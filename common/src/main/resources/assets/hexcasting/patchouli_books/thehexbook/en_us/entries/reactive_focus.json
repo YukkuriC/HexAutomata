@@ -1,0 +1,9 @@
+{
+  "name": "item.hexautomata.reactive_focus",
+  "category": "hexcasting:patterns",
+  "icon": "minecraft:oak_sapling",
+  "advancement": "hexcasting:root",
+  "pages": [
+    "hexautomata.book.text.1"
+  ]
+}

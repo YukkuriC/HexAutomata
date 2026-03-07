@@ -1,0 +1,30 @@
+package io.yukkuric.hexautomata.actions
+
+import at.petrak.hexcasting.api.casting.ActionRegistryEntry
+import at.petrak.hexcasting.api.casting.castables.Action
+import at.petrak.hexcasting.api.casting.math.HexDir
+import at.petrak.hexcasting.api.casting.math.HexPattern
+import io.yukkuric.hexautomata.HexAutomata.modLoc
+import net.minecraft.resources.ResourceLocation
+
+class HexAutomataActions {
+    companion object {
+        private val CACHED: MutableMap<ResourceLocation, ActionRegistryEntry> = HashMap()
+
+        init {
+        }
+
+        @JvmStatic
+        fun registerActions(regFunc: (ResourceLocation, ActionRegistryEntry) -> Any) {
+            for ((key, value) in CACHED) regFunc(key, value)
+        }
+
+        private fun wrap(name: String, signature: String, dir: HexDir, action: Action?): ActionRegistryEntry {
+            val pattern = HexPattern.fromAngles(signature, dir)
+            val key = modLoc(name)
+            val entry = ActionRegistryEntry(pattern, action)
+            CACHED[key] = entry
+            return entry
+        }
+    }
+}

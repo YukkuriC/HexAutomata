@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "hexautomata",
+  "version": "${version}",
+  "name": "HexAutomata",
+  "description": "Provide items with ability listening to various game events and triggering custom spells.",
+  "authors": [
+    "YukkuriC"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/hexautomata",
+    "sources": "https://github.com/YukkuriC/HexAutomata",
+    "issues": "https://github.com/YukkuriC/HexAutomata/issues"
+  },
+  "license": "MIT",
+  "icon": "logo.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "io.yukkuric.hexautomata.fabric.HexAutomataFabric"
+    ],
+    "client": [
+      "io.yukkuric.hexautomata.fabric.HexAutomataFabricClient"
+    ]
+  },
+  "mixins": [
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.9",
+    "minecraft": "~1.20.1",
+    "java": ">=17",
+    "hexcasting": ">=0"
+  },
+  "suggests": {}
+}
