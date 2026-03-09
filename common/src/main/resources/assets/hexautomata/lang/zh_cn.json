@@ -1,0 +1,8 @@
+{
+  "itemGroup.hexautomata.main": "咒法自动机",
+  "item.hexautomata.reactive_focus.template": "反应核心：%s",
+  "hexautomata.events.HURT": "受伤",
+  "hexautomata.events.TARGETED": "被锁定",
+  "hexautomata.events.SHOOT": "弹射物射出",
+  "hexautomata.events.PROJECTILE_HIT": "弹射物命中"
+}
