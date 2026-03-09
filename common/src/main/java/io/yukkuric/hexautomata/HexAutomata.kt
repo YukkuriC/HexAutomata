@@ -1,6 +1,8 @@
 package io.yukkuric.hexautomata
 
 import com.mojang.logging.LogUtils
+import io.yukkuric.hexautomata.interop.HexOPInterop
+import io.yukkuric.hexautomata.interop.HexParseInterop
 import net.minecraft.resources.ResourceLocation
 import org.slf4j.Logger
 
@@ -14,9 +16,8 @@ object HexAutomata {
 
     @JvmStatic
     fun commonInit() {
-        tryLoadInterop("hexoverpowered") {
-            // TODO
-        }
+        tryLoadInterop("hexparse", HexParseInterop::run)
+        tryLoadInterop("hexoverpowered", HexOPInterop::run)
     }
 
     private fun tryLoadInterop(modId: String, loadFunc: () -> Any) {

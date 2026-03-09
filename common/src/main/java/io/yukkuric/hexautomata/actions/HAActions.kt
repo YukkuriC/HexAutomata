@@ -7,7 +7,7 @@ import at.petrak.hexcasting.api.casting.math.HexPattern
 import io.yukkuric.hexautomata.HexAutomata.modLoc
 import net.minecraft.resources.ResourceLocation
 
-class HexAutomataActions {
+class HAActions {
     companion object {
         private val CACHED: MutableMap<ResourceLocation, ActionRegistryEntry> = HashMap()
 
@@ -15,7 +15,7 @@ class HexAutomataActions {
         }
 
         @JvmStatic
-        fun registerActions(regFunc: (ResourceLocation, ActionRegistryEntry) -> Any) {
+        fun registerActions(regFunc: (ResourceLocation, ActionRegistryEntry) -> Any?) {
             for ((key, value) in CACHED) regFunc(key, value)
         }
 
