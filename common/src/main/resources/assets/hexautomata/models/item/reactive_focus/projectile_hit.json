@@ -1,0 +1,11 @@
+{
+  "parent": "hexautomata:item/reactive_focus/idle/projectile_hit",
+  "overrides": [
+    {
+      "model": "hexautomata:item/reactive_focus/active/projectile_hit",
+      "predicate": {
+        "hexautomata:data": 1.0
+      }
+    }
+  ]
+}

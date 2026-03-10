@@ -1,0 +1,11 @@
+{
+  "parent": "hexautomata:item/reactive_focus/idle/hurt",
+  "overrides": [
+    {
+      "model": "hexautomata:item/reactive_focus/active/hurt",
+      "predicate": {
+        "hexautomata:data": 1.0
+      }
+    }
+  ]
+}

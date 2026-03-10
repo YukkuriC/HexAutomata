@@ -3,6 +3,7 @@ package io.yukkuric.hexautomata.fabric
 import at.petrak.hexcasting.common.lib.hex.HexActions
 import io.yukkuric.hexautomata.HexAutomata.IAPI
 import io.yukkuric.hexautomata.HexAutomata.commonInit
+import io.yukkuric.hexautomata.HexAutomataClient
 import io.yukkuric.hexautomata.actions.HAActions
 import io.yukkuric.hexautomata.fabric.events.HAFabricEventsListener
 import io.yukkuric.hexautomata.items.HAItems
@@ -31,5 +32,6 @@ class HexAutomataFabric : IAPI(), ModInitializer {
 
 class HexAutomataFabricClient : ClientModInitializer {
     override fun onInitializeClient() {
+        HexAutomataClient.load()
     }
 }

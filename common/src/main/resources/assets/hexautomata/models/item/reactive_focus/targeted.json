@@ -1,0 +1,11 @@
+{
+  "parent": "hexautomata:item/reactive_focus/idle/targeted",
+  "overrides": [
+    {
+      "model": "hexautomata:item/reactive_focus/active/targeted",
+      "predicate": {
+        "hexautomata:data": 1.0
+      }
+    }
+  ]
+}

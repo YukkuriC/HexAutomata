@@ -38,6 +38,7 @@ object HAItems {
 
     // load all focuses by event type
     private val FOCUSES_BY_TYPE = HashMap<EventMarker, ItemReactiveFocus>()
+    fun AllFocuses() = FOCUSES_BY_TYPE.values.toList()
 
     init {
         for (type in EventMarker.all()) {

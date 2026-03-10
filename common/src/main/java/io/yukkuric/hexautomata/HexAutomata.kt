@@ -1,9 +1,13 @@
 package io.yukkuric.hexautomata
 
+import at.petrak.hexcasting.xplat.IClientXplatAbstractions
 import com.mojang.logging.LogUtils
 import io.yukkuric.hexautomata.interop.HexOPInterop
 import io.yukkuric.hexautomata.interop.HexParseInterop
+import io.yukkuric.hexautomata.items.HAItems
+import io.yukkuric.hexautomata.items.ItemReactiveFocus
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.entity.player.Player
 import org.slf4j.Logger
 
 object HexAutomata {
@@ -37,5 +41,21 @@ object HexAutomata {
         }
 
         abstract fun modLoaded(id: String): Boolean
+    }
+}
+
+// client stuff
+object HexAutomataClient {
+    fun load() {
+        // all focus model variant
+        for (focus in HAItems.AllFocuses()) {
+            IClientXplatAbstractions.INSTANCE.registerItemProperty(
+                focus, ItemReactiveFocus.DATA_PRED
+            ) { stack, _, holder, _ ->
+                if (holder is Player &&
+                    focus.readIotaTag(stack) != null
+                ) 1F else 0F
+            }
+        }
     }
 }

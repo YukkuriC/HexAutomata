@@ -1,0 +1,14 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer1": "hexautomata:item/reactive_focus/idle"
+  },
+  "overrides": [
+    {
+      "model": "hexautomata:item/reactive_focus/_active",
+      "predicate": {
+        "hexautomata:data": 1.0
+      }
+    }
+  ]
+}
