@@ -4,7 +4,7 @@ plugins {
 
 loom {
     forge {
-//        mixinConfig "hexflow.mixins.json"
+        mixinConfig "hexautomata.mixins.json"
     }
 }
 

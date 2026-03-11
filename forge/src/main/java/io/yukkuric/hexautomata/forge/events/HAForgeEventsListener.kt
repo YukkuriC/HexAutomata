@@ -3,7 +3,6 @@ package io.yukkuric.hexautomata.forge.events
 import at.petrak.hexcasting.common.lib.HexRegistries
 import io.yukkuric.hexautomata.actions.HAActions
 import io.yukkuric.hexautomata.events.CommonEventsHandler
-import io.yukkuric.hexautomata.events.CommonHelpers
 import io.yukkuric.hexautomata.events.EventMarker
 import io.yukkuric.hexautomata.forge.HexAutomataForgeClient
 import io.yukkuric.hexautomata.items.HAItems
@@ -17,7 +16,6 @@ import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent
 import net.minecraftforge.event.entity.EntityJoinLevelEvent
 import net.minecraftforge.event.entity.ProjectileImpactEvent
-import net.minecraftforge.event.entity.living.LivingChangeTargetEvent
 import net.minecraftforge.event.entity.living.LivingHurtEvent
 import net.minecraftforge.eventbus.api.EventPriority
 import net.minecraftforge.eventbus.api.SubscribeEvent
@@ -35,16 +33,6 @@ class HAForgeEventsListener {
             val player = e.entity
             if (player !is ServerPlayer || e.amount <= 0) return
             CommonEventsHandler[EventMarker.HURT](player, HAEventsForge.Hurt(e))
-        }
-        @SubscribeEvent(priority = EventPriority.LOWEST)
-        fun OnEntityTargetPlayer(e: LivingChangeTargetEvent) {
-            if (e.isCanceled) return
-            val enemy = e.entity
-            val target = e.newTarget
-            if (!CommonHelpers.checkNewTarget(enemy, target) || target !is ServerPlayer) return
-            CommonEventsHandler[EventMarker.TARGETED](
-                target, HAEventsForge.Targeted(e, enemy.position().distanceTo(target.position()))
-            )
         }
         @SubscribeEvent(priority = EventPriority.LOWEST)
         fun OnEntitySpawn(e: EntityJoinLevelEvent) {

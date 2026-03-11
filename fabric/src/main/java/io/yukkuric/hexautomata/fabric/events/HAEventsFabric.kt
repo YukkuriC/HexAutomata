@@ -7,7 +7,6 @@ import net.minecraft.world.phys.HitResult
 
 object HAEventsFabric {
     class Hurt(override val entity: Entity?, override val data: Double) : IHAEvent.ExtraDouble()
-    class Targeted(override val entity: Entity?, override val data: Double) : IHAEvent.ExtraDouble()
     class Shoot(override val entity: Entity?) : IHAEvent
     class ProjectileHit(entity: Projectile, hit: HitResult) : IHAEvent.CommonProjHit(entity, hit)
 }

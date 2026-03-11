@@ -15,6 +15,8 @@ interface IHAEvent {
     fun extraAmbitCenter() = entity?.position()
 
     // common event structures
+    open class Simple(override val entity: Entity?) : IHAEvent
+
     abstract class ExtraDouble : IHAEvent {
         abstract val data: Double
         override fun extra() = DoubleIota(data)

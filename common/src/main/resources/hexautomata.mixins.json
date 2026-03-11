@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "io.yukkuric.hexautomata.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "plugin": "io.yukkuric.hexautomata.mixin_interface.HAMixinPlugin",
+  "client": [
+  ],
+  "mixins": [
+    "MixinMob"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

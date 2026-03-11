@@ -12,6 +12,10 @@ object CommonEventsHandler {
         }
     }
 
-    operator fun get(marker: EventMarker) = fun(player: ServerPlayer, event: IHAEvent) =
-        generalTrigger(marker, player, event)
+    private val CACHED_HANDLERS = HashMap<EventMarker, (ServerPlayer, IHAEvent) -> Any?>()
+
+    operator fun get(marker: EventMarker) = CACHED_HANDLERS.computeIfAbsent(marker) {
+        fun(player: ServerPlayer, event: IHAEvent) =
+            generalTrigger(marker, player, event)
+    }
 }
