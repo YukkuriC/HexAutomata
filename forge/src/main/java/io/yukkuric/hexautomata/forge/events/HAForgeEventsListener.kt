@@ -37,11 +37,9 @@ class HAForgeEventsListener {
         @SubscribeEvent(priority = EventPriority.LOWEST)
         fun OnEntitySpawn(e: EntityJoinLevelEvent) {
             if (e.isCanceled || e.loadedFromDisk()) return
-            val entity = e.entity
             // check player projectile shoot
-            if (entity is Projectile) {
-                val owner = entity.owner
-                if (owner is ServerPlayer) CommonEventsHandler[EventMarker.SHOOT](owner, HAEventsForge.Shoot(e))
+            (e.entity as? Projectile)?.owner?.let { it as? ServerPlayer }?.let {
+                CommonEventsHandler[EventMarker.SHOOT](it, HAEventsForge.Shoot(e))
             }
         }
         @SubscribeEvent(priority = EventPriority.LOWEST)
