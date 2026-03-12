@@ -5,6 +5,7 @@ import io.yukkuric.hexautomata.HexAutomata.IAPI
 import io.yukkuric.hexautomata.HexAutomata.commonInit
 import io.yukkuric.hexautomata.HexAutomataClient
 import io.yukkuric.hexautomata.actions.HAActions
+import io.yukkuric.hexautomata.blocks.BrainsweepIntermediate
 import io.yukkuric.hexautomata.fabric.events.HAFabricEventsListener
 import io.yukkuric.hexautomata.items.HAItems
 import net.fabricmc.api.ClientModInitializer
@@ -23,6 +24,8 @@ class HexAutomataFabric : IAPI(), ModInitializer {
         bindReg(HexActions.REGISTRY, HAActions::registerActions)
         bindReg(BuiltInRegistries.ITEM, HAItems::registerItems)
         bindReg(BuiltInRegistries.CREATIVE_MODE_TAB, HAItems.Tabs::registerCreativeTabs)
+        bindReg(BuiltInRegistries.BLOCK, BrainsweepIntermediate::registerBlocks)
+        bindReg(BuiltInRegistries.BLOCK_ENTITY_TYPE, BrainsweepIntermediate::registerBETypes)
         HAFabricEventsListener.load()
         commonInit()
     }

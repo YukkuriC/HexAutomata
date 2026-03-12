@@ -16,5 +16,7 @@ Provide items with ability listening to various game events and triggering custo
         - player shooting projectile
         - projectile hit something
         - _TBD_
+    - Crafted by brainsweep recipes
+        - all from `Akashic Record` as source block
     - Places to take effect:
         - inventory

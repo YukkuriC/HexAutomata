@@ -2,6 +2,7 @@ package io.yukkuric.hexautomata.items
 
 import io.yukkuric.hexautomata.HexAutomata
 import io.yukkuric.hexautomata.HexAutomata.modLoc
+import io.yukkuric.hexautomata.blocks.BrainsweepIntermediate
 import io.yukkuric.hexautomata.events.EventMarker
 import io.yukkuric.hexautomata.register
 import net.minecraft.network.chat.Component
@@ -21,17 +22,24 @@ object HAItems {
         for (getter in content) output.accept(getter())
     }
 
-    private fun <T : Item> create(name: String, item: T, tab: CreativeModeTab = Tabs.MAIN): T {
-        ITEMS[modLoc(name)] = item
+    private fun <T : Item> create(
+        name: String,
+        item: T,
+        tab: CreativeModeTab = Tabs.MAIN,
+        createIntermediate: Boolean = false
+    ): T {
+        val id = modLoc(name)
+        ITEMS[id] = item
         if (tab != null) {
             val list = ITEMS_BY_TAB.computeIfAbsent(tab) { _ -> ArrayList() }
             list.add(item::getDefaultInstance)
         }
+        if (createIntermediate) BrainsweepIntermediate.create(id)
         return item
     }
 
     private fun reactiveFocus(type: EventMarker) =
-        create("reactive_focus/${type.name.lowercase()}", ItemReactiveFocus(type))
+        create("reactive_focus/${type.name.lowercase()}", ItemReactiveFocus(type), createIntermediate = true)
 
     // load all focuses by event type
     private val FOCUSES_BY_TYPE = HashMap<EventMarker, ItemReactiveFocus>()

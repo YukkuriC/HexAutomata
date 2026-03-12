@@ -2,6 +2,7 @@ package io.yukkuric.hexautomata.forge.events
 
 import at.petrak.hexcasting.common.lib.HexRegistries
 import io.yukkuric.hexautomata.actions.HAActions
+import io.yukkuric.hexautomata.blocks.BrainsweepIntermediate
 import io.yukkuric.hexautomata.events.CommonEventsHandler
 import io.yukkuric.hexautomata.events.EventMarker
 import io.yukkuric.hexautomata.forge.HexAutomataForgeClient
@@ -65,6 +66,10 @@ class HAForgeEventsListener {
             bindReg(HexRegistries.ACTION, HAActions::registerActions)
             bindReg(Registries.ITEM, HAItems::registerItems)
             bindReg(Registries.CREATIVE_MODE_TAB, HAItems.Tabs::registerCreativeTabs)
+
+            // brainsweep intermediate
+            bindReg(Registries.BLOCK, BrainsweepIntermediate::registerBlocks)
+            bindReg(Registries.BLOCK_ENTITY_TYPE, BrainsweepIntermediate::registerBETypes)
         }
         @SubscribeEvent
         fun OnAddCreativeTabItems(e: BuildCreativeModeTabContentsEvent) {
