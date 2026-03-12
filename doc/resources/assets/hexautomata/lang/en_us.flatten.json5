@@ -1,0 +1,6 @@
+{
+  "hexdoc.hexautomata": {
+    title: "HexAutomata Book",
+    description: "Provides items with ability listening to various game events and triggering custom spells.",
+  },
+}

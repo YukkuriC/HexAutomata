@@ -1,0 +1,26 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+# https://copier.readthedocs.io/en/stable/updating/#never-change-the-answers-file-manually
+_commit: v0.2.0
+_src_path: gh:hexdoc-dev/hexdoc-hexcasting-template
+advanced: true
+capitalize_platforms: false
+classname: HexAutomata
+generate_vscode: true
+github_repo: HexAutomata
+github_user: YukkuriC
+gradle_deps_type: gradle.properties
+gradle_hex_version_key: hexcastingVersion
+gradle_mod_version_key: mod_version_base
+main_branch: main
+minecraft_version: 1.20.1
+minecraft_version_in_mod_version: false
+mod_description: Provides items with ability listening to various game events and
+    triggering custom spells.
+mod_display_name: HexAutomata
+modid: hexautomata
+multiloader: true
+package_name: hexdoc-hexautomata
+package_slug: hexdoc_hexautomata
+pages_url: https://yukkuric.github.io/HexAutomata
+pattern_registry_path: main/java/io/yukkuric/hexautomata/actions/HAActions.kt
+source_url: https://github.com/YukkuriC/HexAutomata
