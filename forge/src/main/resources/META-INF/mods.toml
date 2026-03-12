@@ -9,7 +9,7 @@ version = "${version}"
 displayName = "${mod_name}"
 authors = "YukkuriC"
 description = '''
-Provide items with ability listening to various game events and triggering custom spells.
+Provides items with ability listening to various game events and triggering custom spells.
 '''
 logoFile = "logo.png"
 updateJSONURL = "https://api.modrinth.com/updates/${modid}/forge_updates.json"

@@ -3,7 +3,7 @@
   "id": "hexautomata",
   "version": "${version}",
   "name": "HexAutomata",
-  "description": "Provide items with ability listening to various game events and triggering custom spells.",
+  "description": "Provides items with ability listening to various game events and triggering custom spells.",
   "authors": [
     "YukkuriC"
   ],
