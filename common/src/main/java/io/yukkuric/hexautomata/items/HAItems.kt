@@ -3,6 +3,7 @@ package io.yukkuric.hexautomata.items
 import io.yukkuric.hexautomata.HexAutomata
 import io.yukkuric.hexautomata.HexAutomata.modLoc
 import io.yukkuric.hexautomata.events.EventMarker
+import io.yukkuric.hexautomata.register
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.CreativeModeTab
@@ -13,11 +14,7 @@ import net.minecraft.world.item.ItemStack
 object HAItems {
     private val ITEMS: MutableMap<ResourceLocation, Item> = LinkedHashMap()
     private val ITEMS_BY_TAB: MutableMap<CreativeModeTab, MutableList<() -> ItemStack>> = HashMap()
-    fun registerItems(r: (ResourceLocation, Item) -> Any?) {
-        for (e in ITEMS.entries) {
-            r(e.key, e.value)
-        }
-    }
+    fun registerItems(r: (ResourceLocation, Item) -> Any?) = ITEMS.register(r)
 
     fun loadCreativeTabContents(tab: CreativeModeTab, output: CreativeModeTab.Output) {
         val content = ITEMS_BY_TAB[tab] ?: return
@@ -50,11 +47,7 @@ object HAItems {
 
     object Tabs {
         private val TABS: LinkedHashMap<ResourceLocation, CreativeModeTab> = LinkedHashMap()
-        fun registerCreativeTabs(r: (ResourceLocation, CreativeModeTab) -> Any?) {
-            for (e in TABS.entries) {
-                r(e.key, e.value)
-            }
-        }
+        fun registerCreativeTabs(r: (ResourceLocation, CreativeModeTab) -> Any?) = TABS.register(r)
 
         val MAIN = create("main",
             CreativeModeTab.builder(CreativeModeTab.Row.BOTTOM, 7)

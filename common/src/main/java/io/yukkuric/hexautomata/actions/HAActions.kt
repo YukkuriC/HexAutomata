@@ -5,6 +5,7 @@ import at.petrak.hexcasting.api.casting.castables.Action
 import at.petrak.hexcasting.api.casting.math.HexDir
 import at.petrak.hexcasting.api.casting.math.HexPattern
 import io.yukkuric.hexautomata.HexAutomata.modLoc
+import io.yukkuric.hexautomata.register
 import net.minecraft.resources.ResourceLocation
 
 class HAActions {
@@ -15,9 +16,7 @@ class HAActions {
         }
 
         @JvmStatic
-        fun registerActions(regFunc: (ResourceLocation, ActionRegistryEntry) -> Any?) {
-            for ((key, value) in CACHED) regFunc(key, value)
-        }
+        fun registerActions(regFunc: (ResourceLocation, ActionRegistryEntry) -> Any?) = CACHED.register(regFunc)
 
         private fun wrap(name: String, signature: String, dir: HexDir, action: Action?): ActionRegistryEntry {
             val pattern = HexPattern.fromAngles(signature, dir)
