@@ -23,6 +23,13 @@ interface IHAEvent {
     }
 
     abstract class CommonProjHit(override val entity: Projectile, val hit: HitResult) : IHAEvent {
+        val invalid: Boolean
+
+        init {
+            if (hit is BlockHitResult) invalid = CommonHelpers.checkProjAlreadyHitGround(entity)
+            else invalid = false
+        }
+
         override fun extra() = when (hit) {
             is BlockHitResult -> Vec3Iota(hit.blockPos.center)
             is EntityHitResult -> EntityIota(hit.entity)

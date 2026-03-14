@@ -48,9 +48,11 @@ class HAForgeEventsListener {
             if (e.isCanceled) return
             var proj = e.projectile
             val owner = proj.owner
-            if (owner is ServerPlayer) CommonEventsHandler[EventMarker.PROJECTILE_HIT](
-                owner, HAEventsForge.ProjectileHit(e)
-            )
+            if (owner is ServerPlayer) {
+                val event = HAEventsForge.ProjectileHit(e)
+                if (event.invalid) return
+                CommonEventsHandler[EventMarker.PROJECTILE_HIT](owner, event)
+            }
         }
     }
 

@@ -27,6 +27,8 @@ public abstract class MixinProjectile extends Entity {
     @Inject(method = "onHit", at = @At("HEAD"))
     void hookOnHit(HitResult hitResult, CallbackInfo ci) {
         if (!(getOwner() instanceof ServerPlayer player)) return;
-        CommonEventsHandler.get(EventMarker.PROJECTILE_HIT.INSTANCE).invoke(player, new HAEventsFabric.ProjectileHit(Projectile.class.cast(this), hitResult));
+        var event = new HAEventsFabric.ProjectileHit(Projectile.class.cast(this), hitResult);
+        if (event.getInvalid()) return;
+        CommonEventsHandler.get(EventMarker.PROJECTILE_HIT.INSTANCE).invoke(player, event);
     }
 }
