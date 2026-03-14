@@ -12,7 +12,7 @@ interface IHAEvent {
     val entity: Entity?
     fun extra(): Iota? = null
     fun initStack() = listOfNotNull(entity?.let { EntityIota(it) } ?: NullIota(), extra())
-    fun extraAmbitCenter() = entity?.position()
+    fun extraAmbitCenter(): Vec3? = null
 
     // common event structures
     open class Simple(override val entity: Entity?) : IHAEvent

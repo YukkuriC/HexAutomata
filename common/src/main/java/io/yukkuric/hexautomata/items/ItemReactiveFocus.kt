@@ -30,7 +30,8 @@ class ItemReactiveFocus(val type: EventMarker, props: Properties) : ItemFocus(pr
     }
 
     override fun getName(focus: ItemStack): Component {
-        val nameEvent = Language.getInstance().getOrDefault("hexautomata.events.${type.name}", type.name.capitalize())
+        val nameEvent = Language.getInstance()
+            .getOrDefault("block.hexautomata.reactive_focus.${type.name.lowercase()}", type.name.capitalize())
         return Component.translatable("item.hexautomata.reactive_focus.template", nameEvent)
     }
 
