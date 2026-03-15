@@ -26,6 +26,16 @@
       "type": "hexcasting:brainsweep",
       "recipe": "hexautomata:brainsweep/reactive_focus/projectile_hit",
       "text": "hexautomata.book.reactive_focus.projectile_hit"
+    },
+    {
+      "type": "hexcasting:brainsweep",
+      "recipe": "hexautomata:brainsweep/reactive_focus/melee_hit",
+      "text": "hexautomata.book.reactive_focus.melee_hit"
+    },
+    {
+      "type": "hexcasting:brainsweep",
+      "recipe": "hexautomata:brainsweep/reactive_focus/kill",
+      "text": "hexautomata.book.reactive_focus.kill"
     }
   ]
 }

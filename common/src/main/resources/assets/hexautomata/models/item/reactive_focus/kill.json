@@ -1,0 +1,11 @@
+{
+  "parent": "hexautomata:item/reactive_focus/idle/kill",
+  "overrides": [
+    {
+      "model": "hexautomata:item/reactive_focus/active/kill",
+      "predicate": {
+        "hexautomata:data": 1.0
+      }
+    }
+  ]
+}

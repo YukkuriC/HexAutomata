@@ -12,11 +12,13 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
+import net.minecraft.world.damagesource.DamageTypes
 import net.minecraft.world.entity.projectile.Projectile
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent
 import net.minecraftforge.event.entity.EntityJoinLevelEvent
 import net.minecraftforge.event.entity.ProjectileImpactEvent
+import net.minecraftforge.event.entity.living.LivingDeathEvent
 import net.minecraftforge.event.entity.living.LivingHurtEvent
 import net.minecraftforge.eventbus.api.EventPriority
 import net.minecraftforge.eventbus.api.SubscribeEvent
@@ -29,11 +31,16 @@ import net.minecraftforge.registries.RegisterEvent
 class HAForgeEventsListener {
     private object ForgeBus {
         @SubscribeEvent(priority = EventPriority.LOWEST)
-        fun OnPlayerHurt(e: LivingHurtEvent) {
-            if (e.isCanceled) return
-            val player = e.entity
-            if (player !is ServerPlayer || e.amount <= 0) return
-            CommonEventsHandler[BuiltinEventMarker.HURT](player, HAEventsForge.Hurt(e))
+        fun OnHurt(e: LivingHurtEvent) {
+            if (e.isCanceled || e.amount <= 0) return
+            // player hurt
+            e.entity.let { it as? ServerPlayer }?.let {
+                CommonEventsHandler[BuiltinEventMarker.HURT](it, HAEventsForge.Hurt(e))
+            }
+            // player melee
+            if (e.source.`is`(DamageTypes.PLAYER_ATTACK)) e.source.entity.let { it as? ServerPlayer }?.let {
+                CommonEventsHandler[BuiltinEventMarker.MELEE_HIT](it, HAEventsForge.PlayerAttack(e))
+            }
         }
         @SubscribeEvent(priority = EventPriority.LOWEST)
         fun OnEntitySpawn(e: EntityJoinLevelEvent) {
@@ -46,12 +53,17 @@ class HAForgeEventsListener {
         @SubscribeEvent(priority = EventPriority.LOWEST)
         fun OnProjectileHit(e: ProjectileImpactEvent) {
             if (e.isCanceled) return
-            var proj = e.projectile
-            val owner = proj.owner
-            if (owner is ServerPlayer) {
+            e.projectile.owner.let { it as? ServerPlayer }?.let {
                 val event = HAEventsForge.ProjectileHit(e)
                 if (event.invalid) return
-                CommonEventsHandler[BuiltinEventMarker.PROJECTILE_HIT](owner, event)
+                CommonEventsHandler[BuiltinEventMarker.PROJECTILE_HIT](it, event)
+            }
+        }
+        @SubscribeEvent(priority = EventPriority.LOWEST)
+        fun OnEntityDie(e: LivingDeathEvent) {
+            if (e.isCanceled) return
+            e.source.entity.let { it as? ServerPlayer }?.let {
+                CommonEventsHandler[BuiltinEventMarker.KILL](it, HAEventsForge.Kill(e))
             }
         }
     }

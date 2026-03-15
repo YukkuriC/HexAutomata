@@ -10,3 +10,9 @@
 - id: projectile_hit
   color: green
   entity: shulker
+- id: melee_hit
+  color: orange
+  entity: vindicator
+- id: kill
+  color: purple
+  entity: zombie_villager

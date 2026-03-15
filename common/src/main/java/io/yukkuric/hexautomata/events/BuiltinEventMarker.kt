@@ -5,4 +5,6 @@ sealed class BuiltinEventMarker : EventMarker() {
     object TARGETED : BuiltinEventMarker()
     object SHOOT : BuiltinEventMarker()
     object PROJECTILE_HIT : BuiltinEventMarker()
+    object MELEE_HIT : BuiltinEventMarker()
+    object KILL : BuiltinEventMarker()
 }

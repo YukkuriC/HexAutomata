@@ -1,0 +1,11 @@
+{
+  "parent": "hexautomata:item/reactive_focus/idle/melee_hit",
+  "overrides": [
+    {
+      "model": "hexautomata:item/reactive_focus/active/melee_hit",
+      "predicate": {
+        "hexautomata:data": 1.0
+      }
+    }
+  ]
+}
