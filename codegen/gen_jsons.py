@@ -3,6 +3,8 @@ import os, json, yaml
 
 if 'paths':
     ROOT_RESOURCES = '../common/src/main/resources'
+    ROOT_FABRIC = '../fabric/src/main/resources'
+    ROOT_FORGE = '../forge/src/main/resources'
 
     # assets
     ROOT_ASSETS = f'{ROOT_RESOURCES}/assets/hexautomata'
@@ -73,6 +75,13 @@ if 'helpers':
             )
             dump_json(f'{DIR_MODELS}/{mode}/{id}.json', builder.data)
 
+    def dump_tags(data):
+        ids = ['hexautomata:reactive_focus/' + e['id'] for e in data]
+        if 'curios/trinkets':
+            obj = {"replace": False, "values": ids}
+            dump_json(f'{ROOT_FABRIC}/data/trinkets/tags/items/all.json', obj)
+            dump_json(f'{ROOT_FORGE}/data/curios/tags/items/curio.json', obj)
+
 
 with open('data.yaml') as f:
     data = yaml.load(f, yaml.Loader)
@@ -80,3 +89,5 @@ with open('data.yaml') as f:
 for event in data:
     dump_brainsweep(event['id'], event['entity'])
     dump_models(event['id'], event['color'])
+
+dump_tags(data)
