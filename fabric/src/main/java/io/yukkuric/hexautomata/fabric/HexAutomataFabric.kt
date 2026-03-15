@@ -6,8 +6,10 @@ import io.yukkuric.hexautomata.HexAutomata.commonInit
 import io.yukkuric.hexautomata.HexAutomataClient
 import io.yukkuric.hexautomata.actions.HAActions
 import io.yukkuric.hexautomata.blocks.BrainsweepIntermediate
+import io.yukkuric.hexautomata.fabric.collector.TrinketsCollector
 import io.yukkuric.hexautomata.fabric.events.HAFabricEventsListener
 import io.yukkuric.hexautomata.items.HAItems
+import io.yukkuric.hexautomata.items.collector.FocusCollector
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.loader.api.FabricLoader
@@ -27,6 +29,7 @@ class HexAutomataFabric : IAPI(), ModInitializer {
         bindReg(BuiltInRegistries.BLOCK, BrainsweepIntermediate::registerBlocks)
         bindReg(BuiltInRegistries.BLOCK_ENTITY_TYPE, BrainsweepIntermediate::registerBETypes)
         HAFabricEventsListener.load()
+        FocusCollector.register("trinkets", TrinketsCollector)
         commonInit()
     }
 
