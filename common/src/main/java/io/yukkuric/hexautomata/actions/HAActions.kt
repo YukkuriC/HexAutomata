@@ -13,7 +13,7 @@ class HAActions {
         private val CACHED: MutableMap<ResourceLocation, ActionRegistryEntry> = HashMap()
 
         init {
-            // wrap("todo","ass",HexDir.EAST,Foo)
+            wrap("quantum_swap", "aqaedwaqded", HexDir.NORTH_WEST, OpQuantumSwap)
         }
 
         @JvmStatic
