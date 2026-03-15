@@ -1,7 +1,6 @@
 package io.yukkuric.hexautomata.fabric.mixin;
 
-import io.yukkuric.hexautomata.events.CommonEventsHandler;
-import io.yukkuric.hexautomata.events.EventMarker;
+import io.yukkuric.hexautomata.events.*;
 import io.yukkuric.hexautomata.fabric.events.HAEventsFabric;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -29,6 +28,6 @@ public abstract class MixinProjectile extends Entity {
         if (!(getOwner() instanceof ServerPlayer player)) return;
         var event = new HAEventsFabric.ProjectileHit(Projectile.class.cast(this), hitResult);
         if (event.getInvalid()) return;
-        CommonEventsHandler.get(EventMarker.PROJECTILE_HIT.INSTANCE).invoke(player, event);
+        CommonEventsHandler.get(BuiltinEventMarker.PROJECTILE_HIT.INSTANCE).invoke(player, event);
     }
 }

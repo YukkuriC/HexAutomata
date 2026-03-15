@@ -3,8 +3,8 @@ package io.yukkuric.hexautomata.forge.events
 import at.petrak.hexcasting.common.lib.HexRegistries
 import io.yukkuric.hexautomata.actions.HAActions
 import io.yukkuric.hexautomata.blocks.BrainsweepIntermediate
+import io.yukkuric.hexautomata.events.BuiltinEventMarker
 import io.yukkuric.hexautomata.events.CommonEventsHandler
-import io.yukkuric.hexautomata.events.EventMarker
 import io.yukkuric.hexautomata.forge.HexAutomataForgeClient
 import io.yukkuric.hexautomata.items.HAItems
 import net.minecraft.core.Registry
@@ -33,14 +33,14 @@ class HAForgeEventsListener {
             if (e.isCanceled) return
             val player = e.entity
             if (player !is ServerPlayer || e.amount <= 0) return
-            CommonEventsHandler[EventMarker.HURT](player, HAEventsForge.Hurt(e))
+            CommonEventsHandler[BuiltinEventMarker.HURT](player, HAEventsForge.Hurt(e))
         }
         @SubscribeEvent(priority = EventPriority.LOWEST)
         fun OnEntitySpawn(e: EntityJoinLevelEvent) {
             if (e.isCanceled || e.loadedFromDisk()) return
             // check player projectile shoot
             (e.entity as? Projectile)?.owner?.let { it as? ServerPlayer }?.let {
-                CommonEventsHandler[EventMarker.SHOOT](it, HAEventsForge.Shoot(e))
+                CommonEventsHandler[BuiltinEventMarker.SHOOT](it, HAEventsForge.Shoot(e))
             }
         }
         @SubscribeEvent(priority = EventPriority.LOWEST)
@@ -51,7 +51,7 @@ class HAForgeEventsListener {
             if (owner is ServerPlayer) {
                 val event = HAEventsForge.ProjectileHit(e)
                 if (event.invalid) return
-                CommonEventsHandler[EventMarker.PROJECTILE_HIT](owner, event)
+                CommonEventsHandler[BuiltinEventMarker.PROJECTILE_HIT](owner, event)
             }
         }
     }
