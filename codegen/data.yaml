@@ -1,0 +1,12 @@
+- id: hurt
+  color: red
+  entity: evoker
+- id: targeted
+  color: blue
+  entity: enderman
+- id: shoot
+  color: yellow
+  entity: elder_guardian
+- id: projectile_hit
+  color: green
+  entity: shulker

@@ -1,5 +1,5 @@
 {
-  "parent": "hexautomata:item/reactive_focus/_base",
+  "parent": "hexautomata:item/reactive_focus/_idle",
   "textures": {
     "layer0": "hexcasting:item/colorizer/dye_blue"
   }
