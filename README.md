@@ -17,7 +17,6 @@ Provides items with ability listening to various game events and triggering cust
         - projectile hit something
         - melee attack something
         - killing something
-        - _TBD_
     - Crafted by brainsweep recipes
         - all from `Akashic Record` as source block
     - Places to take effect:
