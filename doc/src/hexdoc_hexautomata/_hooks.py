@@ -19,6 +19,25 @@ class HexAutomataPlugin(ModPluginImpl):
     @staticmethod
     @hookimpl
     def hexdoc_mod_plugin(branch: str) -> ModPlugin:
+        # monkey-patch item texture
+        def add_texture1(func):
+            def inner(self, loader, gaslighting_items, checked_overrides=None):
+                res = func(self, loader, gaslighting_items, checked_overrides)
+                if not res:
+                    layer1 = None
+                    if self.textures:
+                        layer1 = self.textures.get("layer1")
+                    if layer1:
+                        texture_id = "textures" / layer1 + ".png"
+                        return "texture", texture_id
+                return res
+
+            return inner
+
+        from hexdoc.minecraft.assets.models import ModelItem
+
+        ModelItem.find_texture = add_texture1(ModelItem.find_texture)
+
         return HexAutomataModPlugin(branch=branch)
 
 
@@ -51,7 +70,7 @@ class HexAutomataModPlugin(ModPluginWithBook):
         from ._export import generated
 
         return generated
-    
+
     @override
     def jinja_template_root(self) -> tuple[Package, str]:
         return hexdoc_hexautomata, "_templates"
