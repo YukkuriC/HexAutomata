@@ -1,4 +1,4 @@
-# HexFlow
+# HexAutomata
 
 [![Curseforge](https://badges.moddingx.org/curseforge/versions/1481923) ![CurseForge](https://badges.moddingx.org/curseforge/downloads/1481923)](https://www.curseforge.com/minecraft/mc-mods/hexautomata)  
 [![Modrinth](https://badges.moddingx.org/modrinth/versions/hexautomata) ![Modrinth](https://badges.moddingx.org/modrinth/downloads/hexautomata)](https://modrinth.com/mod/hexautomata)
