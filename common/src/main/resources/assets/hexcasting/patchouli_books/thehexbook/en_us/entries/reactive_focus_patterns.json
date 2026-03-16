@@ -1,0 +1,18 @@
+{
+  "name": "hexautomata.book.reactive_focus.patterns.title",
+  "category": "hexcasting:greatwork",
+  "icon": "hexcasting:scroll",
+  "advancement": "hexcasting:enlightenment",
+  "entry_color": "54398a",
+  "pages": [
+    "hexautomata.book.reactive_focus.patterns.intro",
+    {
+      "type": "hexcasting:pattern",
+      "op_id": "hexautomata:quantum_swap",
+      "anchor": "hexautomata:quantum_swap",
+      "input": "",
+      "output": "",
+      "text": "book.descrip.hexautomata:quantum_swap"
+    }
+  ]
+}
