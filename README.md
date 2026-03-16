@@ -23,4 +23,5 @@ Provides items with ability listening to various game events and triggering cust
     - Places to take effect:
         - inventory
         - Curios/Trinkets slots
+        - _config entries controlling whether sources above are enabled_
 - Special patterns taking effect exclusively inside triggered events

@@ -34,6 +34,12 @@ class HexAutomataFabric : IAPI(), ModInitializer {
     }
 
     override fun modLoaded(id: String) = FabricLoader.getInstance().isModLoaded(id)
+
+    companion object {
+        init {
+            HAConfigFabric.setup()
+        }
+    }
 }
 
 class HexAutomataFabricClient : ClientModInitializer {

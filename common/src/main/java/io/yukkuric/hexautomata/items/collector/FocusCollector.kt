@@ -1,5 +1,6 @@
 package io.yukkuric.hexautomata.items.collector
 
+import io.yukkuric.hexautomata.HAConfig
 import io.yukkuric.hexautomata.events.EventMarker
 import io.yukkuric.hexautomata.items.ItemReactiveFocus
 import net.minecraft.server.level.ServerPlayer
@@ -37,6 +38,7 @@ abstract class FocusCollector {
     abstract fun extract(player: ServerPlayer): Sequence<ItemStack>?
 
     object Inv : FocusCollector() {
-        override fun extract(player: ServerPlayer) = player.inventory.items.asSequence()
+        override fun extract(player: ServerPlayer) =
+            if (HAConfig.EnablesFocusInsideInventory()) player.inventory.items.asSequence() else null
     }
 }
