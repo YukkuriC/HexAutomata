@@ -1,0 +1,131 @@
+[build-system]
+requires = [
+    "hatchling",
+    "hatch-gradle-version>=0.9.8",
+]
+build-backend = "hatchling.build"
+
+# project metadata
+
+[project]
+name = "hexdoc-hexautomata"
+description = "Provides items with ability listening to various game events and triggering custom spells."
+readme = "doc/README.md"
+authors = [
+    { name="YukkuriC" },
+]
+keywords = ["hexdoc"]
+requires-python = ">=3.12"
+dynamic = ["version", "dependencies", "optional-dependencies"]
+
+[project.urls]
+Homepage = "https://yukkuric.github.io/HexAutomata"
+Source = "https://github.com/YukkuriC/HexAutomata"
+
+# project version
+
+[tool.hatch.version]
+scheme = "gradle"
+source = "gradle-properties"
+py-path = "doc/src/hexdoc_hexautomata/__version__.py"
+key = "mod_version_base"
+
+# Python dependencies
+
+# required
+[tool.hatch.metadata.hooks.gradle-properties]
+dependencies = [
+    { package="hexdoc-hexcasting", op="~=", py-version="1.0", key="hexcastingVersion" },
+]
+
+# dev-only
+[dependency-groups]
+dev = [
+    "ruff",
+]
+
+# directory inclusion
+
+[tool.hatch.build]
+only-include = [
+    "doc/src/hexdoc_hexautomata",
+    "gradle.properties",
+]
+artifacts = [
+    "/doc/src/hexdoc_hexautomata/_export/generated",
+    "/doc/src/hexdoc_hexautomata/__gradle_version__.py",
+]
+
+[tool.hatch.build.targets.wheel]
+sources = ["doc/src"]
+
+# hexdoc entry points
+
+[project.entry-points.hexdoc]
+hexautomata = "hexdoc_hexautomata._hooks:HexAutomataPlugin"
+
+# linting
+
+[tool.pyright]
+pythonVersion = "3.12"
+pythonPlatform = "All"
+
+include = ["doc/src"]
+extraPaths = ["doc/src"]
+
+typeCheckingMode = "standard"
+
+strictDictionaryInference = true
+strictListInference = true
+strictSetInference = true
+
+reportConstantRedefinition = "error"
+reportIncompleteStub = "error"
+reportInconsistentConstructor = "error"
+reportInvalidStubStatement = "error"
+
+reportDeprecated = "warning"
+reportDuplicateImport = "warning"
+reportMatchNotExhaustive = "warning"
+reportMissingParameterType = "warning"
+reportMissingTypeArgument = "warning"
+reportMissingTypeStubs = "warning"
+reportPrivateUsage = "warning"
+reportTypeCommentUsage = "warning"
+reportUnknownArgumentType = "warning"
+reportUnknownLambdaType = "warning"
+reportUnknownMemberType = "warning"
+reportUnknownParameterType = "warning"
+reportUnknownVariableType = "warning"
+reportUnnecessaryCast = "warning"
+reportUnnecessaryComparison = "warning"
+reportUnnecessaryContains = "warning"
+reportUnnecessaryIsInstance = "warning"
+reportUntypedBaseClass = "warning"
+reportUntypedClassDecorator = "warning"
+reportUntypedFunctionDecorator = "warning"
+reportUntypedNamedTuple = "warning"
+reportUnusedClass = "warning"
+reportUnusedExpression = "warning"
+reportUnusedFunction = "warning"
+reportUnusedImport = "warning"
+reportUnusedVariable = "warning"
+
+# mirror
+# uv sync --index-strategy unsafe-best-match
+[[tool.uv.index]]
+name = "tencent"
+url = "https://mirrors.cloud.tencent.com/pypi/simple/"
+[[tool.uv.index]]
+name = "aliyun"
+url = "https://mirrors.aliyun.com/pypi/simple/"
+[[tool.uv.index]]
+name = "tuna"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple/"
+[[tool.uv.index]]
+name = "volces"
+url = "https://mirrors.volces.com/pypi/simple/"
+
+[[tool.uv.index]]
+name = "default"
+url = "https://files.pythonhosted.org/"

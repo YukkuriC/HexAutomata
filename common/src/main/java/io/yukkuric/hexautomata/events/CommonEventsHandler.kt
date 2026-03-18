@@ -1,14 +1,13 @@
 package io.yukkuric.hexautomata.events
 
 import io.yukkuric.hexautomata.items.ItemReactiveFocus
+import io.yukkuric.hexautomata.items.collector.FocusCollector
 import net.minecraft.server.level.ServerPlayer
 
 object CommonEventsHandler {
     private fun generalTrigger(type: EventMarker, player: ServerPlayer, event: IHAEvent) {
-        for (stack in player.inventory.items) {
-            val item = stack.item
-            if (item !is ItemReactiveFocus || !item.isListening(stack, type)) continue
-            return item.runCallback(stack, event, player)
+        for (stack in FocusCollector.getAllFocus(player, type)) {
+            return (stack.item as ItemReactiveFocus).runCallback(stack, event, player)
         }
     }
 

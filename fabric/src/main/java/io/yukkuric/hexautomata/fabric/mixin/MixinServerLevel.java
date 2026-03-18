@@ -1,7 +1,6 @@
 package io.yukkuric.hexautomata.fabric.mixin;
 
-import io.yukkuric.hexautomata.events.CommonEventsHandler;
-import io.yukkuric.hexautomata.events.EventMarker;
+import io.yukkuric.hexautomata.events.*;
 import io.yukkuric.hexautomata.fabric.events.HAEventsFabric;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -17,7 +16,7 @@ public class MixinServerLevel {
     @Inject(method = "addFreshEntity", at = @At("HEAD"))
     void hookAddEntity(Entity entity, CallbackInfoReturnable<Boolean> cir) {
         if ((entity instanceof Projectile proj && proj.getOwner() instanceof ServerPlayer player)) {
-            CommonEventsHandler.get(EventMarker.SHOOT.INSTANCE).invoke(player, new HAEventsFabric.
+            CommonEventsHandler.get(BuiltinEventMarker.SHOOT.INSTANCE).invoke(player, new HAEventsFabric.
                     Shoot(Projectile.class.cast(this)));
         }
     }

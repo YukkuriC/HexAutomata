@@ -64,7 +64,6 @@ subprojects {
         modImplementation "curse.maven:caelus-308989:5281700"
         modImplementation "curse.maven:inline-971167:6556850"
         modImplementation "curse.maven:patchouli-306770:6164575"
-        modImplementation "curse.maven:curios-309927:5066845"
         modImplementation "curse.maven:cloth-config-348521:5729105"
         // interop dep
         modImplementation "curse.maven:hexparse-1148731:7676910"

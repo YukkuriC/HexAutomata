@@ -9,16 +9,11 @@ abstract class EventMarker(setName: String? = null) {
         }
     }
 
-    object HURT : EventMarker()
-    object TARGETED : EventMarker()
-    object SHOOT : EventMarker()
-    object PROJECTILE_HIT : EventMarker()
-
     companion object {
         private val TYPES = HashMap<String, EventMarker>()
 
         // ref all preset events to force-load
-        val VANILLA = listOf(HURT, TARGETED, SHOOT, PROJECTILE_HIT)
+        val VANILLA = BuiltinEventMarker::class.sealedSubclasses.map { cls -> cls.objectInstance!! }
 
         @JvmStatic
         fun all() = TYPES.values

@@ -3,6 +3,7 @@ package io.yukkuric.hexautomata.items
 import io.yukkuric.hexautomata.HexAutomata
 import io.yukkuric.hexautomata.HexAutomata.modLoc
 import io.yukkuric.hexautomata.blocks.BrainsweepIntermediate
+import io.yukkuric.hexautomata.events.BuiltinEventMarker
 import io.yukkuric.hexautomata.events.EventMarker
 import io.yukkuric.hexautomata.register
 import net.minecraft.network.chat.Component
@@ -59,7 +60,7 @@ object HAItems {
 
         val MAIN = create("main",
             CreativeModeTab.builder(CreativeModeTab.Row.BOTTOM, 7)
-                .icon { FOCUSES_BY_TYPE[EventMarker.HURT]!!.defaultInstance })
+                .icon { FOCUSES_BY_TYPE[BuiltinEventMarker.HURT]!!.defaultInstance })
 
         private fun create(name: String, tabBuilder: CreativeModeTab.Builder): CreativeModeTab {
             var tab = tabBuilder.title(Component.translatable("itemGroup.${HexAutomata.MOD_ID}.$name")).build()

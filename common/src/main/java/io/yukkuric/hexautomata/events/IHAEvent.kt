@@ -12,7 +12,7 @@ interface IHAEvent {
     val entity: Entity?
     fun extra(): Iota? = null
     fun initStack() = listOfNotNull(entity?.let { EntityIota(it) } ?: NullIota(), extra())
-    fun extraAmbitCenter() = entity?.position()
+    fun extraAmbitCenter(): Vec3? = null
 
     // common event structures
     open class Simple(override val entity: Entity?) : IHAEvent
@@ -23,6 +23,13 @@ interface IHAEvent {
     }
 
     abstract class CommonProjHit(override val entity: Projectile, val hit: HitResult) : IHAEvent {
+        val invalid: Boolean
+
+        init {
+            if (hit is BlockHitResult) invalid = CommonHelpers.checkProjAlreadyHitGround(entity)
+            else invalid = false
+        }
+
         override fun extra() = when (hit) {
             is BlockHitResult -> Vec3Iota(hit.blockPos.center)
             is EntityHitResult -> EntityIota(hit.entity)
