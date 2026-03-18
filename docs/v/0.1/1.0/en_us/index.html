@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+      <title>HexAutomata Book</title>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <meta name="description" content="Provides items with ability listening to various game events and triggering custom spells." />
+      <meta name="author" content="YukkuriC" />
+        <link rel="None" type="image/ico" href="favicon.ico" />
+        <link rel="icon" type="image/png" href="favicon-16x16.png" />
+        <link rel="icon" type="image/png" href="favicon-32x32.png" />
+        <link rel="icon" type="image/png" href="favicon-64x64.png" />
+        <link rel="icon" type="image/png" href="favicon-96x96.png" />
+        <link rel="icon" type="image/png" href="favicon-180x180.png" />
+        <link rel="apple-touch-icon" type="image/png" href="apple-touch-icon-57x57.png" />
+        <link rel="apple-touch-icon" type="image/png" href="apple-touch-icon-60x60.png" />
+        <link rel="apple-touch-icon" type="image/png" href="apple-touch-icon-72x72.png" />
+        <link rel="apple-touch-icon" type="image/png" href="apple-touch-icon-76x76.png" />
+        <link rel="apple-touch-icon" type="image/png" href="apple-touch-icon-114x114.png" />
+        <link rel="apple-touch-icon" type="image/png" href="apple-touch-icon-120x120.png" />
+        <link rel="apple-touch-icon" type="image/png" href="apple-touch-icon-144x144.png" />
+        <link rel="apple-touch-icon" type="image/png" href="apple-touch-icon-152x152.png" />
+        <link rel="apple-touch-icon" type="image/png" href="apple-touch-icon-167x167.png" />
+        <link rel="apple-touch-icon" type="image/png" href="apple-touch-icon-180x180.png" />
+        <link rel="None" type="image/png" href="mstile-70x70.png" />
+        <link rel="None" type="image/png" href="mstile-270x270.png" />
+        <link rel="None" type="image/png" href="mstile-310x310.png" />
+        <link rel="None" type="image/png" href="mstile-310x150.png" />
+        <link rel="shortcut icon" type="image/png" href="favicon-196x196.png" />
+      <link rel="mask-icon" href="https://raw.githubusercontent.com/hexdoc-dev/hexdoc/main/media/safari-pinned-tab.svg" color="#332233">
+<meta property="og:type" content="website" />
+<meta property="og:title" content="HexAutomata Book" />
+<meta property="og:image" content="https://yukkuric.github.io/HexAutomata/v/0.1/1.0/en_us/logo.png" />
+<meta property="og:url" content="https://yukkuric.github.io/HexAutomata/v/0.1/1.0/en_us" />
+<meta property="og:description" content="Provides items with ability listening to various game events and triggering custom spells." />
+<meta property="og:site_name" content="HexAutomata (0.1)" />
+      <script src="https://code.jquery.com/jquery-1.12.4.min.js"
+      integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js"
+        integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+      <link rel="stylesheet" href="index.css">
+      <link rel="stylesheet" href="textures.css">
+      <noscript>
+        <style>
+          /* for accessibility */
+          .spoilered {
+            filter: none !important;
+          }
+        </style>
+      </noscript>
+        <script type="module" src="index.js"></script>
+  <script type="module" src="hexcasting.js"></script>
+  <script type="module" src="hexcasting_render.js"></script>
+  </head>
+  <body>
+<nav class="navbar navbar-default navbar-static-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button
+        type="button"
+        class="navbar-toggle collapsed"
+        data-toggle="collapse"
+        data-target="#navbar-collapse"
+        aria-expanded="false"
+      >
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="../../../..">HexAutomata Book</a>
+    </div>
+    <div class="collapse navbar-collapse" id="navbar-collapse">
+      <ul class="nav navbar-nav navbar-right">
+            <li>
+    <a
+      href="https://github.com/YukkuriC/HexAutomata/tree/51811e076681ad0d276eda2c528e49ab8d7e7d64"
+        target="_blank"
+      class="navbar-link"
+      role="button"
+      aria-haspopup="true"
+      aria-expanded="false"
+    >GitHub <i class="bi bi-box-arrow-up-right external-link-icon"></i></a>
+  </li>
+        <li class="dropdown">
+          <a
+            href=""
+            class="dropdown-toggle"
+            data-toggle="dropdown"
+            role="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >0.1 <span class="caret"></span></a>
+          <ul class="dropdown-menu" id="version-dropdown"></ul>
+        </li>
+        <li class="dropdown">
+          <a
+            href=""
+            class="dropdown-toggle"
+            data-toggle="dropdown"
+            role="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >English (United States) <span class="caret"></span></a>
+          <ul class="dropdown-menu dropdown-menu-left" id="lang-dropdown"></ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container" style="margin-top: 3em;">
+  <blockquote>
+      <h1><p>This is the online version of the HexAutomata documentation.</p></h1>
+      <p><strong>Entries which are blurred are spoilers</strong>. Click to reveal them, but be aware that they may spoil endgame progression. Alternatively, click <a href="?nospoiler">here</a> to get a version with all spoilers showing.</p>
+      <span id="old-version-notice" class="hidden">
+        <br />
+        <p><i>The past is a foreign country; they do things differently there.</i></p>
+      </span>
+  </blockquote>
+</div>
+<div class="container">
+<div id="table-of-contents"></div>
+<nav class="toc-container">
+  <h2 class="page-header">
+    Table of <span class="nobr">Contents<a
+      href="javascript:void(0)"
+      class="permalink toggle-link small"
+      data-target="toc-category"
+      title="Toggle all"
+    ><i class="bi bi-list-nested"></i></a><a
+    href="#table-of-contents"
+    class="permalink small toc-permalink"
+    title="Permalink"
+  ><i class="bi bi-link-45deg"></i></a></span>
+  </h2>
+    <details class="toc-category">
+      <summary><a href="#greatwork" class="toc-elem spoilered"><img
+      title="Music Disc"
+      alt="Music Disc"
+      src="https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/a14c64362abe4a12c2dfd87f8d1673af9d1b09f4/data/1.20.2/items/music_disc_11.png"
+      loading="lazy"
+      class="item-texture  texture pixelated"
+    > The Great Work</a></summary>
+      <ul>
+          <li><a href="#reactive_focus" class="toc-elem spoilered"><img
+      title="Hurt"
+      alt="Hurt"
+      src="https://raw.githubusercontent.com/YukkuriC/HexAutomata/51811e076681ad0d276eda2c528e49ab8d7e7d64/common/src/main/resources/assets/hexautomata/textures/item/reactive_focus/inner/red.png"
+      loading="lazy"
+      class="item-texture  texture pixelated"
+    > Reactive Focus</a></li>
+          <li><a href="#reactive_focus_patterns" class="toc-elem spoilered"><img
+      title="Large Scroll"
+      alt="Large Scroll"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/eefaf2d411b6360519c9f56fbfe6b0dfba047425/Common/src/main/resources/assets/hexcasting/textures/item/scroll_pristine_large.png"
+      loading="lazy"
+      class="item-texture  texture pixelated"
+    > Spells Inside Reactive Focus</a></li>
+      </ul>
+    </details>
+</nav>
+  <main class="book-body">
+<section id="greatwork">
+    <div class="spoilered">
+      <h2 class="category-title page-header">
+    <img
+      title="Music Disc"
+      alt="Music Disc"
+      src="https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/a14c64362abe4a12c2dfd87f8d1673af9d1b09f4/data/1.20.2/items/music_disc_11.png"
+      loading="lazy"
+      class="item-texture  texture pixelated"
+    >The Great Work<a
+    href="#table-of-contents"
+    class="permalink small"
+    title="Jump to top"
+  ><i class="bi bi-box-arrow-up"></i></a><a
+    href="#greatwork"
+    class="permalink small"
+    title="Permalink"
+  ><i class="bi bi-link-45deg"></i></a></h2>
+    <p>I have seen... so much. I have... experienced... annihilation and deconstruction and reconstruction. I have seen the atoms of the world screaming as they were inverted and subverted and demoted to energy. I have seen I have seen I have s<span class="obfuscated">get stick bugged lmao</span></p>
+    </div>
+<div id="reactive_focus" class="entry">
+    <div class="spoilered">
+      <h3 class="entry-title page-header">
+    <img
+      title="Hurt"
+      alt="Hurt"
+      src="https://raw.githubusercontent.com/YukkuriC/HexAutomata/51811e076681ad0d276eda2c528e49ab8d7e7d64/common/src/main/resources/assets/hexautomata/textures/item/reactive_focus/inner/red.png"
+      loading="lazy"
+      class="item-texture  texture pixelated"
+    >Reactive Focus<a
+    href="#table-of-contents"
+    class="permalink small"
+    title="Jump to top"
+  ><i class="bi bi-box-arrow-up"></i></a><a
+    href="#reactive_focus"
+    class="permalink small"
+    title="Permalink"
+  ><i class="bi bi-link-45deg"></i></a></h3>
+    <p>I found a way - using the intelligence from a settled villager mind, with some special <span style="color: #8d6acc">&#34;concepts&#34;</span> from wild creatures - to create a kind of special spell-casters: <span style="color: #8d6acc">Reactive Focus</span>.<br />These spell holders act like normal focus when reading/writing, while their inner spells get triggered when certain situations happen, drawing media from me directly when casting.</p>
+<br />
+    <p>Each type of <span style="color: #8d6acc">Reactive Focus</span> also sends iota(s) to the initial stack when they&#39;re triggered, this usually contains the triggering entity as the first iota.<br />Additionally, due to <span style="color: #8d6acc">Quantum Media Entanglement</span> effect between me and whoever triggers a <span style="color: #8d6acc">Reactive Focus</span>, the inner spell has an extra casting ambit of small radius around whom. <i>How convenient :)</i></p>
+<br />
+  <details class="details-collapsible flay-recipe-details">
+    <summary class="collapse-details">
+      <span class="collapse-recipe-show">Click to show recipes</span>
+      <span class="collapse-recipe-hide">Click to hide recipes</span>
+    </summary>
+  <div>
+<h5>Hurt</h5>
+    <div class="flay-recipe">
+        <img
+          class="flay-recipe-background"
+          alt="Flay Mind Recipe GUI"
+          src="https://raw.githubusercontent.com/FallingColors/HexMod/eefaf2d411b6360519c9f56fbfe6b0dfba047425/doc/resources/assets/hexcasting/textures/gui/hexdoc/brainsweep.png"
+        >
+<img
+      title="Evoker"
+      alt="Evoker"
+      src="https://raw.githubusercontent.com/YukkuriC/HexAutomata/51811e076681ad0d276eda2c528e49ab8d7e7d64/doc/resources/assets/minecraft/textures/entities/evoker.png"
+      loading="lazy"
+      class="flay-recipe-entity texture pixelated"
+    >
+        <div class="flay-recipe-block-ingredient">
+          <img
+      title="Akashic Record"
+      alt="Akashic Record"
+      src="https://hexcasting.hexxy.media/v/0.11.3/1.0/assets/hexcasting/textures/block/akashic_record.png"
+      loading="lazy"
+      class="item-texture  texture "
+    >
+        </div>
+        <div class="flay-recipe-cost texture item-texture multi-textures cycle-textures">
+            <div class="texture item-texture multi-texture-active">
+              <img
+      title="Amethyst Dust"
+      alt="Amethyst Dust"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/eefaf2d411b6360519c9f56fbfe6b0dfba047425/Common/src/main/resources/assets/hexcasting/textures/item/amethyst_dust.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    ><div class="badge item-texture-count">100</div>
+            </div>
+            <div class="texture item-texture ">
+              <img
+      title="Amethyst Shard"
+      alt="Amethyst Shard"
+      src="https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/a14c64362abe4a12c2dfd87f8d1673af9d1b09f4/data/1.20.2/items/amethyst_shard.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    ><div class="badge item-texture-count">20</div>
+            </div>
+            <div class="texture item-texture ">
+              <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/eefaf2d411b6360519c9f56fbfe6b0dfba047425/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    ><div class="badge item-texture-count">10</div>
+            </div>
+        </div>
+        <div class="flay-recipe-result">
+          <img
+      title="Hurt"
+      alt="Hurt"
+      src="https://raw.githubusercontent.com/YukkuriC/HexAutomata/51811e076681ad0d276eda2c528e49ab8d7e7d64/common/src/main/resources/assets/hexautomata/textures/item/reactive_focus/inner/red.png"
+      loading="lazy"
+      class="item-texture  texture pixelated"
+    >
+        </div>
+    </div>
+  </div>
+</details>
+  <p>Triggers whenever I get hurt, with the damage causer (could be null) and amount as initial iotas.</p>
+<br />
+  <details class="details-collapsible flay-recipe-details">
+    <summary class="collapse-details">
+      <span class="collapse-recipe-show">Click to show recipes</span>
+      <span class="collapse-recipe-hide">Click to hide recipes</span>
+    </summary>
+  <div>
+<h5>Targeted</h5>
+    <div class="flay-recipe">
+        <img
+          class="flay-recipe-background"
+          alt="Flay Mind Recipe GUI"
+          src="https://raw.githubusercontent.com/FallingColors/HexMod/eefaf2d411b6360519c9f56fbfe6b0dfba047425/doc/resources/assets/hexcasting/textures/gui/hexdoc/brainsweep.png"
+        >
+<img
+      title="Enderman"
+      alt="Enderman"
+      src="https://raw.githubusercontent.com/YukkuriC/HexAutomata/51811e076681ad0d276eda2c528e49ab8d7e7d64/doc/resources/assets/minecraft/textures/entities/enderman.png"
+      loading="lazy"
+      class="flay-recipe-entity texture pixelated"
+    >
+        <div class="flay-recipe-block-ingredient">
+          <img
+      title="Akashic Record"
+      alt="Akashic Record"
+      src="https://hexcasting.hexxy.media/v/0.11.3/1.0/assets/hexcasting/textures/block/akashic_record.png"
+      loading="lazy"
+      class="item-texture  texture "
+    >
+        </div>
+        <div class="flay-recipe-cost texture item-texture multi-textures cycle-textures">
+            <div class="texture item-texture multi-texture-active">
+              <img
+      title="Amethyst Dust"
+      alt="Amethyst Dust"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/eefaf2d411b6360519c9f56fbfe6b0dfba047425/Common/src/main/resources/assets/hexcasting/textures/item/amethyst_dust.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    ><div class="badge item-texture-count">100</div>
+            </div>
+            <div class="texture item-texture ">
+              <img
+      title="Amethyst Shard"
+      alt="Amethyst Shard"
+      src="https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/a14c64362abe4a12c2dfd87f8d1673af9d1b09f4/data/1.20.2/items/amethyst_shard.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    ><div class="badge item-texture-count">20</div>
+            </div>
+            <div class="texture item-texture ">
+              <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/eefaf2d411b6360519c9f56fbfe6b0dfba047425/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    ><div class="badge item-texture-count">10</div>
+            </div>
+        </div>
+        <div class="flay-recipe-result">
+          <img
+      title="Targeted"
+      alt="Targeted"
+      src="https://raw.githubusercontent.com/YukkuriC/HexAutomata/51811e076681ad0d276eda2c528e49ab8d7e7d64/common/src/main/resources/assets/hexautomata/textures/item/reactive_focus/inner/blue.png"
+      loading="lazy"
+      class="item-texture  texture pixelated"
+    >
+        </div>
+    </div>
+  </div>
+</details>
+  <p>Triggers at the moment an enemy targets me, with the enemy as initial iota.</p>
+<br />
+  <details class="details-collapsible flay-recipe-details">
+    <summary class="collapse-details">
+      <span class="collapse-recipe-show">Click to show recipes</span>
+      <span class="collapse-recipe-hide">Click to hide recipes</span>
+    </summary>
+  <div>
+<h5>Projectile Shot</h5>
+    <div class="flay-recipe">
+        <img
+          class="flay-recipe-background"
+          alt="Flay Mind Recipe GUI"
+          src="https://raw.githubusercontent.com/FallingColors/HexMod/eefaf2d411b6360519c9f56fbfe6b0dfba047425/doc/resources/assets/hexcasting/textures/gui/hexdoc/brainsweep.png"
+        >
+<img
+      title="Elder Guardian"
+      alt="Elder Guardian"
+      src="https://raw.githubusercontent.com/YukkuriC/HexAutomata/51811e076681ad0d276eda2c528e49ab8d7e7d64/doc/resources/assets/minecraft/textures/entities/elder_guardian.png"
+      loading="lazy"
+      class="flay-recipe-entity texture pixelated"
+    >
+        <div class="flay-recipe-block-ingredient">
+          <img
+      title="Akashic Record"
+      alt="Akashic Record"
+      src="https://hexcasting.hexxy.media/v/0.11.3/1.0/assets/hexcasting/textures/block/akashic_record.png"
+      loading="lazy"
+      class="item-texture  texture "
+    >
+        </div>
+        <div class="flay-recipe-cost texture item-texture multi-textures cycle-textures">
+            <div class="texture item-texture multi-texture-active">
+              <img
+      title="Amethyst Dust"
+      alt="Amethyst Dust"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/eefaf2d411b6360519c9f56fbfe6b0dfba047425/Common/src/main/resources/assets/hexcasting/textures/item/amethyst_dust.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    ><div class="badge item-texture-count">100</div>
+            </div>
+            <div class="texture item-texture ">
+              <img
+      title="Amethyst Shard"
+      alt="Amethyst Shard"
+      src="https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/a14c64362abe4a12c2dfd87f8d1673af9d1b09f4/data/1.20.2/items/amethyst_shard.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    ><div class="badge item-texture-count">20</div>
+            </div>
+            <div class="texture item-texture ">
+              <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/eefaf2d411b6360519c9f56fbfe6b0dfba047425/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    ><div class="badge item-texture-count">10</div>
+            </div>
+        </div>
+        <div class="flay-recipe-result">
+          <img
+      title="Projectile Shot"
+      alt="Projectile Shot"
+      src="https://raw.githubusercontent.com/YukkuriC/HexAutomata/51811e076681ad0d276eda2c528e49ab8d7e7d64/common/src/main/resources/assets/hexautomata/textures/item/reactive_focus/inner/yellow.png"
+      loading="lazy"
+      class="item-texture  texture pixelated"
+    >
+        </div>
+    </div>
+  </div>
+</details>
+  <p>Triggers when I shoot a projectile (arrow, snowball, etc.), with the projectile as initial iota.</p>
+<br />
+  <details class="details-collapsible flay-recipe-details">
+    <summary class="collapse-details">
+      <span class="collapse-recipe-show">Click to show recipes</span>
+      <span class="collapse-recipe-hide">Click to hide recipes</span>
+    </summary>
+  <div>
+<h5>Projectile Hit</h5>
+    <div class="flay-recipe">
+        <img
+          class="flay-recipe-background"
+          alt="Flay Mind Recipe GUI"
+          src="https://raw.githubusercontent.com/FallingColors/HexMod/eefaf2d411b6360519c9f56fbfe6b0dfba047425/doc/resources/assets/hexcasting/textures/gui/hexdoc/brainsweep.png"
+        >
+<img
+      title="Shulker"
+      alt="Shulker"
+      src="https://raw.githubusercontent.com/YukkuriC/HexAutomata/51811e076681ad0d276eda2c528e49ab8d7e7d64/doc/resources/assets/minecraft/textures/entities/shulker.png"
+      loading="lazy"
+      class="flay-recipe-entity texture pixelated"
+    >
+        <div class="flay-recipe-block-ingredient">
+          <img
+      title="Akashic Record"
+      alt="Akashic Record"
+      src="https://hexcasting.hexxy.media/v/0.11.3/1.0/assets/hexcasting/textures/block/akashic_record.png"
+      loading="lazy"
+      class="item-texture  texture "
+    >
+        </div>
+        <div class="flay-recipe-cost texture item-texture multi-textures cycle-textures">
+            <div class="texture item-texture multi-texture-active">
+              <img
+      title="Amethyst Dust"
+      alt="Amethyst Dust"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/eefaf2d411b6360519c9f56fbfe6b0dfba047425/Common/src/main/resources/assets/hexcasting/textures/item/amethyst_dust.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    ><div class="badge item-texture-count">100</div>
+            </div>
+            <div class="texture item-texture ">
+              <img
+      title="Amethyst Shard"
+      alt="Amethyst Shard"
+      src="https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/a14c64362abe4a12c2dfd87f8d1673af9d1b09f4/data/1.20.2/items/amethyst_shard.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    ><div class="badge item-texture-count">20</div>
+            </div>
+            <div class="texture item-texture ">
+              <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/eefaf2d411b6360519c9f56fbfe6b0dfba047425/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    ><div class="badge item-texture-count">10</div>
+            </div>
+        </div>
+        <div class="flay-recipe-result">
+          <img
+      title="Projectile Hit"
+      alt="Projectile Hit"
+      src="https://raw.githubusercontent.com/YukkuriC/HexAutomata/51811e076681ad0d276eda2c528e49ab8d7e7d64/common/src/main/resources/assets/hexautomata/textures/item/reactive_focus/inner/green.png"
+      loading="lazy"
+      class="item-texture  texture pixelated"
+    >
+        </div>
+    </div>
+  </div>
+</details>
+  <p>Triggers when a projectile I shot hits something; receives 3 initial iotas: the projectile, where it hits, and the target block position or entity it hits.</p>
+<br />
+  <details class="details-collapsible flay-recipe-details">
+    <summary class="collapse-details">
+      <span class="collapse-recipe-show">Click to show recipes</span>
+      <span class="collapse-recipe-hide">Click to hide recipes</span>
+    </summary>
+  <div>
+<h5>Melee Hit</h5>
+    <div class="flay-recipe">
+        <img
+          class="flay-recipe-background"
+          alt="Flay Mind Recipe GUI"
+          src="https://raw.githubusercontent.com/FallingColors/HexMod/eefaf2d411b6360519c9f56fbfe6b0dfba047425/doc/resources/assets/hexcasting/textures/gui/hexdoc/brainsweep.png"
+        >
+<img
+      title="Vindicator"
+      alt="Vindicator"
+      src="https://raw.githubusercontent.com/YukkuriC/HexAutomata/51811e076681ad0d276eda2c528e49ab8d7e7d64/doc/resources/assets/minecraft/textures/entities/vindicator.png"
+      loading="lazy"
+      class="flay-recipe-entity texture pixelated"
+    >
+        <div class="flay-recipe-block-ingredient">
+          <img
+      title="Akashic Record"
+      alt="Akashic Record"
+      src="https://hexcasting.hexxy.media/v/0.11.3/1.0/assets/hexcasting/textures/block/akashic_record.png"
+      loading="lazy"
+      class="item-texture  texture "
+    >
+        </div>
+        <div class="flay-recipe-cost texture item-texture multi-textures cycle-textures">
+            <div class="texture item-texture multi-texture-active">
+              <img
+      title="Amethyst Dust"
+      alt="Amethyst Dust"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/eefaf2d411b6360519c9f56fbfe6b0dfba047425/Common/src/main/resources/assets/hexcasting/textures/item/amethyst_dust.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    ><div class="badge item-texture-count">100</div>
+            </div>
+            <div class="texture item-texture ">
+              <img
+      title="Amethyst Shard"
+      alt="Amethyst Shard"
+      src="https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/a14c64362abe4a12c2dfd87f8d1673af9d1b09f4/data/1.20.2/items/amethyst_shard.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    ><div class="badge item-texture-count">20</div>
+            </div>
+            <div class="texture item-texture ">
+              <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/eefaf2d411b6360519c9f56fbfe6b0dfba047425/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    ><div class="badge item-texture-count">10</div>
+            </div>
+        </div>
+        <div class="flay-recipe-result">
+          <img
+      title="Melee Hit"
+      alt="Melee Hit"
+      src="https://raw.githubusercontent.com/YukkuriC/HexAutomata/51811e076681ad0d276eda2c528e49ab8d7e7d64/common/src/main/resources/assets/hexautomata/textures/item/reactive_focus/inner/orange.png"
+      loading="lazy"
+      class="item-texture  texture pixelated"
+    >
+        </div>
+    </div>
+  </div>
+</details>
+  <p>Triggers when I hit a target by hand or using melee weapon; receives the target entity and damage value as initial iotas.</p>
+<br />
+  <details class="details-collapsible flay-recipe-details">
+    <summary class="collapse-details">
+      <span class="collapse-recipe-show">Click to show recipes</span>
+      <span class="collapse-recipe-hide">Click to hide recipes</span>
+    </summary>
+  <div>
+<h5>Killing</h5>
+    <div class="flay-recipe">
+        <img
+          class="flay-recipe-background"
+          alt="Flay Mind Recipe GUI"
+          src="https://raw.githubusercontent.com/FallingColors/HexMod/eefaf2d411b6360519c9f56fbfe6b0dfba047425/doc/resources/assets/hexcasting/textures/gui/hexdoc/brainsweep.png"
+        >
+<img
+      title="Zombie Villager"
+      alt="Zombie Villager"
+      src="https://raw.githubusercontent.com/YukkuriC/HexAutomata/51811e076681ad0d276eda2c528e49ab8d7e7d64/doc/resources/assets/minecraft/textures/entities/zombie_villager.png"
+      loading="lazy"
+      class="flay-recipe-entity texture pixelated"
+    >
+        <div class="flay-recipe-block-ingredient">
+          <img
+      title="Akashic Record"
+      alt="Akashic Record"
+      src="https://hexcasting.hexxy.media/v/0.11.3/1.0/assets/hexcasting/textures/block/akashic_record.png"
+      loading="lazy"
+      class="item-texture  texture "
+    >
+        </div>
+        <div class="flay-recipe-cost texture item-texture multi-textures cycle-textures">
+            <div class="texture item-texture multi-texture-active">
+              <img
+      title="Amethyst Dust"
+      alt="Amethyst Dust"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/eefaf2d411b6360519c9f56fbfe6b0dfba047425/Common/src/main/resources/assets/hexcasting/textures/item/amethyst_dust.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    ><div class="badge item-texture-count">100</div>
+            </div>
+            <div class="texture item-texture ">
+              <img
+      title="Amethyst Shard"
+      alt="Amethyst Shard"
+      src="https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/a14c64362abe4a12c2dfd87f8d1673af9d1b09f4/data/1.20.2/items/amethyst_shard.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    ><div class="badge item-texture-count">20</div>
+            </div>
+            <div class="texture item-texture ">
+              <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/eefaf2d411b6360519c9f56fbfe6b0dfba047425/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    ><div class="badge item-texture-count">10</div>
+            </div>
+        </div>
+        <div class="flay-recipe-result">
+          <img
+      title="Killing"
+      alt="Killing"
+      src="https://raw.githubusercontent.com/YukkuriC/HexAutomata/51811e076681ad0d276eda2c528e49ab8d7e7d64/common/src/main/resources/assets/hexautomata/textures/item/reactive_focus/inner/purple.png"
+      loading="lazy"
+      class="item-texture  texture pixelated"
+    >
+        </div>
+    </div>
+  </div>
+</details>
+  <p>Triggers when I kill something; receives the dying target as initial iota.</p>
+<br />
+    </div>
+</div>
+<div id="reactive_focus_patterns" class="entry">
+    <div class="spoilered">
+      <h3 class="entry-title page-header">
+    <img
+      title="Large Scroll"
+      alt="Large Scroll"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/eefaf2d411b6360519c9f56fbfe6b0dfba047425/Common/src/main/resources/assets/hexcasting/textures/item/scroll_pristine_large.png"
+      loading="lazy"
+      class="item-texture  texture pixelated"
+    >Spells Inside Reactive Focus<a
+    href="#table-of-contents"
+    class="permalink small"
+    title="Jump to top"
+  ><i class="bi bi-box-arrow-up"></i></a><a
+    href="#reactive_focus_patterns"
+    class="permalink small"
+    title="Permalink"
+  ><i class="bi bi-link-45deg"></i></a></h3>
+    <p>Using <span style="color: #8d6acc">Quantum Media Entanglement</span> effect between me and the triggerer, there are several tricks I can play with exclusively inside an event of <span style="color: #8d6acc">Reactive Focus</span>.<br />However, I have the feeling that, if I cast these spells outside the <i><span style="color: #8d6acc">Focus</span></i>, something <strong>REALLY BAD</strong> might happen.</p>
+<br />
+  <div id="reactive_focus_patterns@hexautomata:quantum_swap" class="">
+<h4 class="pattern-title">Quantum Swap<a
+    href="#reactive_focus_patterns@hexautomata:quantum_swap"
+    class="permalink small"
+    title="Permalink"
+  ><i class="bi bi-link-45deg"></i></a></h4>
+  <details class="details-collapsible">
+    <summary class="collapse-details collapse-spell"></summary>
+    <div class="dropdown spell-settings-dropdown">
+      <span
+        href=""
+        class="dropdown-toggle spell-settings-toggle"
+        data-toggle="dropdown"
+        role="button"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        <i class="bi bi-gear-fill"></i>
+      </span>
+      <ul class="dropdown-menu">
+        <li class="dropdown-submenu">
+          <a
+            href=""
+            class="dropdown-toggle"
+            data-toggle="dropdown"
+            role="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >Renders</a>
+          <ul class="dropdown-menu dropdown-menu-left render-dropdowns"></ul>
+        </li>
+        <li class="dropdown-submenu">
+          <a
+            href=""
+            class="dropdown-toggle"
+            data-toggle="dropdown"
+            role="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >Palettes</a>
+          <ul class="dropdown-menu dropdown-menu-left palette-dropdowns"></ul>
+        </li>
+      </ul>
+    </div>
+      <canvas
+        class="spell-viz"
+        width="216"
+        height="216"
+        data-string="aqaedwaqded"
+        data-start="north_west"
+        data-per-world="False"
+      >Your browser does not support visualizing patterns. Pattern code: aqaedwaqded</canvas>
+  </details>
+      <p>Swaps me and the triggering entity spatially, at cost of half of a dust. Takes no effect if there&#39;s no such entity (for example, hurt event triggered by environmental damage).</p>
+  </div>
+<br />
+    </div>
+</div>
+</section>
+  </main>
+</div>
+      <footer class="footer">
+        <div class="container text-muted">
+          <p>Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.</p><p>Minecraft content and materials are the intellectual property of their respective owners.</p><p>Made with ❤️ using <a href="https://pypi.org/project/hexdoc/" target="_blank">hexdoc</a>.</p>
+        </div>
+      </footer>
+  </body>
+</html>
