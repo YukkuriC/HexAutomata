@@ -22,6 +22,6 @@
   "hexautomata.book.reactive_focus.projectile_hit": "Triggers when a projectile I shot hits something; receives 3 initial iotas: the projectile, where it hits, and the target block position or entity it hits.",
   "hexautomata.book.reactive_focus.melee_hit": "Triggers when I hit a target by hand or using melee weapon; receives the target entity and damage value as initial iotas.",
   "hexautomata.book.reactive_focus.kill": "Triggers when I kill something; receives the dying target as initial iota.",
-  "hexautomata.book.reactive_focus.teleport": "Triggers after I'm teleported; receives the previous position as initial iota.$(br)In addition, I'll have a small range of casting ambit around my old position during this cast.",
+  "hexautomata.book.reactive_focus.teleport": "Triggers when I'm about to be teleported; receives the previous and target position as two initial iotas.$(br)In addition, I'll have small ranges of casting ambit around both positions during this cast.",
   "foo": "tired of line end commas."
 }

@@ -7,4 +7,5 @@ sealed class BuiltinEventMarker : EventMarker() {
     object PROJECTILE_HIT : BuiltinEventMarker()
     object MELEE_HIT : BuiltinEventMarker()
     object KILL : BuiltinEventMarker()
+    object TELEPORT : BuiltinEventMarker()
 }

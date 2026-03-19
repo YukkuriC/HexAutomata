@@ -13,6 +13,10 @@ interface IHAEvent {
     fun extra(): Iota? = null
     fun initStack() = listOfNotNull(entity?.let { EntityIota(it) } ?: NullIota(), extra())
     fun extraAmbitCenter(): Vec3? = null
+    fun extraAmbitCenters() = listOfNotNull(
+        entity?.position(),
+        extraAmbitCenter()
+    )
 
     // common event structures
     open class Simple(override val entity: Entity?) : IHAEvent
@@ -42,6 +46,14 @@ interface IHAEvent {
             EntityIota(entity),
             Vec3Iota(extraAmbitCenter()),
             extra(),
+        )
+    }
+
+    open class CommonTeleport(val oldPos: Vec3, val newPos: Vec3) : IHAEvent {
+        override val entity = null
+        override fun initStack() = extraAmbitCenters().map(::Vec3Iota)
+        override fun extraAmbitCenters() = listOf(
+            oldPos, newPos
         )
     }
 }
