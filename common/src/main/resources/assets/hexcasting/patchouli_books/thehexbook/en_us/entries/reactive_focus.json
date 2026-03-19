@@ -36,6 +36,11 @@
       "type": "hexcasting:brainsweep",
       "recipe": "hexautomata:brainsweep/reactive_focus/kill",
       "text": "hexautomata.book.reactive_focus.kill"
+    },
+    {
+      "type": "hexcasting:brainsweep",
+      "recipe": "hexautomata:brainsweep/reactive_focus/teleport",
+      "text": "hexautomata.book.reactive_focus.teleport"
     }
   ]
 }

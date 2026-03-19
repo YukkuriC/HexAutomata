@@ -16,3 +16,6 @@
 - id: kill
   color: purple
   entity: zombie_villager
+- id: teleport
+  color: cyan
+  entity: endermite

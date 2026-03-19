@@ -1,4 +1,7 @@
 import os, json, yaml
+from functools import partial
+
+open = partial(open, encoding='utf-8')
 
 
 if 'paths':
@@ -42,7 +45,7 @@ if 'helpers':
 
     def dump_json(path, obj):
         os.makedirs(os.path.dirname(path), exist_ok=1)
-        with open(path, 'w', encoding='utf-8') as f:
+        with open(path, 'w') as f:
             json.dump(obj, f, indent=2)
 
     def dump_brainsweep(
@@ -58,7 +61,6 @@ if 'helpers':
         dump_json(f'{DIR_RECIPES}/{id}.json', obj)
 
     def dump_models(id, color):
-        dir_base = f'{DIR_MODELS}/{id}.json'
         builder = ModelBuilder(f'{ID_PRE}/idle/{id}').overrides(
             [
                 {
@@ -82,6 +84,21 @@ if 'helpers':
             dump_json(f'{ROOT_FABRIC}/data/trinkets/tags/items/all.json', obj)
             dump_json(f'{ROOT_FORGE}/data/curios/tags/items/curio.json', obj)
 
+    def extend_patchouli(path, data):
+        with open(path) as f:
+            raw = json.load(f)
+        raw["pages"] = [e for e in raw["pages"] if isinstance(e, str)]
+        for event in data:
+            raw["pages"].append(
+                {
+                    "type": "hexcasting:brainsweep",
+                    "recipe": "hexautomata:brainsweep/reactive_focus/" + event['id'],
+                    "text": "hexautomata.book.reactive_focus." + event['id'],
+                }
+            )
+        with open(path, 'w') as f:
+            json.dump(raw, f, indent=2)
+
 
 with open('data.yaml') as f:
     data = yaml.load(f, yaml.Loader)
@@ -91,3 +108,7 @@ for event in data:
     dump_models(event['id'], event['color'])
 
 dump_tags(data)
+extend_patchouli(
+    f'{ROOT_ASSETS}/../hexcasting/patchouli_books/thehexbook/en_us/entries/reactive_focus.json',
+    data,
+)

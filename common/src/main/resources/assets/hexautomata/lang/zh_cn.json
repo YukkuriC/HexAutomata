@@ -8,6 +8,7 @@
   "block.hexautomata.reactive_focus.projectile_hit": "弹射物命中",
   "block.hexautomata.reactive_focus.melee_hit": "近战命中",
   "block.hexautomata.reactive_focus.kill": "击杀",
+  "block.hexautomata.reactive_focus.teleport": "传送",
   "hexcasting.action.book.hexautomata:quantum_swap": "量子互换",
   "book.descrip.hexautomata:quantum_swap": "将我和触发实体在空间上互换，消耗半粉。当该实体不存在（如环境伤害触发的受伤事件）时无效果。",
   "mishap.hexautomata.out_event": "你在量子海洋中迷失了。",
@@ -21,5 +22,6 @@
   "hexautomata.book.reactive_focus.projectile_hit": "在我发射的弹射物击中时触发，初始iota有3个，按顺序分别为该弹射物，其击中坐标，与它击中的方块坐标或实体。",
   "hexautomata.book.reactive_focus.melee_hit": "在我用空手或近战武器攻击目标时触发，初始iota为目标实体与伤害数值。",
   "hexautomata.book.reactive_focus.kill": "在我击杀某物时触发，初始iota为正在死去的目标。",
+  "hexautomata.book.reactive_focus.teleport": "在我被传送时触发；接收我原先的坐标作为初始iota。$(br)另外，在当次施法期间我会额外拥有原先坐标周围一小片区域的施法范围。",
   "foo": "拒绝json行尾逗号"
 }

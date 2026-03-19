@@ -1,0 +1,6 @@
+{
+  "parent": "hexautomata:item/reactive_focus/_active",
+  "textures": {
+    "layer0": "hexautomata:item/reactive_focus/inner/cyan"
+  }
+}
