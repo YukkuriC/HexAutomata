@@ -1,0 +1,11 @@
+{
+  "parent": "hexautomata:item/reactive_focus/idle/teleport",
+  "overrides": [
+    {
+      "model": "hexautomata:item/reactive_focus/active/teleport",
+      "predicate": {
+        "hexautomata:data": 1.0
+      }
+    }
+  ]
+}

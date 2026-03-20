@@ -6,6 +6,7 @@
     "hexautomata:reactive_focus/shoot",
     "hexautomata:reactive_focus/projectile_hit",
     "hexautomata:reactive_focus/melee_hit",
-    "hexautomata:reactive_focus/kill"
+    "hexautomata:reactive_focus/kill",
+    "hexautomata:reactive_focus/teleport"
   ]
 }

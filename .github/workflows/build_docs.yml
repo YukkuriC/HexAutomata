@@ -10,14 +10,15 @@ on:
       release:
         description: Release this version
         type: boolean
-        default: false
-      package-index:
-        description: Package index to publish to
-        type: choice
-        options:
-          - none
-          - PyPI
-          # - TestPyPI
+        default: true
+      # package-index:
+      #   description: Package index to publish to
+      #   type: choice
+      #   default: PyPI
+      #   options:
+      #     - none
+      #     - PyPI
+      #     # - TestPyPI
 
 permissions:
   contents: read
@@ -102,7 +103,7 @@ jobs:
     needs:
       - build-hexdoc
       - deploy-pages
-    if: inputs.release == true && inputs.package-index == 'PyPI'
+    if: inputs.release == true # && inputs.package-index == 'PyPI'
     environment:
       name: pypi
       url: https://pypi.org/p/${{ env.PYPI_PACKAGE }}

@@ -21,9 +21,8 @@ class EntityEventEnv(
     override fun isVecInRangeEnvironment(vec: Vec3): Boolean {
         val ret = super.isVecInRangeEnvironment(vec)
         if (ret) return true
-        val extraAmbit = event.extraAmbitCenter()
-        if (extraAmbit != null && extraAmbit.distanceTo(vec) <= 1) return true
-        val entityPos = event.entity?.position() ?: return false
-        return entityPos.distanceTo(vec) <= 1
+        for (extraCenter in event.extraAmbitCenters())
+            if (extraCenter.distanceTo(vec) <= 1) return true
+        return false
     }
 }

@@ -24,7 +24,7 @@ object HexAutomata {
         tryLoadInterop("hexoverpowered", HexOPInterop::run)
     }
 
-    private fun tryLoadInterop(modId: String, loadFunc: () -> Any) {
+    fun tryLoadInterop(modId: String, loadFunc: () -> Any) {
         if (!API.modLoaded(modId)) return
         try {
             loadFunc()

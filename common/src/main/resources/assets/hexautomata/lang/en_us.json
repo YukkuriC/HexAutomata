@@ -8,6 +8,7 @@
   "block.hexautomata.reactive_focus.projectile_hit": "Projectile Hit",
   "block.hexautomata.reactive_focus.melee_hit": "Melee Hit",
   "block.hexautomata.reactive_focus.kill": "Killing",
+  "block.hexautomata.reactive_focus.teleport": "Teleported",
   "hexcasting.action.book.hexautomata:quantum_swap": "Quantum Swap",
   "book.descrip.hexautomata:quantum_swap": "Swaps me and the triggering entity spatially, at cost of half of a dust. Takes no effect if there's no such entity (for example, hurt event triggered by environmental damage).",
   "mishap.hexautomata.out_event": "You've lost in the Quantum Sea.",
@@ -21,5 +22,6 @@
   "hexautomata.book.reactive_focus.projectile_hit": "Triggers when a projectile I shot hits something; receives 3 initial iotas: the projectile, where it hits, and the target block position or entity it hits.",
   "hexautomata.book.reactive_focus.melee_hit": "Triggers when I hit a target by hand or using melee weapon; receives the target entity and damage value as initial iotas.",
   "hexautomata.book.reactive_focus.kill": "Triggers when I kill something; receives the dying target as initial iota.",
+  "hexautomata.book.reactive_focus.teleport": "Triggers when I'm about to be teleported; receives the previous and target position as two initial iotas.$(br)In addition, I'll have small ranges of casting ambit around both positions during this cast.",
   "foo": "tired of line end commas."
 }

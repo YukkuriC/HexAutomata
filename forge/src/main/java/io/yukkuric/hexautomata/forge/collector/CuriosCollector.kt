@@ -1,4 +1,4 @@
-package io.yukkuric.hexautomata.fabric.collector
+package io.yukkuric.hexautomata.forge.collector
 
 import io.yukkuric.hexautomata.HAConfig
 import io.yukkuric.hexautomata.items.collector.FocusCollector
