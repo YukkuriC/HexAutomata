@@ -7,10 +7,10 @@ on:
   pull_request:
   workflow_dispatch:
     inputs:
-      release:
-        description: Release this version
-        type: boolean
-        default: true
+      # release:
+      #   description: Release this version
+      #   type: boolean
+      #   default: true
       # package-index:
       #   description: Package index to publish to
       #   type: choice
@@ -37,7 +37,8 @@ jobs:
       pages: read
     outputs:
       pages-url: ${{ steps.build.outputs.pages-url }}
-      deploy: ${{ github.event_name != 'pull_request' && contains(fromJson(env.HEXDOC_BRANCHES), github.ref_name) || inputs.release == true }}
+      # deploy: ${{ github.event_name != 'pull_request' && contains(fromJson(env.HEXDOC_BRANCHES), github.ref_name) || inputs.release == true }}
+      deploy: true
     steps:
       - uses: actions/checkout@v4
 
@@ -58,7 +59,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          release: ${{ inputs.release == true }}
+          release: true # ${{ inputs.release == true }}
 
   deploy-pages:
     needs: build-hexdoc
@@ -87,7 +88,7 @@ jobs:
       - name: Merge new hexdoc build into existing book
         uses: hexdoc-dev/actions/merge@v1
         with:
-          release: ${{ inputs.release == true }}
+          release: true # ${{ inputs.release == true }}
           site-url: ${{ needs.build-hexdoc.outputs.pages-url }}
 
       # if you want to add extra things to your website (eg. Javadoc/Dokka), add it to _site/dst/docs here
@@ -95,7 +96,7 @@ jobs:
       - name: Deploy to Pages
         uses: hexdoc-dev/actions/deploy-pages@v1
         with:
-          release: ${{ inputs.release == true }}
+          release: true # ${{ inputs.release == true }}
           merge: false
 
   publish-pypi:
