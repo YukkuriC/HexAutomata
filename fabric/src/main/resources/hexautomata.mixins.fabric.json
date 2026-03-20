@@ -6,8 +6,7 @@
   "client": [
   ],
   "mixins": [
-    "MixinProjectile",
-    "MixinServerLevel"
+    "MixinProjectile"
   ],
   "injectors": {
     "defaultRequire": 1
