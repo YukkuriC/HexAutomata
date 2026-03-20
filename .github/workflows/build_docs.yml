@@ -103,7 +103,7 @@ jobs:
     needs:
       - build-hexdoc
       - deploy-pages
-    if: inputs.release == true # && inputs.package-index == 'PyPI'
+    # if: inputs.release == true # && inputs.package-index == 'PyPI'
     environment:
       name: pypi
       url: https://pypi.org/p/${{ env.PYPI_PACKAGE }}
