@@ -10,10 +10,11 @@ on:
       release:
         description: Release this version
         type: boolean
-        default: false
+        default: true
       package-index:
         description: Package index to publish to
         type: choice
+        default: PyPI
         options:
           - none
           - PyPI
