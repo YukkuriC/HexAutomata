@@ -15,9 +15,10 @@ abstract class FocusCollector {
         }
 
         @JvmStatic
-        fun filterSeq(raw: Sequence<ItemStack>, type: EventMarker) = raw.filter { stack ->
-            val focus = stack.item as? ItemReactiveFocus ?: return@filter false
-            return@filter focus.isListening(stack, type)
+        fun filterSeq(raw: Sequence<ItemStack>, type: EventMarker) = sequence {
+            for (stack in raw) when (val item = stack.item) {
+                is ItemReactiveFocus -> if (item.isListening(stack, type)) yield(stack)
+            }
         }
         @JvmStatic
         fun getAllFocus(player: ServerPlayer, type: EventMarker): Sequence<ItemStack> {
