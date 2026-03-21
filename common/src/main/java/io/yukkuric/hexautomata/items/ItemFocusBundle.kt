@@ -44,6 +44,13 @@ class ItemFocusBundle : BundleItem(HAItems.Props.STACK_ONE_EPIC) {
 
         private fun ItemStack.getFocusCount() = this.listTag().size
         private fun ItemStack.isFull() = this.getFocusCount() >= MAX_FOCUS_COUNT
+
+        private val _dummyItemMap = HashMap<String, ItemStack>()
+        private fun cachedStack(src: CompoundTag): ItemStack {
+            val dummyStack = _dummyItemMap.computeIfAbsent(src.getString("id")) { ItemStack.of(src) }
+            dummyStack.tag = src.getCompound("tag")
+            return dummyStack
+        }
     }
 
     override fun overrideStackedOnOther(
@@ -79,7 +86,7 @@ class ItemFocusBundle : BundleItem(HAItems.Props.STACK_ONE_EPIC) {
     }
 
     fun getContentsSequence(stack: ItemStack) =
-        Sequence(stack.listTag()::iterator).map { tag -> ItemStack.of(tag as CompoundTag) }
+        Sequence(stack.listTag()::iterator).map { tag -> cachedStack(tag as CompoundTag) }
 
     override fun isBarVisible(stack: ItemStack) = stack.getFocusCount() > 0
     override fun getBarWidth(stack: ItemStack) = min((1 + 12 * stack.getFocusCount() / MAX_FOCUS_COUNT), 13)
