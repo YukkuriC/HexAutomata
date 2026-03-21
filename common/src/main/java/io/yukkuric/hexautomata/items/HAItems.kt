@@ -1,5 +1,6 @@
 package io.yukkuric.hexautomata.items
 
+import at.petrak.hexcasting.common.items.magic.ItemCreativeUnlocker
 import io.yukkuric.hexautomata.HexAutomata
 import io.yukkuric.hexautomata.HexAutomata.modLoc
 import io.yukkuric.hexautomata.blocks.BrainsweepIntermediate
@@ -28,7 +29,7 @@ object HAItems {
     private fun <T : Item> create(
         name: String,
         item: T,
-        tab: CreativeModeTab = Tabs.MAIN,
+        tab: CreativeModeTab? = Tabs.MAIN,
         createIntermediate: Boolean = false
     ): T {
         val id = modLoc(name)
@@ -57,6 +58,7 @@ object HAItems {
     operator fun get(type: EventMarker) = FOCUSES_BY_TYPE[type]
 
     // other items
+    val LOGO = create("logo", ItemCreativeUnlocker(Props.STACK_ONE), null)
     val FOCUS_BUNDLE = create("focus_bundle", ItemFocusBundle())
 
     object Tabs {

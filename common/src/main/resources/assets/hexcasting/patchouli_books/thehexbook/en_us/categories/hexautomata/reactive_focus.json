@@ -1,6 +1,6 @@
 {
   "name": "itemGroup.hexautomata.main",
-  "icon": "hexautomata:reactive_focus/targeted",
+  "icon": "hexautomata:logo",
   "description": "hexautomata.category.reactive_focus.desc",
   "parent": "hexcasting:greatwork",
   "sortnum": 0
