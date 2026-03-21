@@ -1,6 +1,6 @@
 {
   "name": "hexautomata.book.reactive_focus.patterns.title",
-  "category": "hexcasting:greatwork",
+  "category": "hexcasting:hexautomata/reactive_focus",
   "icon": "hexcasting:scroll",
   "advancement": "hexcasting:enlightenment",
   "entry_color": "54398a",

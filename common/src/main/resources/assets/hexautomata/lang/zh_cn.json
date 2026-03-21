@@ -1,5 +1,6 @@
 {
   "itemGroup.hexautomata.main": "咒法自动机",
+  // item info
   "item.hexautomata.reactive_focus": "反应核心",
   "item.hexautomata.reactive_focus.template": "反应核心：%s",
   "block.hexautomata.reactive_focus.hurt": "受伤",
@@ -9,9 +10,12 @@
   "block.hexautomata.reactive_focus.melee_hit": "近战命中",
   "block.hexautomata.reactive_focus.kill": "击杀",
   "block.hexautomata.reactive_focus.teleport": "传送",
-  "hexcasting.action.book.hexautomata:quantum_swap": "量子互换",
+  // action
+  "hexcasting.action.hexautomata:quantum_swap": "量子互换",
   "book.descrip.hexautomata:quantum_swap": "将我和触发实体在空间上互换，消耗半粉。当该实体不存在（如环境伤害触发的受伤事件）时无效果。",
   "mishap.hexautomata.out_event": "你在量子海洋中迷失了。",
+  // patchouli
+  "hexautomata.category.reactive_focus.desc": "我已冂$(k)meow meow meow/$……我已见！",
   "hexautomata.book.reactive_focus.intro": "我找到一个方法 - 通过一个固定的村民意识的智能，佐以源自野生生物的$(thing)\"概念\"/$ - 创造一类特别的施法物品：$(thing)反应核心/$。$(br)这些法术容器在读写时与普通核心无异，但它们容纳的法术会在特定情形下触发，并从我身上直接抽取媒质以施法。",
   "hexautomata.book.reactive_focus.2": "每类$(thing)反应核心/$在触发时也会发送 iota 至法术的初始栈，其中通常以触发者实体作为栈内首个元素。$(br)另外，基于我和触发$(thing)反应核心/$者之间的$(thing)量子媒质纠缠/$效应，内部法术在触发者周围会有一小块额外的施法范围。$(o)太便利了 :)/$",
   "hexautomata.book.reactive_focus.patterns.title": "反应核心内的法术",
@@ -23,5 +27,6 @@
   "hexautomata.book.reactive_focus.melee_hit": "在我用空手或近战武器攻击目标时触发，初始iota为目标实体与伤害数值。",
   "hexautomata.book.reactive_focus.kill": "在我击杀某物时触发，初始iota为正在死去的目标。",
   "hexautomata.book.reactive_focus.teleport": "在我将被传送时触发；接收我原先与目标坐标作为两个初始iota。$(br)另外，在当次施法期间我会额外拥有前后两坐标周围小片区域的施法范围。",
+  // EOL
   "foo": "拒绝json行尾逗号"
 }
