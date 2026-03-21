@@ -2,6 +2,7 @@ package io.yukkuric.hexautomata.items.collector
 
 import io.yukkuric.hexautomata.HAConfig
 import io.yukkuric.hexautomata.events.EventMarker
+import io.yukkuric.hexautomata.items.ItemFocusBundle
 import io.yukkuric.hexautomata.items.ItemReactiveFocus
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.item.ItemStack
@@ -15,9 +16,10 @@ abstract class FocusCollector {
         }
 
         @JvmStatic
-        fun filterSeq(raw: Sequence<ItemStack>, type: EventMarker) = sequence {
+        fun filterSeq(raw: Sequence<ItemStack>, type: EventMarker): Sequence<ItemStack> = sequence {
             for (stack in raw) when (val item = stack.item) {
                 is ItemReactiveFocus -> if (item.isListening(stack, type)) yield(stack)
+                is ItemFocusBundle -> yieldAll(filterSeq(item.getContentsSequence(stack), type))
             }
         }
         @JvmStatic

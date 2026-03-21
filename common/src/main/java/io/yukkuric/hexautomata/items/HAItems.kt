@@ -10,7 +10,9 @@ import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.Item.Properties
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Rarity
 
 
 object HAItems {
@@ -54,6 +56,9 @@ object HAItems {
 
     operator fun get(type: EventMarker) = FOCUSES_BY_TYPE[type]
 
+    // other items
+    val FOCUS_BUNDLE = create("focus_bundle", ItemFocusBundle())
+
     object Tabs {
         private val TABS: LinkedHashMap<ResourceLocation, CreativeModeTab> = LinkedHashMap()
         fun registerCreativeTabs(r: (ResourceLocation, CreativeModeTab) -> Any?) = TABS.register(r)
@@ -67,5 +72,10 @@ object HAItems {
             TABS[modLoc(name)] = tab
             return tab
         }
+    }
+
+    object Props {
+        val STACK_ONE = Properties().rarity(Rarity.RARE).stacksTo(1)
+        val STACK_ONE_EPIC = Properties().rarity(Rarity.EPIC).stacksTo(1)
     }
 }

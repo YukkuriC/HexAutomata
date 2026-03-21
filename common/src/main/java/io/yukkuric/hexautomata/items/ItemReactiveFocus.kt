@@ -13,10 +13,9 @@ import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.Rarity
 
 class ItemReactiveFocus(val type: EventMarker, props: Properties) : ItemFocus(props) {
-    constructor(type: EventMarker) : this(type, Properties().rarity(Rarity.RARE).stacksTo(1))
+    constructor(type: EventMarker) : this(type, HAItems.Props.STACK_ONE)
 
     open fun isListening(stack: ItemStack, marker: EventMarker) = type == marker
 
