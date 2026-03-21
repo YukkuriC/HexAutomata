@@ -20,6 +20,9 @@ if 'paths':
     # resloc
     ID_PRE = 'hexautomata:item/reactive_focus'
 
+if 'data':
+    EXTRA_ACC_TAG = ['hexautomata:focus_bundle']
+
 if 'helpers':
 
     class ModelBuilder:
@@ -78,7 +81,7 @@ if 'helpers':
             dump_json(f'{DIR_MODELS}/{mode}/{id}.json', builder.data)
 
     def dump_tags(data):
-        ids = ['hexautomata:reactive_focus/' + e['id'] for e in data]
+        ids = EXTRA_ACC_TAG + ['hexautomata:reactive_focus/' + e['id'] for e in data]
         if 'curios/trinkets':
             obj = {"replace": False, "values": ids}
             dump_json(f'{ROOT_FABRIC}/data/trinkets/tags/items/all.json', obj)

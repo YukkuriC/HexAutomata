@@ -1,9 +1,13 @@
 package io.yukkuric.hexautomata.items
 
 import at.petrak.hexcasting.api.utils.putList
+import io.yukkuric.hexautomata.HexAutomata
+import net.minecraft.client.multiplayer.ClientLevel
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.ListTag
 import net.minecraft.nbt.Tag
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.SlotAccess
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.ClickAction
@@ -50,6 +54,18 @@ class ItemFocusBundle : BundleItem(HAItems.Props.STACK_ONE_EPIC) {
             val dummyStack = _dummyItemMap.computeIfAbsent(src.getString("id")) { ItemStack.of(src) }
             dummyStack.tag = src.getCompound("tag")
             return dummyStack
+        }
+
+        val CONTENTS_PRED: ResourceLocation = HexAutomata.modLoc("contents")
+
+        object Client {
+            @JvmStatic
+            fun contentsPredicate(stack: ItemStack, level: ClientLevel?, entity: LivingEntity?, i: Int): Float {
+                val cnt = stack.getFocusCount()
+                if (cnt <= 0) return 0f
+                if (cnt <= MAX_FOCUS_COUNT / 2) return 1f
+                return 2f
+            }
         }
     }
 

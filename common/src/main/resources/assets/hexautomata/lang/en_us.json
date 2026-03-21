@@ -10,6 +10,8 @@
   "block.hexautomata.reactive_focus.melee_hit": "Melee Hit",
   "block.hexautomata.reactive_focus.kill": "Killing",
   "block.hexautomata.reactive_focus.teleport": "Teleported",
+  "item.hexautomata.focus_bundle": "Reactive Focus Nexus",
+  "block.hexautomata.focus_bundle": "Reactive Focus Nexus",
   // action
   "hexcasting.action.hexautomata:quantum_swap": "Quantum Swap",
   "book.descrip.hexautomata:quantum_swap": "Swaps me and the triggering entity spatially, at cost of half of a dust. Takes no effect if there's no such entity (for example, hurt event triggered by environmental damage).",

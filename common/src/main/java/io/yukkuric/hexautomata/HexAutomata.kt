@@ -5,6 +5,7 @@ import com.mojang.logging.LogUtils
 import io.yukkuric.hexautomata.interop.HexOPInterop
 import io.yukkuric.hexautomata.interop.HexParseInterop
 import io.yukkuric.hexautomata.items.HAItems
+import io.yukkuric.hexautomata.items.ItemFocusBundle
 import io.yukkuric.hexautomata.items.ItemReactiveFocus
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Player
@@ -57,5 +58,10 @@ object HexAutomataClient {
                 ) 1F else 0F
             }
         }
+        IClientXplatAbstractions.INSTANCE.registerItemProperty(
+            HAItems.FOCUS_BUNDLE,
+            ItemFocusBundle.CONTENTS_PRED,
+            ItemFocusBundle.Companion.Client::contentsPredicate
+        )
     }
 }

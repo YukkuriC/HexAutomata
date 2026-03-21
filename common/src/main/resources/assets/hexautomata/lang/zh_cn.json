@@ -10,6 +10,8 @@
   "block.hexautomata.reactive_focus.melee_hit": "近战命中",
   "block.hexautomata.reactive_focus.kill": "击杀",
   "block.hexautomata.reactive_focus.teleport": "传送",
+  "item.hexautomata.focus_bundle": "反应核心枢纽",
+  "block.hexautomata.focus_bundle": "反应核心枢纽",
   // action
   "hexcasting.action.hexautomata:quantum_swap": "量子互换",
   "book.descrip.hexautomata:quantum_swap": "将我和触发实体在空间上互换，消耗半粉。当该实体不存在（如环境伤害触发的受伤事件）时无效果。",

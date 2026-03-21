@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+    "hexautomata:focus_bundle",
     "hexautomata:reactive_focus/hurt",
     "hexautomata:reactive_focus/targeted",
     "hexautomata:reactive_focus/shoot",
