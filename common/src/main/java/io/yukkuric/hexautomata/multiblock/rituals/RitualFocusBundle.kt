@@ -91,6 +91,7 @@ object RitualFocusBundle : RitualCollector() {
     override val postEffect = { level: ServerLevel, pos: BlockPos, ritual: IMultiblock, rotation: Rotation ->
         for (record in ritual.simulate(level, pos, rotation, false).second) {
             when (record.stateMatcher) {
+                null -> {}
                 matcherBody -> if (Math.random() < 0.5) {
                     var shiftPos: BlockPos? = null
                     for (i in 1 until (4 + (Math.random() * 4).toInt())) {
@@ -100,19 +101,23 @@ object RitualFocusBundle : RitualCollector() {
                         else break
                     }
                     if (shiftPos == null) {
-                        level.setBlock(record.worldPosition, DECAYED_BLOCK_SET.random().defaultBlockState(), 3)
+                        level.setBlock(
+                            record.worldPosition,
+                            DECAYED_BLOCK_SET.random().defaultBlockState().rotate(Rotation.getRandom(level.random)),
+                            3
+                        )
                     } else {
                         level.setBlock(
                             shiftPos,
                             (if (Math.random() < 0.05) DECAYED_BLOCK_SET_RARE else DECAYED_BLOCK_SET).random()
-                                .defaultBlockState(),
+                                .defaultBlockState().rotate(Rotation.getRandom(level.random)),
                             3
                         )
                         level.setBlock(record.worldPosition, Blocks.AIR.defaultBlockState(), 3)
                     }
                 }
 
-                else -> level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3)
+                else -> level.setBlock(record.worldPosition, Blocks.AIR.defaultBlockState(), 3)
             }
         }
     }
