@@ -1,8 +1,20 @@
-- name: EnablesFocusInsideInventory
+- name: EnablesFocusInHands
   type: boolean
   default: 'true'
   category: Scope
+  descrip: Reactive Focus(es) inside player's hands take effect; ignored if `Inventory` set to true
+  side: common
+- name: EnablesFocusInsideInventory
+  type: boolean
+  default: 'false'
+  category: Scope
   descrip: Reactive Focus(es) inside player's inventory (including main/off hand) take effect
+  side: common
+- name: EnablesFocusInsideEnderChest
+  type: boolean
+  default: 'false'
+  category: Scope
+  descrip: Reactive Focus(es) inside player's ender chest take effect
   side: common
 - name: EnablesFocusInsideAccessories
   type: boolean

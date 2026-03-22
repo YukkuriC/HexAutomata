@@ -1,0 +1,7 @@
+{
+  "name": "itemGroup.hexautomata.main",
+  "icon": "hexautomata:logo",
+  "description": "hexautomata.category.reactive_focus.desc",
+  "parent": "hexcasting:greatwork",
+  "sortnum": 0
+}

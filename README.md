@@ -21,7 +21,13 @@ Provides items with ability listening to various game events and triggering cust
     - Crafted by brainsweep recipes
         - all from `Akashic Record` as source block
     - Places to take effect:
-        - inventory
-        - Curios/Trinkets slots
+        - Inventory (default: false)
+        - Main/Off hand (default: true; takes no effect if `Inventory` set to true)
+        - Ender Chest (default: false)
+        - Curios/Trinkets slots (default: true)
         - _config entries controlling whether sources above are enabled_
+- `Reactive Focus Nexus`: an item holding multiple Reactive Focuses
+    - all inner focuses take effect as if they're outside
+    - crafted with a multiblock structure, ending with another brainsweep
+      ![ritual multiblock](https://github.com/YukkuriC/HexAutomata/blob/main/doc/resources/assets/hexautomata/textures/gui/multiblock/focus_bundle.png?raw=true)
 - Special patterns taking effect exclusively inside triggered events

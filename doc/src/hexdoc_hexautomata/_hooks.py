@@ -38,7 +38,39 @@ class HexAutomataPlugin(ModPluginImpl):
 
         ModelItem.find_texture = add_texture1(ModelItem.find_texture)
 
+        HexAutomataPlugin.replace_multiblock()
         return HexAutomataModPlugin(branch=branch)
+
+    @staticmethod
+    def replace_multiblock():
+        from hexdoc.patchouli import Entry
+
+        @classmethod
+        def wrap_load(cls, resource_dir, id, data, context):
+            pages = data['pages']
+            changed = False
+            for i, page in enumerate(pages):
+                if isinstance(page, str):
+                    continue
+
+                if 'multiblock' in page['type'] and page['multiblock_id']:
+                    page['type'] = "image"
+                    if ':' in page['multiblock_id']:
+                        namespace, path = page['multiblock_id'].split(':')
+                    else:
+                        namespace, path = 'minecraft', page['multiblock_id']
+                    del page['multiblock_id']
+                    page["images"] = [f'{namespace}:textures/gui/multiblock/{path}.png']
+                    pages[i] = page
+                    changed = True
+
+            if changed:
+                data['pages'] = pages
+
+            return Entry._load_original(resource_dir, id, data, context)
+
+        Entry._load_original = Entry.load
+        Entry.load = wrap_load
 
 
 class HexAutomataModPlugin(ModPluginWithBook):

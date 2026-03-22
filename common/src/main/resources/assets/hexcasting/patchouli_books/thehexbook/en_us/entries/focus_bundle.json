@@ -1,0 +1,20 @@
+{
+  "name": "item.hexautomata.focus_bundle",
+  "category": "hexcasting:hexautomata/reactive_focus",
+  "icon": "hexautomata:focus_bundle",
+  "advancement": "hexcasting:enlightenment",
+  "entry_color": "54398a",
+  "pages": [
+    "hexautomata.book.focus_bundle.intro",
+    {
+      "type": "multiblock",
+      "multiblock_id": "hexautomata:focus_bundle",
+      "text": "hexautomata.book.focus_bundle.1"
+    },
+    {
+      "type": "hexcasting:brainsweep",
+      "recipe": "hexautomata:brainsweep/focus_bundle",
+      "text": "hexautomata.book.focus_bundle.2"
+    }
+  ]
+}

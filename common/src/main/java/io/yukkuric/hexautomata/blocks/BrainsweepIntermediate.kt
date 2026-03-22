@@ -1,9 +1,11 @@
 package io.yukkuric.hexautomata.blocks
 
+import io.yukkuric.hexautomata.HexAutomata
 import io.yukkuric.hexautomata.register
 import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.item.Item
@@ -19,11 +21,13 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import org.jetbrains.annotations.NotNull
 
-class BrainsweepIntermediate : Block(PROP_BLOCK), EntityBlock {
+open class BrainsweepIntermediate : Block(PROP_BLOCK), EntityBlock {
     companion object {
-        private val PROP_BLOCK = Properties.of().noCollission().noLootTable()
-        private val BLOCKS = HashMap<ResourceLocation, BrainsweepIntermediate>()
-        private val BE_TYPES = HashMap<ResourceLocation, BlockEntityType<*>>()
+        protected val PROP_BLOCK = Properties.of().noCollission().noLootTable()
+        @JvmStatic
+        protected val BLOCKS = HashMap<ResourceLocation, BrainsweepIntermediate>()
+        @JvmStatic
+        protected val BE_TYPES = HashMap<ResourceLocation, BlockEntityType<*>>()
 
         fun registerBlocks(r: (ResourceLocation, Block) -> Any?) = BLOCKS.register(r)
         fun registerBETypes(r: (ResourceLocation, BlockEntityType<*>) -> Any?) = BE_TYPES.register(r)
@@ -34,6 +38,15 @@ class BrainsweepIntermediate : Block(PROP_BLOCK), EntityBlock {
             val type = BEType(block)
             BE_TYPES[id] = type
         }
+
+        @JvmStatic
+        fun getBlock(id: ResourceLocation) = BLOCKS[id]
+        @JvmStatic
+        fun getBlock(id: String) = BLOCKS[HexAutomata.modLoc(id)]
+        @JvmStatic
+        fun getBEType(id: ResourceLocation) = BE_TYPES[id]
+        @JvmStatic
+        fun getBEType(id: String) = BE_TYPES[HexAutomata.modLoc(id)]
     }
 
     override fun getRenderShape(blockState: BlockState?) = RenderShape.INVISIBLE
@@ -55,16 +68,38 @@ class BrainsweepIntermediate : Block(PROP_BLOCK), EntityBlock {
         blockEntityType: BlockEntityType<T>
     ) = blockEntityType as? BlockEntityTicker<T>
 
-    class BEType(src: BrainsweepIntermediate) : BlockEntityType<BE>(src::newBlockEntity, setOf(src), null),
+    open class BEType(src: BrainsweepIntermediate) : BlockEntityType<BE>(src::newBlockEntity, setOf(src), null),
         BlockEntityTicker<BE> {
+
+        fun selfId() = BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(this)
+
+        // contextual data
+        lateinit var level: ServerLevel
+        lateinit var blockPos: BlockPos
+
+        @Synchronized
         override fun tick(level: Level, blockPos: BlockPos, blockState: BlockState, blockEntity: BE) {
+            if (level.isClientSide) {
+                // TODO: make some fx here?
+                return
+            }
+            this.level = level as ServerLevel
+            this.blockPos = blockPos
+            perform()
+        }
+
+        open fun perform() {
             // destroy self
-            level.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 3)
+            destroySelf()
             // spawn item
-            val id = BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(this)
-            val item = BuiltInRegistries.ITEM[id]
+            val item = BuiltInRegistries.ITEM[selfId()]
+            popItem(ItemStack(item))
+        }
+
+        fun destroySelf(newBlock: Block = Blocks.AIR) = level.setBlock(blockPos, newBlock.defaultBlockState(), 3)
+        fun popItem(stack: ItemStack) {
             val e = ItemEntity(EntityType.ITEM, level)
-            e.item = ItemStack(item)
+            e.item = stack
             e.setPos(blockPos.center)
             e.setDeltaMovement(0.0, 0.2, 0.0)
             level.addFreshEntity(e)

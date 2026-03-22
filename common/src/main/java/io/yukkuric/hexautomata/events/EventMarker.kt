@@ -10,7 +10,7 @@ abstract class EventMarker(setName: String? = null) {
     }
 
     companion object {
-        private val TYPES = HashMap<String, EventMarker>()
+        private val TYPES = LinkedHashMap<String, EventMarker>()
 
         // ref all preset events to force-load
         val VANILLA = BuiltinEventMarker::class.sealedSubclasses.map { cls -> cls.objectInstance!! }

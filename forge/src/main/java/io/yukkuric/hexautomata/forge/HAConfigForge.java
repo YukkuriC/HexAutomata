@@ -10,8 +10,14 @@ import static io.yukkuric.hexautomata.HAConfig.*;
 public class HAConfigForge implements API {
     public static HAConfigForge INSTANCE;
 
+    public boolean EnablesFocusInHands() {
+        return cfg_EnablesFocusInHands.get();
+    }
     public boolean EnablesFocusInsideInventory() {
         return cfg_EnablesFocusInsideInventory.get();
+    }
+    public boolean EnablesFocusInsideEnderChest() {
+        return cfg_EnablesFocusInsideEnderChest.get();
     }
     public boolean EnablesFocusInsideAccessories() {
         return cfg_EnablesFocusInsideAccessories.get();
@@ -21,13 +27,17 @@ public class HAConfigForge implements API {
     }
 
     public ForgeConfigSpec.BooleanValue
+            cfg_EnablesFocusInHands,
             cfg_EnablesFocusInsideInventory,
+            cfg_EnablesFocusInsideEnderChest,
             cfg_EnablesFocusInsideAccessories,
             cfg_FirstFocusOnly;
 
     public HAConfigForge(ForgeConfigSpec.Builder builder) {
         builder.push("Scope");
-        cfg_EnablesFocusInsideInventory = builder.comment(desc_EnablesFocusInsideInventory).define("EnablesFocusInsideInventory", true);
+        cfg_EnablesFocusInHands = builder.comment(desc_EnablesFocusInHands).define("EnablesFocusInHands", true);
+        cfg_EnablesFocusInsideInventory = builder.comment(desc_EnablesFocusInsideInventory).define("EnablesFocusInsideInventory", false);
+        cfg_EnablesFocusInsideEnderChest = builder.comment(desc_EnablesFocusInsideEnderChest).define("EnablesFocusInsideEnderChest", false);
         cfg_EnablesFocusInsideAccessories = builder.comment(desc_EnablesFocusInsideAccessories).define("EnablesFocusInsideAccessories", true);
         cfg_FirstFocusOnly = builder.comment(desc_FirstFocusOnly).define("FirstFocusOnly", true);
         builder.pop();

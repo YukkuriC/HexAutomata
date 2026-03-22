@@ -1,16 +1,20 @@
 package io.yukkuric.hexautomata.items
 
+import at.petrak.hexcasting.common.items.magic.ItemCreativeUnlocker
 import io.yukkuric.hexautomata.HexAutomata
 import io.yukkuric.hexautomata.HexAutomata.modLoc
 import io.yukkuric.hexautomata.blocks.BrainsweepIntermediate
 import io.yukkuric.hexautomata.events.BuiltinEventMarker
 import io.yukkuric.hexautomata.events.EventMarker
+import io.yukkuric.hexautomata.multiblock.BrainsweepRitualIntermediate
 import io.yukkuric.hexautomata.register
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.Item.Properties
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Rarity
 
 
 object HAItems {
@@ -26,8 +30,9 @@ object HAItems {
     private fun <T : Item> create(
         name: String,
         item: T,
-        tab: CreativeModeTab = Tabs.MAIN,
-        createIntermediate: Boolean = false
+        tab: CreativeModeTab? = Tabs.MAIN,
+        createIntermediate: Boolean = false,
+        createRitualIntermediate: Boolean = false,
     ): T {
         val id = modLoc(name)
         ITEMS[id] = item
@@ -35,7 +40,8 @@ object HAItems {
             val list = ITEMS_BY_TAB.computeIfAbsent(tab) { _ -> ArrayList() }
             list.add(item::getDefaultInstance)
         }
-        if (createIntermediate) BrainsweepIntermediate.create(id)
+        if (createRitualIntermediate) BrainsweepRitualIntermediate.create(id)
+        else if (createIntermediate) BrainsweepIntermediate.create(id)
         return item
     }
 
@@ -54,6 +60,10 @@ object HAItems {
 
     operator fun get(type: EventMarker) = FOCUSES_BY_TYPE[type]
 
+    // other items
+    val LOGO = create("logo", ItemCreativeUnlocker(Props.STACK_ONE), null)
+    val FOCUS_BUNDLE = create("focus_bundle", ItemFocusBundle(), createRitualIntermediate = true)
+
     object Tabs {
         private val TABS: LinkedHashMap<ResourceLocation, CreativeModeTab> = LinkedHashMap()
         fun registerCreativeTabs(r: (ResourceLocation, CreativeModeTab) -> Any?) = TABS.register(r)
@@ -67,5 +77,10 @@ object HAItems {
             TABS[modLoc(name)] = tab
             return tab
         }
+    }
+
+    object Props {
+        val STACK_ONE = Properties().rarity(Rarity.RARE).stacksTo(1)
+        val STACK_ONE_EPIC = Properties().rarity(Rarity.EPIC).stacksTo(1)
     }
 }
