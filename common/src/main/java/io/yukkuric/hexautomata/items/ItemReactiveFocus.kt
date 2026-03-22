@@ -26,7 +26,7 @@ class ItemReactiveFocus(val type: EventMarker, props: Properties) : ItemFocus(pr
         val spell = readIota(stack, player.serverLevel()) ?: return
         val list = if (spell is ListIota) spell.list.toList() else listOf(spell)
 
-        val env = EntityEventEnv(event, player)
+        val env = EntityEventEnv(event, stack, player)
         val image = CastingImage().copy(stack = event.initStack())
         CastingVM(image, env).queueExecuteAndWrapIotas(list, player.serverLevel())
     }

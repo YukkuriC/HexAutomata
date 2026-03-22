@@ -21,7 +21,11 @@
   "tooltip.hexautomata.listeners.alert": "Please enable at least 1 listening scope(s) inside config",
   // action
   "hexcasting.action.hexautomata:quantum_swap": "Quantum Swap",
+  "hexcasting.action.hexautomata:event/read": "Klein's Reflection",
+  "hexcasting.action.hexautomata:event/write": "Klein's Gambit",
   "book.descrip.hexautomata:quantum_swap": "Swaps me and the triggering entity spatially, at cost of half of a dust. Takes no effect if there's no such entity (for example, hurt event triggered by environmental damage).",
+  "book.descrip.hexautomata:event/read": "Reads the spell currently running during the event from certain $(thing)Reactive Focus/$. Might be helpful if one wants to look into self more thoroughly.",
+  "book.descrip.hexautomata:event/write": "Write given iota into the $(thing)Reactive Focus/$ triggering. Might be helpful if one wants to look into self more thoroughly.",
   "mishap.hexautomata.out_event": "You've lost in the Quantum Sea.",
   // patchouli
   "hexautomata.ritual.missing": "Ritual Conditions not Met!",

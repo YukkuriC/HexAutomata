@@ -5,10 +5,12 @@ import at.petrak.hexcasting.api.casting.eval.env.PlayerBasedCastEnv
 import io.yukkuric.hexautomata.events.IHAEvent
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.InteractionHand
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.phys.Vec3
 
 class EntityEventEnv(
     val event: IHAEvent,
+    val stack: ItemStack,
     caster: ServerPlayer,
     castingHand: InteractionHand = InteractionHand.MAIN_HAND
 ) : PlayerBasedCastEnv(caster, castingHand) {
