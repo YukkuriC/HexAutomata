@@ -27,7 +27,7 @@
   "hexautomata.ritual.missing": "仪式条件未满足！",
   "hexautomata.book.focus_bundle.intro": "信息可塑，可重构，有弹性……信息是更多信息……信息是我……$(br)我能持有更多信息，只要建造一个图书馆，拥有更多细节，和一个中继……我即是图书馆。$(br)$(br)一个$(thing)反应核心枢纽/$可装下多至8个$(thing)反应核心/$；在我持有一个枢纽时，我仍可感受到自己与其内部核心的连接。",
   "hexautomata.book.focus_bundle.1": "反应核心枢纽图书馆",
-  "hexautomata.book.focus_bundle.2": "在建造图书馆后，融入一个容器的思维，以完成最终的压缩",
+  "hexautomata.book.focus_bundle.2": "在建造图书馆后，融入一个多线程的思维，以完成最终的压缩",
   "hexautomata.category.reactive_focus.desc": "我已冂$(k)meow$(l:https://github.com/YukkuriC/HexAutomata)meow$(/l)meow/$……我已见！",
   "hexautomata.book.reactive_focus.intro": "我找到一个方法 - 通过一个固定的村民意识的智能，佐以源自野生生物的$(thing)\"概念\"/$ - 创造一类特别的施法物品：$(thing)反应核心/$。$(br)这些法术容器在读写时与普通核心无异，但它们容纳的法术会在特定情形下触发，并从我身上直接抽取媒质以施法。",
   "hexautomata.book.reactive_focus.2": "每类$(thing)反应核心/$在触发时也会发送 iota 至法术的初始栈，其中通常以触发者实体作为栈内首个元素。$(br)另外，基于我和触发$(thing)反应核心/$者之间的$(thing)量子媒质纠缠/$效应，内部法术在触发者周围会有一小块额外的施法范围。$(o)太便利了 :)/$",

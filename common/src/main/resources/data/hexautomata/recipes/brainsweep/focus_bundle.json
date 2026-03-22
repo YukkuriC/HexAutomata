@@ -4,10 +4,10 @@
     "type": "block",
     "block": "beacon"
   },
-  "cost": 1000000,
+  "cost": 100000,
   "entityIn": {
     "type": "entity_type",
-    "entityType": "shulker"
+    "entityType": "slime"
   },
   "result": {
     "name": "hexautomata:focus_bundle"
