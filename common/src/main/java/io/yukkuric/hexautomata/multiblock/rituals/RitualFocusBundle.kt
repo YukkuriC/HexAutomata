@@ -6,6 +6,7 @@ import io.yukkuric.hexautomata.multiblock.matchers.DisplayMatcher
 import io.yukkuric.hexautomata.multiblock.matchers.MultiMatcher
 import io.yukkuric.hexautomata.multiblock.matchers.TagMatcher
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.BlockTags
 import net.minecraft.world.level.block.Blocks
@@ -88,12 +89,49 @@ object RitualFocusBundle : RitualCollector() {
         ) as AbstractMultiblock).setOffset(4, 1, 4)
     }
     override val postEffect = { level: ServerLevel, pos: BlockPos, ritual: IMultiblock, rotation: Rotation ->
-        for (offset in RECORD_POS) level.setBlock(pos.offset(offset), Blocks.AIR.defaultBlockState(), 3)
-        for (dx in -1..1) for (dz in -1..1) level.setBlock(
-            pos.offset(dx, -1, dz), Blocks.AIR.defaultBlockState(), 3
-        )
+        for (record in ritual.simulate(level, pos, rotation, false).second) {
+            when (record.stateMatcher) {
+                matcherBody -> if (Math.random() < 0.5) {
+                    var shiftPos: BlockPos? = null
+                    for (i in 1 until (4 + (Math.random() * 4).toInt())) {
+                        val newShift =
+                            (shiftPos ?: record.worldPosition).offset(Direction.getRandom(level.random).normal)
+                        if (level.getBlockState(newShift).isAir) shiftPos = newShift
+                        else break
+                    }
+                    if (shiftPos == null) {
+                        level.setBlock(record.worldPosition, DECAYED_BLOCK_SET.random().defaultBlockState(), 3)
+                    } else {
+                        level.setBlock(
+                            shiftPos,
+                            (if (Math.random() < 0.05) DECAYED_BLOCK_SET_RARE else DECAYED_BLOCK_SET).random()
+                                .defaultBlockState(),
+                            3
+                        )
+                        level.setBlock(record.worldPosition, Blocks.AIR.defaultBlockState(), 3)
+                    }
+                }
+
+                else -> level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3)
+            }
+        }
     }
 
     private val matcherBody = MultiMatcher(HexBlocks.AKASHIC_LIGATURE, HexBlocks.AKASHIC_BOOKSHELF)
-    val RECORD_POS = listOf(BlockPos(0, -1, 2), BlockPos(0, -1, -2), BlockPos(2, -1, 0), BlockPos(-2, -1, 0))
+    var DECAYED_BLOCK_SET = mutableListOf(
+        HexBlocks.AMETHYST_BRICKS,
+        HexBlocks.QUENCHED_ALLAY_BRICKS,
+        HexBlocks.QUENCHED_ALLAY_BRICKS_SMALL,
+        HexBlocks.EDIFIED_PLANKS,
+        Blocks.AMETHYST_BLOCK,
+        HexBlocks.AKASHIC_BOOKSHELF,
+        HexBlocks.AKASHIC_LIGATURE,
+    )
+    var DECAYED_BLOCK_SET_RARE = mutableListOf(
+        HexBlocks.AKASHIC_RECORD,
+        Blocks.SHULKER_BOX,
+        HexBlocks.QUENCHED_ALLAY,
+        Blocks.BUDDING_AMETHYST,
+        Blocks.DIAMOND_BLOCK,
+    )
 }
