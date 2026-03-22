@@ -12,6 +12,13 @@
   "block.hexautomata.reactive_focus.teleport": "传送",
   "item.hexautomata.focus_bundle": "反应核心枢纽",
   "block.hexautomata.focus_bundle": "反应核心枢纽",
+  "tooltip.hexautomata.listeners": "生效于：",
+  "tooltip.hexautomata.listener.accessory": "饰品栏",
+  "tooltip.hexautomata.listener.inv": "背包",
+  "tooltip.hexautomata.listener.hands": "手中",
+  "tooltip.hexautomata.listener.ender_chest": "末影箱",
+  "tooltip.hexautomata.listener_none": "无",
+  "tooltip.hexautomata.listeners.alert": "请在配置中启用至少一种监听范围",
   // action
   "hexcasting.action.hexautomata:quantum_swap": "量子互换",
   "book.descrip.hexautomata:quantum_swap": "将我和触发实体在空间上互换，消耗半粉。当该实体不存在（如环境伤害触发的受伤事件）时无效果。",

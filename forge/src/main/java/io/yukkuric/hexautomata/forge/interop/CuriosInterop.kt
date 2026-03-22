@@ -5,6 +5,6 @@ import io.yukkuric.hexautomata.items.collector.FocusCollector
 
 object CuriosInterop : Runnable {
     override fun run() {
-        FocusCollector.register("curios", CuriosCollector)
+        FocusCollector.register("accessory", CuriosCollector)
     }
 }

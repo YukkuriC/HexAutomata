@@ -12,6 +12,13 @@
   "block.hexautomata.reactive_focus.teleport": "Teleported",
   "item.hexautomata.focus_bundle": "Reactive Focus Nexus",
   "block.hexautomata.focus_bundle": "Reactive Focus Nexus",
+  "tooltip.hexautomata.listeners": "Taking effect in: ",
+  "tooltip.hexautomata.listener.accessory": "Accessory Slots",
+  "tooltip.hexautomata.listener.inv": "Inventory",
+  "tooltip.hexautomata.listener.hands": "Hands",
+  "tooltip.hexautomata.listener.ender_chest": "Ender Chest",
+  "tooltip.hexautomata.listener_none": "Nothing",
+  "tooltip.hexautomata.listeners.alert": "Please enable at least 1 listening scope(s) inside config",
   // action
   "hexcasting.action.hexautomata:quantum_swap": "Quantum Swap",
   "book.descrip.hexautomata:quantum_swap": "Swaps me and the triggering entity spatially, at cost of half of a dust. Takes no effect if there's no such entity (for example, hurt event triggered by environmental damage).",

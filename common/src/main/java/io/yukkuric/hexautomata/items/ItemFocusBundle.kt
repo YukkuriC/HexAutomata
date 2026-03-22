@@ -2,10 +2,12 @@ package io.yukkuric.hexautomata.items
 
 import at.petrak.hexcasting.api.utils.putList
 import io.yukkuric.hexautomata.HexAutomata
+import io.yukkuric.hexautomata.helpers.TooltipHelper
 import net.minecraft.client.multiplayer.ClientLevel
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.ListTag
 import net.minecraft.nbt.Tag
+import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.SlotAccess
@@ -14,6 +16,8 @@ import net.minecraft.world.inventory.ClickAction
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.BundleItem
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.TooltipFlag
+import net.minecraft.world.level.Level
 import kotlin.math.min
 
 class ItemFocusBundle : BundleItem(HAItems.Props.STACK_ONE_EPIC) {
@@ -67,6 +71,16 @@ class ItemFocusBundle : BundleItem(HAItems.Props.STACK_ONE_EPIC) {
                 return 2f
             }
         }
+    }
+
+    override fun appendHoverText(
+        stack: ItemStack,
+        lvl: Level?,
+        tooltips: MutableList<Component?>,
+        advanced: TooltipFlag
+    ) {
+        TooltipHelper.appendScopeTooltip(tooltips)
+        super.appendHoverText(stack, lvl, tooltips, advanced)
     }
 
     override fun overrideStackedOnOther(

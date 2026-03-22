@@ -12,9 +12,13 @@ abstract class FocusCollector {
         private val MAP = LinkedHashMap<String, FocusCollector>()
 
         init {
+            MAP["hands"] = Hands
             MAP["inv"] = Inv
+            MAP["ender_chest"] = EnderChest
         }
 
+        @JvmStatic
+        fun entries() = MAP.entries
         @JvmStatic
         fun filterSeq(raw: Sequence<ItemStack>, type: EventMarker): Sequence<ItemStack> = sequence {
             for (stack in raw) when (val item = stack.item) {
@@ -26,7 +30,8 @@ abstract class FocusCollector {
         fun getAllFocus(player: ServerPlayer, type: EventMarker): Sequence<ItemStack> {
             return sequence {
                 for (getter in MAP.values) {
-                    val raw = getter.extract(player) ?: continue
+                    if (!getter.enabled()) continue
+                    val raw = getter.extract(player)
                     yieldAll(filterSeq(raw, type))
                 }
             }
@@ -38,10 +43,24 @@ abstract class FocusCollector {
         }
     }
 
-    abstract fun extract(player: ServerPlayer): Sequence<ItemStack>?
+    abstract fun enabled(): Boolean
+    abstract fun extract(player: ServerPlayer): Sequence<ItemStack>
 
     object Inv : FocusCollector() {
-        override fun extract(player: ServerPlayer) =
-            if (HAConfig.EnablesFocusInsideInventory()) player.inventory.items.asSequence() else null
+        override fun enabled() = HAConfig.EnablesFocusInsideInventory()
+        override fun extract(player: ServerPlayer) = player.inventory.items.asSequence()
+    }
+
+    object Hands : FocusCollector() {
+        override fun enabled() = HAConfig.EnablesFocusInHands() && !HAConfig.EnablesFocusInsideInventory()
+        override fun extract(player: ServerPlayer) = sequenceOf(player.mainHandItem, player.offhandItem)
+    }
+
+    object EnderChest : FocusCollector() {
+        override fun enabled() = HAConfig.EnablesFocusInsideEnderChest()
+        override fun extract(player: ServerPlayer) = sequence {
+            val inv = player.enderChestInventory
+            for (i in 0 until inv.containerSize) yield(inv.getItem(i))
+        }
     }
 }

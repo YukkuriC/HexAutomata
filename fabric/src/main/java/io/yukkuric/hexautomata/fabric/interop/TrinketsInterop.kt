@@ -5,6 +5,6 @@ import io.yukkuric.hexautomata.items.collector.FocusCollector
 
 object TrinketsInterop : Runnable {
     override fun run() {
-        FocusCollector.register("trinkets", TrinketsCollector)
+        FocusCollector.register("accessory", TrinketsCollector)
     }
 }

@@ -21,7 +21,9 @@ Provides items with ability listening to various game events and triggering cust
     - Crafted by brainsweep recipes
         - all from `Akashic Record` as source block
     - Places to take effect:
-        - inventory
-        - Curios/Trinkets slots
+        - Inventory (default: false)
+        - Main/Off hand (default: true; takes no effect if `Inventory` set to true)
+        - Ender Chest (default: false)
+        - Curios/Trinkets slots (default: true)
         - _config entries controlling whether sources above are enabled_
 - Special patterns taking effect exclusively inside triggered events
