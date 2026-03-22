@@ -7,6 +7,7 @@ import io.yukkuric.hexautomata.interop.HexParseInterop
 import io.yukkuric.hexautomata.items.HAItems
 import io.yukkuric.hexautomata.items.ItemFocusBundle
 import io.yukkuric.hexautomata.items.ItemReactiveFocus
+import io.yukkuric.hexautomata.multiblock.HARituals
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Player
 import org.slf4j.Logger
@@ -21,6 +22,7 @@ object HexAutomata {
 
     @JvmStatic
     fun commonInit() {
+        HARituals.load()
         tryLoadInterop("hexparse", HexParseInterop::run)
         tryLoadInterop("hexoverpowered", HexOPInterop::run)
     }

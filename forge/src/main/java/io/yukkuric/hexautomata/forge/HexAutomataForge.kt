@@ -1,7 +1,6 @@
 package io.yukkuric.hexautomata.forge
 
 import io.yukkuric.hexautomata.HexAutomata
-import io.yukkuric.hexautomata.HexAutomata.commonInit
 import io.yukkuric.hexautomata.HexAutomataClient
 import io.yukkuric.hexautomata.forge.events.HAForgeEventsListener
 import io.yukkuric.hexautomata.forge.interop.CuriosInterop
@@ -17,7 +16,6 @@ class HexAutomataForge : HexAutomata.IAPI() {
         HAForgeEventsListener.load()
         HAConfigForge.register(ModLoadingContext.get())
         HexAutomata.tryLoadInterop("curios", CuriosInterop::run)
-        commonInit()
     }
 
     override fun modLoaded(id: String) = ModList.get().isLoaded(id)

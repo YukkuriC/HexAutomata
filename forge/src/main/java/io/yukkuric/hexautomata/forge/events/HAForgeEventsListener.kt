@@ -1,6 +1,7 @@
 package io.yukkuric.hexautomata.forge.events
 
 import at.petrak.hexcasting.common.lib.HexRegistries
+import io.yukkuric.hexautomata.HexAutomata.commonInit
 import io.yukkuric.hexautomata.actions.HAActions
 import io.yukkuric.hexautomata.blocks.BrainsweepIntermediate
 import io.yukkuric.hexautomata.events.BuiltinEventMarker
@@ -25,6 +26,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.Bindings
 import net.minecraftforge.fml.DistExecutor
 import net.minecraftforge.fml.common.Mod
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
 import net.minecraftforge.registries.RegisterEvent
 
 
@@ -88,6 +90,10 @@ class HAForgeEventsListener {
         @SubscribeEvent
         fun OnAddCreativeTabItems(e: BuildCreativeModeTabContentsEvent) {
             HAItems.loadCreativeTabContents(e.tab, e)
+        }
+        @SubscribeEvent
+        fun OnCommonSetup(e: FMLCommonSetupEvent) {
+            commonInit()
         }
     }
 

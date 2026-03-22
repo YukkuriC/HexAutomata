@@ -6,6 +6,7 @@ import io.yukkuric.hexautomata.HexAutomata.modLoc
 import io.yukkuric.hexautomata.blocks.BrainsweepIntermediate
 import io.yukkuric.hexautomata.events.BuiltinEventMarker
 import io.yukkuric.hexautomata.events.EventMarker
+import io.yukkuric.hexautomata.multiblock.BrainsweepRitualIntermediate
 import io.yukkuric.hexautomata.register
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
@@ -30,7 +31,8 @@ object HAItems {
         name: String,
         item: T,
         tab: CreativeModeTab? = Tabs.MAIN,
-        createIntermediate: Boolean = false
+        createIntermediate: Boolean = false,
+        createRitualIntermediate: Boolean = false,
     ): T {
         val id = modLoc(name)
         ITEMS[id] = item
@@ -38,7 +40,8 @@ object HAItems {
             val list = ITEMS_BY_TAB.computeIfAbsent(tab) { _ -> ArrayList() }
             list.add(item::getDefaultInstance)
         }
-        if (createIntermediate) BrainsweepIntermediate.create(id)
+        if (createRitualIntermediate) BrainsweepRitualIntermediate.create(id)
+        else if (createIntermediate) BrainsweepIntermediate.create(id)
         return item
     }
 
@@ -59,7 +62,7 @@ object HAItems {
 
     // other items
     val LOGO = create("logo", ItemCreativeUnlocker(Props.STACK_ONE), null)
-    val FOCUS_BUNDLE = create("focus_bundle", ItemFocusBundle())
+    val FOCUS_BUNDLE = create("focus_bundle", ItemFocusBundle(), createRitualIntermediate = true)
 
     object Tabs {
         private val TABS: LinkedHashMap<ResourceLocation, CreativeModeTab> = LinkedHashMap()
