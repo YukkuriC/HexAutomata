@@ -66,7 +66,6 @@ class HexAutomataPlugin(ModPluginImpl):
 
             if changed:
                 data['pages'] = pages
-            print(data)
 
             return Entry._load_original(resource_dir, id, data, context)
 
