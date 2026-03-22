@@ -36,6 +36,9 @@ abstract class EventLimitedAction : ConstMediaAction {
     abstract fun execute(args: List<Iota>, env: EntityEventEnv): List<Iota>
 
     open fun doQuantumPunish(caster: LivingEntity) {
-        caster.teleportToWithTicket(-caster.x, -caster.y, -caster.z)
+        val lst = mutableListOf(caster.x, caster.y, caster.z)
+        lst.shuffle()
+        for (i in 0 until 3) if (Math.random() < 0.5) lst[i] *= -1.0
+        caster.teleportToWithTicket(lst[0], lst[1], lst[2])
     }
 }
