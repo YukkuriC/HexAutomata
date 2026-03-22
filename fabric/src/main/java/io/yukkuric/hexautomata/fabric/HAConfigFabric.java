@@ -22,7 +22,7 @@ public class HAConfigFabric implements ConfigData {
 
     public static class Common implements API, ConfigData {
         @Comment("<Scope> " + desc_EnablesFocusInHands)
-        private boolean EnablesFocusInHands = false;
+        private boolean EnablesFocusInHands = true;
         @Comment("<Scope> " + desc_EnablesFocusInsideInventory)
         private boolean EnablesFocusInsideInventory = false;
         @Comment("<Scope> " + desc_EnablesFocusInsideEnderChest)

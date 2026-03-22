@@ -1,6 +1,6 @@
 - name: EnablesFocusInHands
   type: boolean
-  default: 'false'
+  default: 'true'
   category: Scope
   descrip: Reactive Focus(es) inside player's hands take effect; ignored if `Inventory` set to true
   side: common

@@ -35,7 +35,7 @@ public class HAConfigForge implements API {
 
     public HAConfigForge(ForgeConfigSpec.Builder builder) {
         builder.push("Scope");
-        cfg_EnablesFocusInHands = builder.comment(desc_EnablesFocusInHands).define("EnablesFocusInHands", false);
+        cfg_EnablesFocusInHands = builder.comment(desc_EnablesFocusInHands).define("EnablesFocusInHands", true);
         cfg_EnablesFocusInsideInventory = builder.comment(desc_EnablesFocusInsideInventory).define("EnablesFocusInsideInventory", false);
         cfg_EnablesFocusInsideEnderChest = builder.comment(desc_EnablesFocusInsideEnderChest).define("EnablesFocusInsideEnderChest", false);
         cfg_EnablesFocusInsideAccessories = builder.comment(desc_EnablesFocusInsideAccessories).define("EnablesFocusInsideAccessories", true);
