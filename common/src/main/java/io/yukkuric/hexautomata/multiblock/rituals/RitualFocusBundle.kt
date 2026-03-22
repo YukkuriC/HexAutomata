@@ -12,81 +12,37 @@ import net.minecraft.tags.BlockTags
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.Rotation
 import vazkii.patchouli.api.IMultiblock
-import vazkii.patchouli.api.PatchouliAPI
-import vazkii.patchouli.common.multiblock.AbstractMultiblock
+import vazkii.patchouli.api.IStateMatcher
+import vazkii.patchouli.common.multiblock.SparseMultiblock
+import vazkii.patchouli.common.multiblock.StateMatcher
 
 object RitualFocusBundle : RitualCollector() {
     override val idStr = "focus_bundle"
     override val ritual = Suppliers.memoize {
-        val l0 = arrayOf(
-            "BBBBBBBBB",
-            "B_BB_BB_B",
-            "BBBBBBBBB",
-            "BBB___BBB",
-            "B_B___B_B",
-            "BBB___BBB",
-            "BBBBBBBBB",
-            "B_BB_BB_B",
-            "BBBBBBBBB",
-        )
-        val l1 = arrayOf(
-            "B_BB_BB_B",
-            "_________",
-            "B_BB_BB_B",
-            "B_B___B_B",
-            "_________",
-            "B_B___B_B",
-            "B_BB_BB_B",
-            "_________",
-            "B_BB_BB_B",
-        )
-        val l2 = arrayOf(
-            "BBB___BBB",
-            "B_B___B_B",
-            "BBB___BBB",
-            "_________",
-            "_________",
-            "_________",
-            "BBB___BBB",
-            "B_B___B_B",
-            "BBB___BBB",
-        )
-        val l3 = arrayOf(
-            "B_B___B_B",
-            "_________",
-            "B_B___B_B",
-            "_________",
-            "_________",
-            "_________",
-            "B_B___B_B",
-            "_________",
-            "B_B___B_B",
-        )
-        val lb1 = l1.clone()
-        lb1[4] = "____T____"
-        val lb0 = arrayOf(
-            "BBBBBBBBB",
-            "B_BB_BB_B",
-            "BBBBCBBBB",
-            "BBBIIIBBB",
-            "B_CI0IC_B",
-            "BBBIIIBBB",
-            "BBBBCBBBB",
-            "B_BB_BB_B",
-            "BBBBBBBBB",
-        )
-        val api = PatchouliAPI.get()
+        fun isMenger(step: Int, vararg axes: Int): Boolean {
+            var hollowCount = 0
+            for (a in axes) if ((a / step) == 1) hollowCount++
+            if (hollowCount >= 2) return false
+            if (step <= 1) return true
+            return isMenger(step / 3, *axes.map { it % step }.toIntArray())
+        }
+
+        val matchers = HashMap<BlockPos, IStateMatcher>()
+        for (x in 0 until 9)
+            for (y in 0 until 9)
+                for (z in 0 until 9)
+                    if (isMenger(3, x, y, z)) matchers[BlockPos(x, y, z)] = matcherBody
+        val matcherRecord = StateMatcher.fromBlockLoose(HexBlocks.AKASHIC_RECORD)
+        for (delta in -2..2 step 4) {
+            matchers[BlockPos(4, 0, 4 + delta)] = matcherRecord
+            matchers[BlockPos(4 + delta, 0, 4)] = matcherRecord
+        }
         val beaconBase = TagMatcher(BlockTags.BEACON_BASE_BLOCKS)
-        (api.makeMultiblock(
-            arrayOf(
-                l0, l1, l0, l2, l3, l2, l0, lb1, lb0
-            ),
-            'B', matcherBody,
-            'C', HexBlocks.AKASHIC_RECORD,
-            'I', beaconBase,
-            '0', beaconBase,
-            'T', DisplayMatcher(Blocks.BEACON)
-        ) as AbstractMultiblock).setOffset(4, 1, 4)
+        for (x in 3..5)
+            for (z in 3..5)
+                matchers[BlockPos(x, 0, z)] = beaconBase
+        matchers[BlockPos(4, 1, 4)] = DisplayMatcher(Blocks.BEACON)
+        SparseMultiblock(matchers).setOffset(4, 1, 4).setSymmetrical(true)
     }
     override val postEffect = { level: ServerLevel, pos: BlockPos, ritual: IMultiblock, rotation: Rotation ->
         for (record in ritual.simulate(level, pos, rotation, false).second) {
