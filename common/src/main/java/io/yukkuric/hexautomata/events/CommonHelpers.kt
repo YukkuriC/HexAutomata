@@ -14,6 +14,6 @@ object CommonHelpers {
     @JvmStatic
     fun compareAndTriggerTargeted(mob: Entity, newTarget: Entity?) {
         if (!checkNewTarget(mob, newTarget) || newTarget !is ServerPlayer) return
-        CommonEventsHandler[BuiltinEventMarker.TARGETED](newTarget, IHAEvent.Simple(mob))
+        CommonEventsHandler.trigger(BuiltinEventMarker.TARGETED, newTarget, IHAEvent.Simple(mob))
     }
 }

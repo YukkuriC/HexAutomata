@@ -37,11 +37,11 @@ class HAForgeEventsListener {
             if (e.isCanceled || e.amount <= 0) return
             // player hurt
             e.entity.let { it as? ServerPlayer }?.let {
-                CommonEventsHandler[BuiltinEventMarker.HURT](it, HAEventsForge.Hurt(e))
+                CommonEventsHandler.trigger(BuiltinEventMarker.HURT, it, HAEventsForge.Hurt(e))
             }
             // player melee
             if (e.source.`is`(DamageTypes.PLAYER_ATTACK)) e.source.entity.let { it as? ServerPlayer }?.let {
-                CommonEventsHandler[BuiltinEventMarker.MELEE_HIT](it, HAEventsForge.PlayerAttack(e))
+                CommonEventsHandler.trigger(BuiltinEventMarker.MELEE_HIT, it, HAEventsForge.PlayerAttack(e))
             }
         }
         @SubscribeEvent(priority = EventPriority.LOWEST)
@@ -49,7 +49,7 @@ class HAForgeEventsListener {
             if (e.isCanceled || e.loadedFromDisk()) return
             // check player projectile shoot
             (e.entity as? Projectile)?.owner?.let { it as? ServerPlayer }?.let {
-                CommonEventsHandler[BuiltinEventMarker.SHOOT](it, HAEventsForge.Shoot(e))
+                CommonEventsHandler.trigger(BuiltinEventMarker.SHOOT, it, HAEventsForge.Shoot(e))
             }
         }
         @SubscribeEvent(priority = EventPriority.LOWEST)
@@ -58,14 +58,14 @@ class HAForgeEventsListener {
             e.projectile.owner.let { it as? ServerPlayer }?.let {
                 val event = HAEventsForge.ProjectileHit(e)
                 if (event.invalid) return
-                CommonEventsHandler[BuiltinEventMarker.PROJECTILE_HIT](it, event)
+                CommonEventsHandler.trigger(BuiltinEventMarker.PROJECTILE_HIT, it, event)
             }
         }
         @SubscribeEvent(priority = EventPriority.LOWEST)
         fun OnEntityDie(e: LivingDeathEvent) {
             if (e.isCanceled) return
             e.source.entity.let { it as? ServerPlayer }?.let {
-                CommonEventsHandler[BuiltinEventMarker.KILL](it, HAEventsForge.Kill(e))
+                CommonEventsHandler.trigger(BuiltinEventMarker.KILL, it, HAEventsForge.Kill(e))
             }
         }
     }

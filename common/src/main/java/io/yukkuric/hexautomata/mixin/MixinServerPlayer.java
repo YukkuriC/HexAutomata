@@ -21,7 +21,7 @@ public abstract class MixinServerPlayer extends Player {
 
     @Unique
     private void hexAutomata$generalPreTP(Vec3 newPos) {
-        CommonEventsHandler.get(BuiltinEventMarker.TELEPORT.INSTANCE).invoke(ServerPlayer.class.cast(this), new IHAEvent.CommonTeleport(position(), newPos));
+        CommonEventsHandler.trigger(BuiltinEventMarker.TELEPORT.INSTANCE, ServerPlayer.class.cast(this), new IHAEvent.CommonTeleport(position(), newPos));
     }
 
     @Inject(method = "teleportTo(DDD)V", at = @At("HEAD"))

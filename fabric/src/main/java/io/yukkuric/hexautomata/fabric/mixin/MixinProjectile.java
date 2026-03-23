@@ -29,6 +29,6 @@ public abstract class MixinProjectile extends Entity {
         if (hitResult.getType() == HitResult.Type.MISS || !(getOwner() instanceof ServerPlayer player)) return;
         var event = new HAEventsFabric.ProjectileHit(Projectile.class.cast(this), hitResult);
         if (event.getInvalid()) return;
-        CommonEventsHandler.get(BuiltinEventMarker.PROJECTILE_HIT.INSTANCE).invoke(player, event);
+        CommonEventsHandler.trigger(BuiltinEventMarker.PROJECTILE_HIT.INSTANCE, player, event);
     }
 }

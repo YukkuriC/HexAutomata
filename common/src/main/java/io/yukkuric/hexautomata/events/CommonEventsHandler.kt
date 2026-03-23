@@ -7,7 +7,8 @@ import io.yukkuric.hexautomata.items.collector.FocusCollector
 import net.minecraft.server.level.ServerPlayer
 
 object CommonEventsHandler {
-    private fun generalTrigger(type: EventMarker, player: ServerPlayer, event: IHAEvent) {
+    @JvmStatic
+    fun trigger(type: EventMarker, player: ServerPlayer, event: IHAEvent) {
         try {
             for (stack in FocusCollector.getAllFocus(player, type)) {
                 val ret = (stack.item as ItemReactiveFocus).runCallback(stack, event, player)
@@ -16,13 +17,5 @@ object CommonEventsHandler {
         } catch (e: Throwable) {
             player.sendSystemMessage(("hexcasting.mishap.unknown").asTranslatedComponent(e))
         }
-    }
-
-    private val CACHED_HANDLERS = HashMap<EventMarker, (ServerPlayer, IHAEvent) -> Any?>()
-
-    @JvmStatic
-    operator fun get(marker: EventMarker) = CACHED_HANDLERS.computeIfAbsent(marker) {
-        fun(player: ServerPlayer, event: IHAEvent) =
-            generalTrigger(marker, player, event)
     }
 }
