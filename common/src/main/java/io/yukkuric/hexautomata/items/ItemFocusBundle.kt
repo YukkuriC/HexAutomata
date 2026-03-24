@@ -1,5 +1,7 @@
 package io.yukkuric.hexautomata.items
 
+import at.petrak.hexcasting.api.utils.asTranslatedComponent
+import at.petrak.hexcasting.api.utils.gray
 import at.petrak.hexcasting.api.utils.putList
 import io.yukkuric.hexautomata.HexAutomata
 import io.yukkuric.hexautomata.helpers.TooltipHelper
@@ -80,7 +82,14 @@ class ItemFocusBundle : BundleItem(HAItems.Props.STACK_ONE_EPIC) {
         advanced: TooltipFlag
     ) {
         TooltipHelper.appendScopeTooltip(tooltips)
-        super.appendHoverText(stack, lvl, tooltips, advanced)
+        // super.appendHoverText(stack, lvl, tooltips, advanced)
+        tooltips.add(
+            "item.minecraft.bundle.fullness".asTranslatedComponent(
+                stack.getFocusCount(),
+                MAX_FOCUS_COUNT
+            ).gray
+        )
+        for (focus in getContentsSequence(stack)) tooltips.add(focus.item.getName(focus))
     }
 
     override fun overrideStackedOnOther(
