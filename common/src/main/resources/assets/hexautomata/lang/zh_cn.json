@@ -35,6 +35,7 @@
   "hexautomata.category.reactive_focus.desc": "我已冂$(k)meow$(l:https://github.com/YukkuriC/HexAutomata)meow$(/l)meow/$……我已见！",
   "hexautomata.book.reactive_focus.intro": "我找到一个方法 - 通过一个固定的村民意识的智能，佐以源自野生生物的$(thing)\"概念\"/$ - 创造一类特别的施法物品：$(thing)反应核心/$。$(br)这些法术容器在读写时与普通核心无异，但它们容纳的法术会在特定情形下触发，并从我身上直接抽取媒质以施法。",
   "hexautomata.book.reactive_focus.2": "每类$(thing)反应核心/$在触发时也会发送 iota 至法术的初始栈，其中通常以触发者实体作为栈内首个元素。$(br)另外，基于我和触发$(thing)反应核心/$者之间的$(thing)量子媒质纠缠/$效应，内部法术在触发者周围会有一小块额外的施法范围。$(o)太便利了 :)/$",
+  "hexautomata.book.reactive_focus.3": "话虽如此，即使是$(thing)量子媒质纠缠/$也有其局限性：过于频繁地访问$(thing)量子海洋/$可能会导致现实坍缩，并在短时间内（大约1/20秒）断开进一步的连接。这种情况不会经常发生，但确实存在有一些方法可以遭遇乃至诱发这种风险。",
   "hexautomata.book.reactive_focus.patterns.title": "反应核心内的法术",
   "hexautomata.book.reactive_focus.patterns.intro": "利用我和触发者之间的$(thing)量子媒质纠缠/$效应，在$(thing)反应核心/$触发事件内可以施展一些独特的操作。$(br)但是，我有一种预感，如果我在$(o)$(thing)核心/$外施放了这些法术，会发生一些$(bold)很恐怖/$的事情。",
   "hexautomata.book.reactive_focus.hurt": "在我受伤时触发，初始iota为攻击者（可能为null）与伤害数值。",

@@ -41,6 +41,7 @@
       "type": "hexcasting:brainsweep",
       "recipe": "hexautomata:brainsweep/reactive_focus/teleport",
       "text": "hexautomata.book.reactive_focus.teleport"
-    }
+    },
+    "hexautomata.book.reactive_focus.3"
   ]
 }
