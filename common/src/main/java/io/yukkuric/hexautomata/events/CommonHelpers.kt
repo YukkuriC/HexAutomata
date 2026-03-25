@@ -1,5 +1,6 @@
 package io.yukkuric.hexautomata.events
 
+import io.yukkuric.hexautomata.tag.HATags
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.projectile.Projectile
@@ -14,6 +15,7 @@ object CommonHelpers {
     @JvmStatic
     fun compareAndTriggerTargeted(mob: Entity, newTarget: Entity?) {
         if (!checkNewTarget(mob, newTarget) || newTarget !is ServerPlayer) return
+        if (mob.type.`is`(HATags.Entity.IGNORE_TARGETING)) return
         CommonEventsHandler.trigger(BuiltinEventMarker.TARGETED, newTarget, IHAEvent.Simple(mob))
     }
 

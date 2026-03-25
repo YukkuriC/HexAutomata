@@ -11,7 +11,7 @@ Provides items with ability listening to various game events and triggering cust
 
 - `Reactive Focus`: focus bound with certain game events happening on player
     - Events to listen to:
-        - enemy targeting player
+        - enemy targeting player (without tag `#hexautomata:ignore_targeting`)
         - player taking damage
         - player shooting projectile
         - projectile hit something
