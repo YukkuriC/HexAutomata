@@ -8,6 +8,7 @@
     "hexautomata.book.focus_bundle.intro",
     {
       "type": "multiblock",
+      "name": "item.hexautomata.focus_bundle",
       "multiblock_id": "hexautomata:focus_bundle",
       "text": "hexautomata.book.focus_bundle.1"
     },

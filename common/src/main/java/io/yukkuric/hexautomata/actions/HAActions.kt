@@ -14,6 +14,8 @@ class HAActions {
 
         init {
             wrap("quantum_swap", "aqaedwaqded", HexDir.NORTH_WEST, OpQuantumSwap)
+            wrap("event/write", "aqaedwaqeeeeed", HexDir.NORTH_WEST, OpEventWrite)
+            wrap("event/read", "aqqqqqedwaqded", HexDir.EAST, OpEventRead)
         }
 
         @JvmStatic

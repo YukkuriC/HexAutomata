@@ -1,4 +1,4 @@
-import os, json, yaml
+import os, json, yaml, re
 from functools import partial
 
 open = partial(open, encoding='utf-8')
@@ -12,6 +12,9 @@ if 'paths':
     # assets
     ROOT_ASSETS = f'{ROOT_RESOURCES}/assets/hexautomata'
     DIR_MODELS = f'{ROOT_ASSETS}/models/item/reactive_focus'
+    ROOT_PATCHOULI = (
+        f'{ROOT_RESOURCES}/assets/hexcasting/patchouli_books/thehexbook/en_us/entries'
+    )
 
     # data
     ROOT_DATA = f'{ROOT_RESOURCES}/data/hexautomata'
@@ -22,6 +25,22 @@ if 'paths':
 
 if 'data':
     EXTRA_ACC_TAG = ['hexautomata:focus_bundle']
+
+    with open('data.yaml') as f:
+        DATA = yaml.load(f, yaml.Loader)
+
+    with open('patterns.yaml') as f:
+        PATTERNS = yaml.load(f, yaml.Loader)
+    for i, raw in enumerate(PATTERNS):
+        op_id = 'hexautomata:' + raw['id']
+        PATTERNS[i] = {
+            'type': 'hexcasting:pattern',
+            'op_id': op_id,
+            'anchor': op_id,
+            'input': raw.get('input', ''),
+            'output': raw.get('output', ''),
+            'text': 'book.descrip.' + op_id,
+        }
 
 if 'helpers':
 
@@ -87,31 +106,34 @@ if 'helpers':
             dump_json(f'{ROOT_FABRIC}/data/trinkets/tags/items/all.json', obj)
             dump_json(f'{ROOT_FORGE}/data/curios/tags/items/curio.json', obj)
 
-    def extend_patchouli(path, data):
+    def extend_patchouli(path, data, insert_pos=None):
         with open(path) as f:
             raw = json.load(f)
-        raw["pages"] = [e for e in raw["pages"] if isinstance(e, str)]
-        for event in data:
-            raw["pages"].append(
-                {
-                    "type": "hexcasting:brainsweep",
-                    "recipe": "hexautomata:brainsweep/reactive_focus/" + event['id'],
-                    "text": "hexautomata.book.reactive_focus." + event['id'],
-                }
-            )
+        pages = [e for e in raw["pages"] if isinstance(e, str)]
+        if insert_pos is None:
+            insert_pos = len(pages)
+        raw['pages'] = pages[:insert_pos] + data + pages[insert_pos:]
         with open(path, 'w') as f:
             json.dump(raw, f, indent=2)
 
 
-with open('data.yaml') as f:
-    data = yaml.load(f, yaml.Loader)
-
-for event in data:
+for event in DATA:
     dump_brainsweep(event['id'], event['entity'])
     dump_models(event['id'], event['color'])
 
-dump_tags(data)
-extend_patchouli(
-    f'{ROOT_ASSETS}/../hexcasting/patchouli_books/thehexbook/en_us/entries/reactive_focus.json',
-    data,
-)
+dump_tags(DATA)
+
+if 'patchouli':
+    extend_patchouli(
+        f'{ROOT_PATCHOULI}/reactive_focus.json',
+        [
+            {
+                "type": "hexcasting:brainsweep",
+                "recipe": "hexautomata:brainsweep/reactive_focus/" + event['id'],
+                "text": "hexautomata.book.reactive_focus." + event['id'],
+            }
+            for event in DATA
+        ],
+        2,
+    )
+    extend_patchouli(f'{ROOT_PATCHOULI}/reactive_focus_patterns.json', PATTERNS)
