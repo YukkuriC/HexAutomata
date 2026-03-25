@@ -1,7 +1,9 @@
 package io.yukkuric.hexautomata.events
 
+import io.yukkuric.hexautomata.HexAutomata
 import io.yukkuric.hexautomata.tag.HATags
 import net.minecraft.server.level.ServerPlayer
+import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.projectile.Projectile
 import java.util.*
@@ -11,6 +13,12 @@ object CommonHelpers {
     private val PROJ_HIT_GROUND = WeakHashMap<Entity, Boolean>()
     fun checkNewTarget(mob: Entity, newTarget: Entity?) = OLD_TARGETS.put(mob, newTarget) != newTarget
     fun checkProjAlreadyHitGround(proj: Projectile) = PROJ_HIT_GROUND.put(proj, true) != null
+
+    @JvmStatic
+    fun shouldIgnoreHurt(src: DamageSource): Boolean {
+        HexAutomata.LOGGER.error("damage check ${src.type()}, ${src.`is`(HATags.Damage.IGNORE_HURT)}")
+        return src.`is`(HATags.Damage.IGNORE_HURT) || (src.entity?.type?.`is`(HATags.Entity.IGNORE_HURT) == true)
+    }
 
     @JvmStatic
     fun compareAndTriggerTargeted(mob: Entity, newTarget: Entity?) {
