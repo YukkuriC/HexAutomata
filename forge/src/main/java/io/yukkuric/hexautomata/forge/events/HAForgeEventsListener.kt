@@ -6,6 +6,7 @@ import io.yukkuric.hexautomata.actions.HAActions
 import io.yukkuric.hexautomata.blocks.BrainsweepIntermediate
 import io.yukkuric.hexautomata.events.BuiltinEventMarker
 import io.yukkuric.hexautomata.events.CommonEventsHandler
+import io.yukkuric.hexautomata.events.CommonHelpers
 import io.yukkuric.hexautomata.forge.HexAutomataForgeClient
 import io.yukkuric.hexautomata.items.HAItems
 import net.minecraft.core.Registry
@@ -37,6 +38,7 @@ class HAForgeEventsListener {
             if (e.isCanceled || e.amount <= 0) return
             // player hurt
             e.entity.let { it as? ServerPlayer }?.let {
+                if (CommonHelpers.shouldIgnoreHurt(e.source)) return@let
                 CommonEventsHandler.trigger(BuiltinEventMarker.HURT, it, HAEventsForge.Hurt(e))
             }
             // player melee

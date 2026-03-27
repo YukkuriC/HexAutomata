@@ -9,10 +9,12 @@ Provides items with ability listening to various game events and triggering cust
 
 ## Features
 
+> I found a way - using the intelligence from a settled villager mind, with some special "**concepts**" from wild creatures - to create a kind of special spell-casters: **Reactive Focus**.
+
 - `Reactive Focus`: focus bound with certain game events happening on player
     - Events to listen to:
-        - enemy targeting player
-        - player taking damage
+        - enemy targeting player (without tag `#hexautomata:ignore_targeting`)
+        - player taking damage (both source and attacker without tag `#hexautomata:ignore_hurt`)
         - player shooting projectile
         - projectile hit something
         - melee attack something
@@ -29,5 +31,5 @@ Provides items with ability listening to various game events and triggering cust
 - `Reactive Focus Nexus`: an item holding multiple Reactive Focuses
     - all inner focuses take effect as if they're outside
     - crafted with a multiblock structure, ending with another brainsweep
-      ![ritual multiblock](https://github.com/YukkuriC/HexAutomata/blob/main/doc/resources/assets/hexautomata/textures/gui/multiblock/focus_bundle.png?raw=true)
+      ![ritual multiblock](https://github.com/YukkuriC/HexAutomata/blob/main/doc/resources/assets/hexautomata/textures/multiblock/hexdoc/focus_bundle.png?raw=true)
 - Special patterns taking effect exclusively inside triggered events

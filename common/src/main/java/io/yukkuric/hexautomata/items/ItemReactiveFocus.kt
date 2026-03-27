@@ -1,7 +1,5 @@
 package io.yukkuric.hexautomata.items
 
-import at.petrak.hexcasting.api.casting.eval.vm.CastingImage
-import at.petrak.hexcasting.api.casting.eval.vm.CastingVM
 import at.petrak.hexcasting.api.casting.iota.ListIota
 import at.petrak.hexcasting.common.items.storage.ItemFocus
 import io.yukkuric.hexautomata.HexAutomata
@@ -25,10 +23,7 @@ class ItemReactiveFocus(val type: EventMarker, props: Properties) : ItemFocus(pr
     open fun runCallback(stack: ItemStack, event: IHAEvent, player: ServerPlayer) {
         val spell = readIota(stack, player.serverLevel()) ?: return
         val list = if (spell is ListIota) spell.list.toList() else listOf(spell)
-
-        val env = EntityEventEnv(event, stack, player)
-        val image = CastingImage().copy(stack = event.initStack())
-        CastingVM(image, env).queueExecuteAndWrapIotas(list, player.serverLevel())
+        EntityEventEnv(event, stack, player).executeIotasWithTax(list)
     }
 
     override fun getName(focus: ItemStack): Component {

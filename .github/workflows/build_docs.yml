@@ -2,32 +2,20 @@ name: Build the web book
 
 on:
   push:
-    branches:
-      - "main"
+    branches: ["*"]
   pull_request:
   workflow_dispatch:
     inputs:
-      # release:
-      #   description: Release this version
-      #   type: boolean
-      #   default: true
-      # package-index:
-      #   description: Package index to publish to
-      #   type: choice
-      #   default: PyPI
-      #   options:
-      #     - none
-      #     - PyPI
-      #     # - TestPyPI
+      release:
+        description: Release this version
+        type: boolean
+        default: false
 
 permissions:
   contents: read
 
 env:
   PYPI_PACKAGE: hexdoc-hexautomata
-  # adding a branch name here will make hexdoc deploy prerelease versions of your web book on every push to that branch
-  # for example: https://hexcasting.hexxy.media/v/latest/main/en_us/
-  HEXDOC_BRANCHES: '["main"]'
 
 jobs:
   build-hexdoc:
@@ -37,8 +25,8 @@ jobs:
       pages: read
     outputs:
       pages-url: ${{ steps.build.outputs.pages-url }}
-      # deploy: ${{ github.event_name != 'pull_request' && contains(fromJson(env.HEXDOC_BRANCHES), github.ref_name) || inputs.release == true }}
-      deploy: true
+      # Release on pushes to main, or if manually running with release checked
+      release: ${{ github.event_name == 'push' && github.ref_name == 'main' || inputs.release == true }}
     steps:
       - uses: actions/checkout@v4
 
@@ -59,11 +47,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          release: true # ${{ inputs.release == true }}
+          # Always build in release mode, since we only deploy the web book for releases
+          release: true
 
   deploy-pages:
     needs: build-hexdoc
-    if: needs.build-hexdoc.outputs.deploy == 'true'
+    if: needs.build-hexdoc.outputs.release == 'true'
     runs-on: ubuntu-latest
     concurrency:
       group: hexdoc-deploy-pages
@@ -88,7 +77,7 @@ jobs:
       - name: Merge new hexdoc build into existing book
         uses: hexdoc-dev/actions/merge@v1
         with:
-          release: true # ${{ inputs.release == true }}
+          release: true
           site-url: ${{ needs.build-hexdoc.outputs.pages-url }}
 
       # if you want to add extra things to your website (eg. Javadoc/Dokka), add it to _site/dst/docs here
@@ -96,7 +85,7 @@ jobs:
       - name: Deploy to Pages
         uses: hexdoc-dev/actions/deploy-pages@v1
         with:
-          release: true # ${{ inputs.release == true }}
+          release: true
           merge: false
 
   publish-pypi:
@@ -104,7 +93,7 @@ jobs:
     needs:
       - build-hexdoc
       - deploy-pages
-    # if: inputs.release == true # && inputs.package-index == 'PyPI'
+    if: needs.build-hexdoc.outputs.release == 'true'
     environment:
       name: pypi
       url: https://pypi.org/p/${{ env.PYPI_PACKAGE }}
@@ -119,28 +108,3 @@ jobs:
 
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
-
-  # Uncomment if you want to try publishing to TestPyPI before using the real index.
-
-  # publish-testpypi:
-  #   runs-on: ubuntu-latest
-  #   needs:
-  #    - build-hexdoc
-  #    - deploy-pages
-  #   if: inputs.package-index == 'TestPyPI'
-  #   environment:
-  #     name: testpypi
-  #     url: https://test.pypi.org/p/${{ env.PYPI_PACKAGE }}
-  #   permissions:
-  #     id-token: write
-  #   steps:
-  #     - name: Download package artifact
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         name: hexdoc-build
-  #         path: dist
-
-  #     - name: Publish to TestPyPI
-  #       uses: pypa/gh-action-pypi-publish@release/v1
-  #       with:
-  #         repository-url: https://test.pypi.org/legacy/

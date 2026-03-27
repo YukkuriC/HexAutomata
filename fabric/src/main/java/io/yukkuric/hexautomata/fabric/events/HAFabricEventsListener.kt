@@ -2,6 +2,7 @@ package io.yukkuric.hexautomata.fabric.events
 
 import io.yukkuric.hexautomata.events.BuiltinEventMarker
 import io.yukkuric.hexautomata.events.CommonEventsHandler
+import io.yukkuric.hexautomata.events.CommonHelpers
 import io.yukkuric.hexautomata.items.HAItems
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents
@@ -34,6 +35,7 @@ object HAFabricEventsListener {
             if (damage <= 0) return@register true
             // player hurt
             entity.let { it as? ServerPlayer }?.let {
+                if (CommonHelpers.shouldIgnoreHurt(source)) return@let
                 CommonEventsHandler.trigger(
                     BuiltinEventMarker.HURT, it, HAEventsFabric.Hurt(source.entity, damage.toDouble())
                 )

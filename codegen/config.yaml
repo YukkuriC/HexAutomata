@@ -28,3 +28,15 @@
   category: Scope
   descrip: Only the first Reactive Focus of a type met take effect; if set to false, all Focuses of certain type are triggered for each event (may cause performance impact)
   side: common
+- name: MaxRecursiveEventsPerTick
+  type: int
+  default: 10, 0, 114514
+  category: Execute
+  descrip: Recursive triggered events in a tick deeper than this value will be rejected (e.g. teleport self inside `Teleported` focus)
+  side: common
+- name: EventTriggerTax
+  type: int
+  default: 0, 0, Integer.MAX_VALUE
+  category: Execute
+  descrip: per time right before the hex get executed, in 1e-4 dust
+  side: common
