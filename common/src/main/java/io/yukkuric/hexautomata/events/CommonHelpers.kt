@@ -1,7 +1,9 @@
 package io.yukkuric.hexautomata.events
 
+import at.petrak.hexcasting.api.casting.eval.env.PlayerBasedMishapEnv
 import io.yukkuric.hexautomata.HAConfig
 import io.yukkuric.hexautomata.HexAutomata
+import io.yukkuric.hexautomata.casting.MishapOutEvent
 import io.yukkuric.hexautomata.tag.HATags
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.damagesource.DamageSource
@@ -31,6 +33,7 @@ object CommonHelpers {
     // max recursive count per tick
     private val RECURSIVE_COUNTER = WeakHashMap<ServerPlayer, Int>()
     private val COUNTER_VERSION = WeakHashMap<ServerPlayer, Int>()
+    private val RECURSIVE_MISHAP_AGE = WeakHashMap<ServerPlayer, Int>()
     @JvmStatic
     fun trackRecursive(player: ServerPlayer): Boolean {
         val oldVersion = COUNTER_VERSION.getOrDefault(player, 0)
@@ -41,10 +44,26 @@ object CommonHelpers {
         }
         val newRecursed = RECURSIVE_COUNTER.getOrDefault(player, 0) + 1
         RECURSIVE_COUNTER[player] = newRecursed
-        return newRecursed > HAConfig.MaxRecursiveEventsPerTick()
+        val overflow = newRecursed > HAConfig.MaxRecursiveEventsPerTick()
+        recursiveMishap(player)
+        return overflow
     }
     @JvmStatic
     fun releaseRecursive(player: ServerPlayer) {
         RECURSIVE_COUNTER[player] = (RECURSIVE_COUNTER.getOrDefault(player, 0) - 1).coerceAtLeast(0)
+    }
+
+    private fun recursiveMishap(player: ServerPlayer) {
+        val oldVersion = RECURSIVE_MISHAP_AGE.getOrDefault(player, 0)
+        val newVersion = player.tickCount
+        if (oldVersion == newVersion) return
+        RECURSIVE_MISHAP_AGE[player] = newVersion
+
+        // TODO: advnacements?
+
+        // manually call mishap
+        val mishapEnv = PlayerBasedMishapEnv(player)
+        mishapEnv.drown()
+        player.sendSystemMessage(MishapOutEvent.ERROR_MSG)
     }
 }
