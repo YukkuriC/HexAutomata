@@ -33,6 +33,8 @@ public class HAConfigFabric implements ConfigData {
         private boolean FirstFocusOnly = true;
         @Comment("<Execute> " + desc_MaxRecursiveEventsPerTick)
         private int MaxRecursiveEventsPerTick = 10;
+        @Comment("<Execute> " + desc_EventTriggerTax)
+        private int EventTriggerTax = 0;
 
         public boolean EnablesFocusInHands() {
             return EnablesFocusInHands;
@@ -51,6 +53,9 @@ public class HAConfigFabric implements ConfigData {
         }
         public int MaxRecursiveEventsPerTick() {
             return MaxRecursiveEventsPerTick;
+        }
+        public int EventTriggerTax() {
+            return EventTriggerTax;
         }
     }
 }

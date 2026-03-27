@@ -28,6 +28,9 @@ public class HAConfigForge implements API {
     public int MaxRecursiveEventsPerTick() {
         return cfg_MaxRecursiveEventsPerTick.get();
     }
+    public int EventTriggerTax() {
+        return cfg_EventTriggerTax.get();
+    }
 
     public ForgeConfigSpec.BooleanValue
             cfg_EnablesFocusInHands,
@@ -36,7 +39,8 @@ public class HAConfigForge implements API {
             cfg_EnablesFocusInsideAccessories,
             cfg_FirstFocusOnly;
     public ForgeConfigSpec.IntValue
-            cfg_MaxRecursiveEventsPerTick;
+            cfg_MaxRecursiveEventsPerTick,
+            cfg_EventTriggerTax;
 
     public HAConfigForge(ForgeConfigSpec.Builder builder) {
         builder.push("Scope");
@@ -49,6 +53,7 @@ public class HAConfigForge implements API {
 
         builder.push("Execute");
         cfg_MaxRecursiveEventsPerTick = builder.comment(desc_MaxRecursiveEventsPerTick).defineInRange("MaxRecursiveEventsPerTick", 10, 0, 114514);
+        cfg_EventTriggerTax = builder.comment(desc_EventTriggerTax).defineInRange("EventTriggerTax", 0, 0, Integer.MAX_VALUE);
         builder.pop();
 
         INSTANCE = this;
