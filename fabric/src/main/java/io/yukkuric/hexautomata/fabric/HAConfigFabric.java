@@ -31,6 +31,8 @@ public class HAConfigFabric implements ConfigData {
         private boolean EnablesFocusInsideAccessories = true;
         @Comment("<Scope> " + desc_FirstFocusOnly)
         private boolean FirstFocusOnly = true;
+        @Comment("<Execute> " + desc_MaxRecursiveEventsPerTick)
+        private int MaxRecursiveEventsPerTick = 10;
 
         public boolean EnablesFocusInHands() {
             return EnablesFocusInHands;
@@ -46,6 +48,9 @@ public class HAConfigFabric implements ConfigData {
         }
         public boolean FirstFocusOnly() {
             return FirstFocusOnly;
+        }
+        public int MaxRecursiveEventsPerTick() {
+            return MaxRecursiveEventsPerTick;
         }
     }
 }

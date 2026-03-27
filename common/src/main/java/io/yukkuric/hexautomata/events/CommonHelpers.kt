@@ -1,5 +1,6 @@
 package io.yukkuric.hexautomata.events
 
+import io.yukkuric.hexautomata.HAConfig
 import io.yukkuric.hexautomata.HexAutomata
 import io.yukkuric.hexautomata.tag.HATags
 import net.minecraft.server.level.ServerPlayer
@@ -28,7 +29,6 @@ object CommonHelpers {
     }
 
     // max recursive count per tick
-    val MAX_RECURSIVE = 10
     private val RECURSIVE_COUNTER = WeakHashMap<ServerPlayer, Int>()
     private val COUNTER_VERSION = WeakHashMap<ServerPlayer, Int>()
     @JvmStatic
@@ -41,7 +41,7 @@ object CommonHelpers {
         }
         val newRecursed = RECURSIVE_COUNTER.getOrDefault(player, 0) + 1
         RECURSIVE_COUNTER[player] = newRecursed
-        return newRecursed > MAX_RECURSIVE
+        return newRecursed > HAConfig.MaxRecursiveEventsPerTick()
     }
     @JvmStatic
     fun releaseRecursive(player: ServerPlayer) {
