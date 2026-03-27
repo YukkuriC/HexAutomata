@@ -14,7 +14,13 @@ import java.util.*
 object CommonHelpers {
     private val OLD_TARGETS = WeakHashMap<Entity, Entity>()
     private val PROJ_HIT_GROUND = WeakHashMap<Entity, Boolean>()
-    fun checkNewTarget(mob: Entity, newTarget: Entity?) = OLD_TARGETS.put(mob, newTarget) != newTarget
+    private fun checkNewTarget(mob: Entity, newTarget: Entity?): Boolean {
+        val oldTarget = OLD_TARGETS[mob]
+        if (oldTarget == newTarget) return true
+        OLD_TARGETS[mob] = newTarget
+        return false
+    }
+
     fun checkProjAlreadyHitGround(proj: Projectile) = PROJ_HIT_GROUND.put(proj, true) != null
 
     @JvmStatic
@@ -25,7 +31,7 @@ object CommonHelpers {
 
     @JvmStatic
     fun compareAndTriggerTargeted(mob: Entity, newTarget: Entity?) {
-        if (!checkNewTarget(mob, newTarget) || newTarget !is ServerPlayer) return
+        if (checkNewTarget(mob, newTarget) || newTarget !is ServerPlayer) return
         if (mob.type.`is`(HATags.Entity.IGNORE_TARGETING)) return
         CommonEventsHandler.trigger(BuiltinEventMarker.TARGETED, newTarget, IHAEvent.Simple(mob))
     }
@@ -45,7 +51,7 @@ object CommonHelpers {
         val newRecursed = RECURSIVE_COUNTER.getOrDefault(player, 0) + 1
         RECURSIVE_COUNTER[player] = newRecursed
         val overflow = newRecursed > HAConfig.MaxRecursiveEventsPerTick()
-        recursiveMishap(player)
+        if (overflow) recursiveMishap(player)
         return overflow
     }
     @JvmStatic
