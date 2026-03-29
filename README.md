@@ -9,7 +9,7 @@ Provides items with ability listening to various game events and triggering cust
 
 ## Features
 
-> I found a way - using the intelligence from a settled villager mind, with some special "**concepts**" from wild creatures - to create a kind of special spell-casters: **Reactive Focus**.
+> _I found a way - using the intelligence from a settled villager mind, with some special "**concepts**" from wild creatures - to create a kind of special spell-casters: **Reactive Focus**._
 
 - `Reactive Focus`: focus bound with certain game events happening on player
     - Events to listen to:

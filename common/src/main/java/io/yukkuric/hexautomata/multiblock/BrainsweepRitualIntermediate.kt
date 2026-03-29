@@ -4,6 +4,8 @@ import at.petrak.hexcasting.common.recipe.HexRecipeStuffRegistry
 import at.petrak.hexcasting.common.recipe.ingredient.StateIngredientBlock
 import com.google.common.base.Suppliers
 import io.yukkuric.hexautomata.blocks.BrainsweepIntermediate
+import io.yukkuric.hexautomata.network.HAPackets
+import io.yukkuric.hexautomata.network.packet.S2CShowMultiblock
 import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.chat.Component
@@ -27,6 +29,8 @@ class BrainsweepRitualIntermediate : BrainsweepIntermediate() {
             BE_TYPES[id] = type
             return type
         }
+
+        val MSG_RITUAL_MISSING = Component.translatable("hexautomata.ritual.missing")
     }
 
     override fun newBlockEntity(blockPos: BlockPos, blockState: BlockState): BE {
@@ -53,12 +57,18 @@ class BrainsweepRitualIntermediate : BrainsweepIntermediate() {
                 )
                 explosion.explode()
                 if (ritual != null) {
-                    PatchouliAPI.get().showMultiblock(
-                        ritual,
-                        Component.translatable("hexautomata.ritual.missing"),
-                        blockPos.offset(0, -1, 0),
-                        Rotation.NONE
-                    )
+                    val displayCenter = blockPos.offset(0, -1, 0)
+                    for (player in level.getPlayers { it.position().distanceTo(center) < 32 }) {
+                        HAPackets.sendPacketToPlayer(
+                            player,
+                            S2CShowMultiblock(
+                                ritualId,
+                                displayCenter,
+                                Rotation.NONE,
+                                MSG_RITUAL_MISSING
+                            )
+                        )
+                    }
                 }
                 return
             }
