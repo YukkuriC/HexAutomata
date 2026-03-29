@@ -10,7 +10,6 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.level.Explosion
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.Rotation
@@ -52,10 +51,10 @@ class BrainsweepRitualIntermediate : BrainsweepIntermediate() {
             if (rot == null) {
                 destroySelf(fallbackBlock.get() ?: Blocks.DIRT)
                 val center = blockPos.center
-                val explosion = Explosion(
-                    level, null, center.x, center.y, center.z, 5f, false, Explosion.BlockInteraction.KEEP
-                )
-                explosion.explode()
+                sacrifice?.let {
+                    // TODO revert brainsweep
+                    it.kill()
+                }
                 if (ritual != null) {
                     val displayCenter = blockPos.offset(0, -1, 0)
                     for (player in level.getPlayers { it.position().distanceTo(center) < 32 }) {

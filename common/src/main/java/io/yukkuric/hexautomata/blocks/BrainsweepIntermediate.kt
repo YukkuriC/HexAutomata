@@ -4,11 +4,14 @@ import io.yukkuric.hexautomata.HexAutomata
 import io.yukkuric.hexautomata.register
 import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.NbtUtils
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.EntityType
+import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
@@ -24,6 +27,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import org.jetbrains.annotations.NotNull
+import java.util.*
 
 open class BrainsweepIntermediate : Block(PROP_BLOCK), EntityBlock {
     companion object {
@@ -93,6 +97,8 @@ open class BrainsweepIntermediate : Block(PROP_BLOCK), EntityBlock {
         // contextual data
         lateinit var level: ServerLevel
         lateinit var blockPos: BlockPos
+        var self: BE? = null
+        var sacrifice: LivingEntity? = null
 
         @Synchronized
         override fun tick(level: Level, blockPos: BlockPos, blockState: BlockState, blockEntity: BE?) {
@@ -102,6 +108,7 @@ open class BrainsweepIntermediate : Block(PROP_BLOCK), EntityBlock {
             }
             this.level = level as ServerLevel
             this.blockPos = blockPos
+            sacrifice = blockEntity?.sacrifice
             perform()
         }
 
@@ -123,5 +130,27 @@ open class BrainsweepIntermediate : Block(PROP_BLOCK), EntityBlock {
         }
     }
 
-    class BE(type: BlockEntityType<*>, pos: @NotNull BlockPos, state: BlockState) : BlockEntity(type, pos, state)
+    class BE(type: BlockEntityType<*>, pos: @NotNull BlockPos, state: BlockState) : BlockEntity(type, pos, state) {
+        companion object {
+            const val KEY_SACRIFICE_UUID = "sacrifice"
+        }
+
+        private var sacrificeId: UUID? = null
+
+        override fun load(data: CompoundTag) {
+            sacrificeId = if (data.contains(KEY_SACRIFICE_UUID, 11)) NbtUtils.loadUUID(data[KEY_SACRIFICE_UUID])
+            else null
+        }
+
+        override fun saveAdditional(data: CompoundTag) {
+            sacrificeId?.let { data.put(KEY_SACRIFICE_UUID, NbtUtils.createUUID(it)) }
+        }
+
+        var sacrifice: LivingEntity?
+            get() = sacrificeId?.let { (level as? ServerLevel)?.getEntity(it) as? LivingEntity }
+            set(target) {
+                sacrificeId = target?.uuid
+                setChanged()
+            }
+    }
 }
