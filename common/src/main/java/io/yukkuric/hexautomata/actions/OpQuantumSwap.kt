@@ -16,7 +16,7 @@ object OpQuantumSwap : EventLimitedAction() {
         val caster = env.castingEntity ?: return listOf()
         val target = env.event.entity ?: caster
         var oldPosTarget = target.position()
-        env.event.let { it as IHAEvent.CommonProjHit }?.let {
+        env.event.let { it as? IHAEvent.CommonProjHit }?.let {
             oldPosTarget = it.extraAmbitCenter()
         }
         val oldPosCaster = caster.position()
