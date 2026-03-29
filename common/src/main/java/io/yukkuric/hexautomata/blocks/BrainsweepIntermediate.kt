@@ -6,8 +6,11 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.item.ItemEntity
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
@@ -19,6 +22,7 @@ import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityTicker
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.phys.BlockHitResult
 import org.jetbrains.annotations.NotNull
 
 open class BrainsweepIntermediate : Block(PROP_BLOCK), EntityBlock {
@@ -68,6 +72,19 @@ open class BrainsweepIntermediate : Block(PROP_BLOCK), EntityBlock {
         blockEntityType: BlockEntityType<T>
     ) = blockEntityType as? BlockEntityTicker<T>
 
+    override fun use(
+        blockState: BlockState,
+        level: Level,
+        blockPos: BlockPos,
+        player: Player,
+        interactionHand: InteractionHand,
+        blockHitResult: BlockHitResult
+    ): InteractionResult {
+        val beType = BuiltInRegistries.BLOCK_ENTITY_TYPE.get(BuiltInRegistries.BLOCK.getKey(blockState.block))
+        if (beType is BEType) beType.tick(level, blockPos, blockState, null)
+        return InteractionResult.PASS
+    }
+
     open class BEType(src: BrainsweepIntermediate) : BlockEntityType<BE>(src::newBlockEntity, setOf(src), null),
         BlockEntityTicker<BE> {
 
@@ -78,7 +95,7 @@ open class BrainsweepIntermediate : Block(PROP_BLOCK), EntityBlock {
         lateinit var blockPos: BlockPos
 
         @Synchronized
-        override fun tick(level: Level, blockPos: BlockPos, blockState: BlockState, blockEntity: BE) {
+        override fun tick(level: Level, blockPos: BlockPos, blockState: BlockState, blockEntity: BE?) {
             if (level.isClientSide) {
                 // TODO: make some fx here?
                 return
