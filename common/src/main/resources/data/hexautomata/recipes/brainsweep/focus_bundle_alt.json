@@ -1,0 +1,15 @@
+{
+  "type": "hexcasting:brainsweep",
+  "blockIn": {
+    "type": "block",
+    "block": "beacon"
+  },
+  "cost": 100000,
+  "entityIn": {
+    "type": "entity_type",
+    "entityType": "magma_cube"
+  },
+  "result": {
+    "name": "hexautomata:focus_bundle"
+  }
+}
