@@ -1,5 +1,9 @@
 {
   "itemGroup.hexautomata.main": "HexAutomata",
+  // tags
+  "tag.hexautomata.ignore_hurt": "Ignoring Hurt Events Tracking",
+  "tag.hexautomata.ignore_targeting": "Ignoring Targeting Events Tracking",
+  "tag.hexautomata.multi_threaded": "Multi-Threaded Minds",
   // item info
   "item.hexautomata.reactive_focus": "Reactive Focus",
   "item.hexautomata.reactive_focus.template": "Reactive Focus: %s",

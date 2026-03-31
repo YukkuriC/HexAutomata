@@ -6,8 +6,8 @@
   },
   "cost": 100000,
   "entityIn": {
-    "type": "entity_type",
-    "entityType": "magma_cube"
+    "type": "entity_tag",
+    "tag": "hexautomata:multi_threaded"
   },
   "result": {
     "name": "hexautomata:focus_bundle"

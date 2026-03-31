@@ -1,5 +1,9 @@
 {
   "itemGroup.hexautomata.main": "咒法自动机",
+  // tags
+  "tag.hexautomata.ignore_hurt": "忽略伤害事件追踪",
+  "tag.hexautomata.ignore_targeting": "忽略锁定事件追踪",
+  "tag.hexautomata.multi_threaded": "多线程思维",
   // item info
   "item.hexautomata.reactive_focus": "反应核心",
   "item.hexautomata.reactive_focus.template": "反应核心：%s",
