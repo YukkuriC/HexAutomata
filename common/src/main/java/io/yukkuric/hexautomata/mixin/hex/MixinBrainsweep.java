@@ -1,16 +1,21 @@
 package io.yukkuric.hexautomata.mixin.hex;
 
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment;
-import at.petrak.hexcasting.common.casting.actions.spells.great.OpBrainsweep;
-import io.yukkuric.hexautomata.HexAutomata;
+import at.petrak.hexcasting.common.recipe.ingredient.brainsweep.EntityTagIngredient;
 import io.yukkuric.hexautomata.blocks.BrainsweepIntermediate;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.Mob;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.level.Level;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 @Mixin(targets = "at.petrak.hexcasting.common.casting.actions.spells.great.OpBrainsweep$Spell")
 public abstract class MixinBrainsweep {
@@ -26,6 +31,24 @@ public abstract class MixinBrainsweep {
         var be = level.getBlockEntity(getPos());
         if (be instanceof BrainsweepIntermediate.BE iBE) {
             iBE.setSacrifice(sacrifice);
+        }
+    }
+
+    @Mixin(EntityTagIngredient.class)
+    static class EntityTagIngredientDisplay {
+        @Shadow(remap = false)
+        @Final
+        public TagKey<EntityType<?>> entityTypeTag;
+        @Inject(method = "exampleEntity", at = @At("HEAD"), remap = false, cancellable = true)
+        void loopedEntityList(Level level, CallbackInfoReturnable<Entity> cir) {
+            var optional = BuiltInRegistries.ENTITY_TYPE.getTag(entityTypeTag);
+            if (optional.isEmpty()) {
+                cir.setReturnValue(null);
+                return;
+            }
+            var allEntities = optional.get();
+            int tick = (int) (LocalDateTime.now().toEpochSecond(ZoneOffset.UTC) % allEntities.size());
+            cir.setReturnValue(allEntities.get(tick).value().create(level));
         }
     }
 }

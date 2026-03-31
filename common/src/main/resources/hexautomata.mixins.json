@@ -9,7 +9,8 @@
   "mixins": [
     "MixinMob",
     "MixinServerPlayer",
-    "hex.MixinBrainsweep"
+    "hex.MixinBrainsweep",
+    "hex.MixinBrainsweep$EntityTagIngredientDisplay"
   ],
   "injectors": {
     "defaultRequire": 1
