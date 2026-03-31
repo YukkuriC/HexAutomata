@@ -3,6 +3,7 @@ package io.yukkuric.hexautomata.multiblock
 import at.petrak.hexcasting.common.recipe.HexRecipeStuffRegistry
 import at.petrak.hexcasting.common.recipe.ingredient.StateIngredientBlock
 import com.google.common.base.Suppliers
+import io.yukkuric.hexautomata.HexAutomata
 import io.yukkuric.hexautomata.blocks.BrainsweepIntermediate
 import io.yukkuric.hexautomata.network.HAPackets
 import io.yukkuric.hexautomata.network.packet.S2CShowMultiblock
@@ -10,6 +11,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.entity.Mob
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.Rotation
@@ -52,8 +54,8 @@ class BrainsweepRitualIntermediate : BrainsweepIntermediate() {
                 destroySelf(fallbackBlock.get() ?: Blocks.DIRT)
                 val center = blockPos.center
                 sacrifice?.let {
-                    // TODO revert brainsweep
-                    it.kill()
+                    // revert brainsweep
+                    (it as? Mob)?.let(HexAutomata.API::revertBrainsweep)
                 }
                 if (ritual != null) {
                     val displayCenter = blockPos.offset(0, -1, 0)

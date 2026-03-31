@@ -2,6 +2,7 @@ package io.yukkuric.hexautomata.fabric
 
 import at.petrak.hexcasting.common.lib.hex.HexActions
 import at.petrak.hexcasting.common.msgs.IMessage
+import at.petrak.hexcasting.fabric.cc.HexCardinalComponents
 import io.yukkuric.hexautomata.HexAutomata
 import io.yukkuric.hexautomata.HexAutomata.IAPI
 import io.yukkuric.hexautomata.HexAutomata.commonInit
@@ -23,6 +24,7 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
+import net.minecraft.world.entity.Mob
 
 class HexAutomataFabric : IAPI(), ModInitializer {
     private fun <T : Any> bindReg(reg: Registry<T>, loader: ((ResourceLocation, T) -> Any?) -> Any?) {
@@ -41,6 +43,11 @@ class HexAutomataFabric : IAPI(), ModInitializer {
     }
 
     override fun modLoaded(id: String) = FabricLoader.getInstance().isModLoaded(id)
+    override fun revertBrainsweep(mob: Mob) {
+        val comp = HexCardinalComponents.BRAINSWEPT.get(mob)
+        comp.isBrainswept = false
+        forceRefresh(mob)
+    }
 
     companion object {
         init {

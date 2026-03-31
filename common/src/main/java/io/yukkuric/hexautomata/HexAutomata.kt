@@ -8,7 +8,9 @@ import io.yukkuric.hexautomata.items.HAItems
 import io.yukkuric.hexautomata.items.ItemFocusBundle
 import io.yukkuric.hexautomata.items.ItemReactiveFocus
 import io.yukkuric.hexautomata.multiblock.HARituals
+import net.minecraft.nbt.CompoundTag
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.entity.Mob
 import net.minecraft.world.entity.player.Player
 import org.slf4j.Logger
 
@@ -44,6 +46,15 @@ object HexAutomata {
         }
 
         abstract fun modLoaded(id: String): Boolean
+        abstract fun revertBrainsweep(mob: Mob)
+
+        open fun forceRefresh(mob: Mob) = mob.level().let { level ->
+            mob.type.create(level)?.let {
+                it.load(mob.saveWithoutId(CompoundTag()))
+                mob.discard()
+                level.addFreshEntity(it)
+            }
+        }
     }
 }
 
