@@ -32,11 +32,7 @@ open class BrainsweepIntermediate : Block(PROP_BLOCK), EntityBlock, BlockEntityT
     companion object {
         protected val PROP_BLOCK = Properties.of().noCollission().noLootTable()
 
-        fun create(id: ResourceLocation): Pair<BrainsweepIntermediate, BlockEntityType<BE>> {
-            val block = BrainsweepIntermediate()
-            val type = BEType(block)
-            return HABlocks.createBE(id, block, type)
-        }
+        fun create(id: ResourceLocation) = BrainsweepIntermediate().let { HABlocks.createBE(id, it, BEType(it)) }
     }
 
     override fun getRenderShape(blockState: BlockState?) = RenderShape.INVISIBLE

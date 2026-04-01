@@ -32,11 +32,11 @@ class HexAutomataFabric : IAPI(), ModInitializer {
     }
 
     override fun onInitialize() {
-        bindReg(HexActions.REGISTRY, HAActions::registerActions)
-        bindReg(BuiltInRegistries.ITEM, HAItems::registerItems)
-        bindReg(BuiltInRegistries.CREATIVE_MODE_TAB, HAItems.Tabs::registerCreativeTabs)
-        bindReg(BuiltInRegistries.BLOCK, HABlocks::registerBlocks)
-        bindReg(BuiltInRegistries.BLOCK_ENTITY_TYPE, HABlocks::registerBETypes)
+        bindReg(HexActions.REGISTRY, HAActions::register)
+        bindReg(BuiltInRegistries.ITEM, HAItems::register)
+        bindReg(BuiltInRegistries.CREATIVE_MODE_TAB, HAItems.Tabs::register)
+        bindReg(BuiltInRegistries.BLOCK, HABlocks::register)
+        bindReg(BuiltInRegistries.BLOCK_ENTITY_TYPE, HABlocks.BETypes::register)
         HAFabricEventsListener.load()
         HexAutomata.tryLoadInterop("trinkets", TrinketsInterop::run)
         commonInit()

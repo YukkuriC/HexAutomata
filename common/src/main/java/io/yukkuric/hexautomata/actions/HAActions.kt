@@ -5,25 +5,20 @@ import at.petrak.hexcasting.api.casting.castables.Action
 import at.petrak.hexcasting.api.casting.math.HexDir
 import at.petrak.hexcasting.api.casting.math.HexPattern
 import io.yukkuric.hexautomata.HexAutomata.modLoc
-import io.yukkuric.hexautomata.register
-import net.minecraft.resources.ResourceLocation
+import io.yukkuric.hexautomata.helpers.CustomRegisterObject
 
-object HAActions {
-    private val ACTIONS: MutableMap<ResourceLocation, ActionRegistryEntry> = HashMap()
-
+object HAActions : CustomRegisterObject<ActionRegistryEntry>() {
     init {
         wrap("quantum_swap", "aqaedwaqded", HexDir.NORTH_WEST, OpQuantumSwap)
         wrap("event/write", "aqaedwaqeeeeed", HexDir.NORTH_WEST, OpEventWrite)
         wrap("event/read", "aqqqqqedwaqded", HexDir.EAST, OpEventRead)
     }
 
-    fun registerActions(regFunc: (ResourceLocation, ActionRegistryEntry) -> Any?) = ACTIONS.register(regFunc)
-
     private fun wrap(name: String, signature: String, dir: HexDir, action: Action?): ActionRegistryEntry {
         val pattern = HexPattern.fromAngles(signature, dir)
         val key = modLoc(name)
         val entry = ActionRegistryEntry(pattern, action)
-        ACTIONS[key] = entry
+        this[key] = entry
         return entry
     }
 }

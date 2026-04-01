@@ -24,11 +24,8 @@ import vazkii.patchouli.api.PatchouliAPI
 // leave it mutable for modifications (like modpacks)
 open class BrainsweepRitualIntermediate(var ritualId: ResourceLocation) : BrainsweepIntermediate() {
     companion object {
-        fun create(id: ResourceLocation): Pair<BrainsweepRitualIntermediate, BlockEntityType<BE>> {
-            val block = BrainsweepRitualIntermediate(id)
-            val type = BEType(block)
-            return HABlocks.createBE(id, block, type)
-        }
+        fun create(id: ResourceLocation) =
+            BrainsweepRitualIntermediate(id).let { HABlocks.createBE(id, it, BEType(it)) }
 
         val MSG_RITUAL_MISSING = Component.translatable("hexautomata.ritual.missing")
     }
@@ -57,12 +54,8 @@ open class BrainsweepRitualIntermediate(var ritualId: ResourceLocation) : Brains
                 val displayCenter = blockPos.offset(0, -1, 0)
                 for (player in level.getPlayers { it.position().distanceTo(center) < 32 }) {
                     HAPackets.sendPacketToPlayer(
-                        player,
-                        S2CShowMultiblock(
-                            ritualId,
-                            displayCenter,
-                            Rotation.NONE,
-                            MSG_RITUAL_MISSING
+                        player, S2CShowMultiblock(
+                            ritualId, displayCenter, Rotation.NONE, MSG_RITUAL_MISSING
                         )
                     )
                 }

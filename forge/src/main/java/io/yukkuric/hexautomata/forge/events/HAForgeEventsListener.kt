@@ -81,13 +81,13 @@ class HAForgeEventsListener {
                 if (e.registryKey != key) return
                 regFunc { id, obj -> e.register(key, id) { obj } }
             }
-            bindReg(HexRegistries.ACTION, HAActions::registerActions)
-            bindReg(Registries.ITEM, HAItems::registerItems)
-            bindReg(Registries.CREATIVE_MODE_TAB, HAItems.Tabs::registerCreativeTabs)
+            bindReg(HexRegistries.ACTION, HAActions::register)
+            bindReg(Registries.ITEM, HAItems::register)
+            bindReg(Registries.CREATIVE_MODE_TAB, HAItems.Tabs::register)
 
             // brainsweep intermediate
-            bindReg(Registries.BLOCK, HABlocks::registerBlocks)
-            bindReg(Registries.BLOCK_ENTITY_TYPE, HABlocks::registerBETypes)
+            bindReg(Registries.BLOCK, HABlocks::register)
+            bindReg(Registries.BLOCK_ENTITY_TYPE, HABlocks.BETypes::register)
         }
         @SubscribeEvent
         fun OnAddCreativeTabItems(e: BuildCreativeModeTabContentsEvent) {
