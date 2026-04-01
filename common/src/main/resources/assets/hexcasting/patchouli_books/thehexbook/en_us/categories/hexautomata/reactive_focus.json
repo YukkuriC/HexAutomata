@@ -2,7 +2,6 @@
   "name": "itemGroup.hexautomata.main",
   "icon": "hexautomata:logo",
   "description": "hexautomata.category.reactive_focus.desc",
-  "advancement": "hexcasting:enlightenment",
   "parent": "hexcasting:greatwork",
   "sortnum": 0
 }
