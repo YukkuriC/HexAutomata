@@ -1,7 +1,5 @@
 package io.yukkuric.hexautomata.blocks
 
-import io.yukkuric.hexautomata.HexAutomata
-import io.yukkuric.hexautomata.register
 import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.nbt.CompoundTag
@@ -32,29 +30,12 @@ import java.util.*
 open class BrainsweepIntermediate : Block(PROP_BLOCK), EntityBlock {
     companion object {
         protected val PROP_BLOCK = Properties.of().noCollission().noLootTable()
-        @JvmStatic
-        protected val BLOCKS = HashMap<ResourceLocation, BrainsweepIntermediate>()
-        @JvmStatic
-        protected val BE_TYPES = HashMap<ResourceLocation, BlockEntityType<*>>()
 
-        fun registerBlocks(r: (ResourceLocation, Block) -> Any?) = BLOCKS.register(r)
-        fun registerBETypes(r: (ResourceLocation, BlockEntityType<*>) -> Any?) = BE_TYPES.register(r)
-
-        fun create(id: ResourceLocation) {
+        fun create(id: ResourceLocation): Pair<BrainsweepIntermediate, BlockEntityType<BE>> {
             val block = BrainsweepIntermediate()
-            BLOCKS[id] = block
             val type = BEType(block)
-            BE_TYPES[id] = type
+            return HABlocks.createBE(id, block, type)
         }
-
-        @JvmStatic
-        fun getBlock(id: ResourceLocation) = BLOCKS[id]
-        @JvmStatic
-        fun getBlock(id: String) = BLOCKS[HexAutomata.modLoc(id)]
-        @JvmStatic
-        fun getBEType(id: ResourceLocation) = BE_TYPES[id]
-        @JvmStatic
-        fun getBEType(id: String) = BE_TYPES[HexAutomata.modLoc(id)]
     }
 
     override fun getRenderShape(blockState: BlockState?) = RenderShape.INVISIBLE

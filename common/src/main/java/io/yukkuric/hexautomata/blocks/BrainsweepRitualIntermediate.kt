@@ -1,10 +1,10 @@
-package io.yukkuric.hexautomata.multiblock
+package io.yukkuric.hexautomata.blocks
 
 import at.petrak.hexcasting.common.recipe.HexRecipeStuffRegistry
 import at.petrak.hexcasting.common.recipe.ingredient.StateIngredientBlock
 import com.google.common.base.Suppliers
 import io.yukkuric.hexautomata.HexAutomata
-import io.yukkuric.hexautomata.blocks.BrainsweepIntermediate
+import io.yukkuric.hexautomata.multiblock.HARituals
 import io.yukkuric.hexautomata.network.HAPackets
 import io.yukkuric.hexautomata.network.packet.S2CShowMultiblock
 import net.minecraft.core.BlockPos
@@ -23,12 +23,10 @@ import vazkii.patchouli.api.PatchouliAPI
 
 class BrainsweepRitualIntermediate : BrainsweepIntermediate() {
     companion object {
-        fun create(id: ResourceLocation): RitualBEType {
+        fun create(id: ResourceLocation): Pair<BrainsweepRitualIntermediate, BlockEntityType<BE>> {
             val block = BrainsweepRitualIntermediate()
-            BLOCKS[id] = block
             val type = RitualBEType(id, block)
-            BE_TYPES[id] = type
-            return type
+            return HABlocks.createBE(id, block, type)
         }
 
         val MSG_RITUAL_MISSING = Component.translatable("hexautomata.ritual.missing")

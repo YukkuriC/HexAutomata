@@ -36,7 +36,6 @@ abstract class FocusCollector {
                 }
             }
         }
-        @JvmStatic
         fun register(id: String, obj: FocusCollector): FocusCollector {
             MAP.put(id, obj) ?: return obj
             throw IllegalArgumentException("duplicate focus collector id: $id")

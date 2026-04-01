@@ -4,9 +4,9 @@ import at.petrak.hexcasting.common.items.magic.ItemCreativeUnlocker
 import io.yukkuric.hexautomata.HexAutomata
 import io.yukkuric.hexautomata.HexAutomata.modLoc
 import io.yukkuric.hexautomata.blocks.BrainsweepIntermediate
+import io.yukkuric.hexautomata.blocks.BrainsweepRitualIntermediate
 import io.yukkuric.hexautomata.events.BuiltinEventMarker
 import io.yukkuric.hexautomata.events.EventMarker
-import io.yukkuric.hexautomata.multiblock.BrainsweepRitualIntermediate
 import io.yukkuric.hexautomata.register
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation

@@ -28,14 +28,13 @@ class ItemFocusBundle : BundleItem(HAItems.Props.STACK_ONE_EPIC) {
         val KEY_ITEMS = "Items"
         private val STUB_LIST = ListTag()
 
-        @JvmStatic
         fun pushOne(bundleStack: ItemStack, otherStack: ItemStack) {
             val listTag = bundleStack.listTag(true)
             val dump = CompoundTag()
             otherStack.save(dump)
             listTag.add(dump)
         }
-        @JvmStatic
+
         fun popOne(bundleStack: ItemStack): ItemStack? {
             val listTag = bundleStack.listTag(false)
             if (listTag.isEmpty()) return null
@@ -65,7 +64,6 @@ class ItemFocusBundle : BundleItem(HAItems.Props.STACK_ONE_EPIC) {
         val CONTENTS_PRED: ResourceLocation = HexAutomata.modLoc("contents")
 
         object Client {
-            @JvmStatic
             fun contentsPredicate(stack: ItemStack, level: ClientLevel?, entity: LivingEntity?, i: Int): Float {
                 val cnt = stack.getFocusCount()
                 if (cnt <= 0) return 0f

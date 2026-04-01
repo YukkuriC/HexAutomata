@@ -22,7 +22,6 @@ object HexAutomata {
         return ResourceLocation(MOD_ID, path)
     }
 
-    @JvmStatic
     fun commonInit() {
         HARituals.load()
         tryLoadInterop("hexparse", HexParseInterop::run)
