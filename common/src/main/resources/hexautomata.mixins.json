@@ -9,6 +9,7 @@
   "mixins": [
     "MixinMob",
     "MixinServerPlayer",
+    "hex.AccessorActionRegistryEntry",
     "hex.MixinBrainsweep",
     "hex.MixinBrainsweep$EntityTagIngredientDisplay"
   ],

@@ -2,6 +2,7 @@ package io.yukkuric.hexautomata
 
 import at.petrak.hexcasting.xplat.IClientXplatAbstractions
 import com.mojang.logging.LogUtils
+import io.yukkuric.hexautomata.actions.patch.HAPatches
 import io.yukkuric.hexautomata.interop.HexOPInterop
 import io.yukkuric.hexautomata.interop.HexParseInterop
 import io.yukkuric.hexautomata.items.HAItems
@@ -26,6 +27,7 @@ object HexAutomata {
         HARituals.load()
         tryLoadInterop("hexparse", HexParseInterop::run)
         tryLoadInterop("hexoverpowered", HexOPInterop::run)
+        HAPatches.patchAll()
     }
 
     fun tryLoadInterop(modId: String, loadFunc: () -> Any) {
