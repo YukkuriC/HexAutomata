@@ -2,7 +2,7 @@
   "name": "item.hexautomata.focus_bundle",
   "category": "hexcasting:hexautomata/reactive_focus",
   "icon": "hexautomata:focus_bundle",
-  "advancement": "hexcasting:enlightenment",
+  "advancement": "hexautomata:root",
   "entry_color": "54398a",
   "pages": [
     "hexautomata.book.focus_bundle.intro",

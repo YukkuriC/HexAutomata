@@ -2,7 +2,7 @@
   "name": "hexautomata.book.reactive_focus.patterns.title",
   "category": "hexcasting:hexautomata/reactive_focus",
   "icon": "hexcasting:scroll",
-  "advancement": "hexcasting:enlightenment",
+  "advancement": "hexautomata:root",
   "entry_color": "54398a",
   "pages": [
     "hexautomata.book.reactive_focus.patterns.intro",

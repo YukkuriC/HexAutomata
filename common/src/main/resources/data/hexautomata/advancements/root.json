@@ -1,0 +1,26 @@
+{
+  "parent": "hexcasting:enlightenment",
+  "criteria": {
+    "root": {
+      "trigger": "impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hexautomata:root.desc"
+    },
+    "icon": {
+      "item": "hexautomata:reactive_focus/hurt"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "itemGroup.hexautomata.main"
+    }
+  },
+  "requirements": [
+    [
+      "root"
+    ]
+  ]
+}

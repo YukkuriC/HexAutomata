@@ -1,0 +1,38 @@
+{
+  "parent": "hexautomata:root",
+  "criteria": {
+    "root": {
+      "trigger": "inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hexautomata:focus_bundle"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hexautomata:item/bundle.desc"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "hexautomata:focus_bundle",
+      "nbt": "{Items:[{},{},{},{},{},{},{},{}]}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.hexautomata:item/bundle"
+    }
+  },
+  "requirements": [
+    [
+      "root"
+    ]
+  ]
+}

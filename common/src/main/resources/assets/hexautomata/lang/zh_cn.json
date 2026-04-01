@@ -1,5 +1,11 @@
 {
   "itemGroup.hexautomata.main": "咒法自动机",
+  // advancements
+  "advancement.hexautomata:root.desc": "触发了一次反应核心",
+  "advancement.hexautomata:item/bundle": "便携门格海绵",
+  "advancement.hexautomata:item/bundle.desc": "制造一个反应核心枢纽",
+  "advancement.hexautomata:stack_overflow": "现实坍缩",
+  "advancement.hexautomata:stack_overflow.desc": "烫烫烫烫烫烫烫烫烫烫",
   // tags
   "tag.hexautomata.ignore_hurt": "忽略伤害事件追踪",
   "tag.hexautomata.ignore_targeting": "忽略锁定事件追踪",

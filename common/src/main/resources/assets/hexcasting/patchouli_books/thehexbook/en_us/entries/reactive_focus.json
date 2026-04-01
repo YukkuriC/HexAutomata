@@ -2,7 +2,6 @@
   "name": "item.hexautomata.reactive_focus",
   "category": "hexcasting:hexautomata/reactive_focus",
   "icon": "hexautomata:reactive_focus/hurt",
-  "advancement": "hexcasting:enlightenment",
   "entry_color": "54398a",
   "pages": [
     "hexautomata.book.reactive_focus.intro",

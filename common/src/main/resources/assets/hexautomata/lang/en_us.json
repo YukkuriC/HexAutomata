@@ -1,5 +1,11 @@
 {
   "itemGroup.hexautomata.main": "HexAutomata",
+  // advancements
+  "advancement.hexautomata:root.desc": "Reactive Focus triggered once",
+  "advancement.hexautomata:item/bundle": "Portable Menger Sponge",
+  "advancement.hexautomata:item/bundle.desc": "Craft a Reactive Focus Bundle",
+  "advancement.hexautomata:stack_overflow": "Reality Collapsed",
+  "advancement.hexautomata:stack_overflow.desc": "Aieeeeeeeeeee...",
   // tags
   "tag.hexautomata.ignore_hurt": "Ignoring Hurt Events Tracking",
   "tag.hexautomata.ignore_targeting": "Ignoring Targeting Events Tracking",
