@@ -1,5 +1,6 @@
 package io.yukkuric.hexautomata.blocks
 
+import io.yukkuric.hexautomata.blocks.BrainsweepIntermediate.BE
 import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.nbt.CompoundTag
@@ -27,7 +28,7 @@ import net.minecraft.world.phys.BlockHitResult
 import org.jetbrains.annotations.NotNull
 import java.util.*
 
-open class BrainsweepIntermediate : Block(PROP_BLOCK), EntityBlock {
+open class BrainsweepIntermediate : Block(PROP_BLOCK), EntityBlock, BlockEntityTicker<BE> {
     companion object {
         protected val PROP_BLOCK = Properties.of().noCollission().noLootTable()
 
@@ -55,7 +56,7 @@ open class BrainsweepIntermediate : Block(PROP_BLOCK), EntityBlock {
         level: Level,
         blockState: BlockState,
         blockEntityType: BlockEntityType<T>
-    ) = blockEntityType as? BlockEntityTicker<T>
+    ) = this as BlockEntityTicker<T>
 
     override fun use(
         blockState: BlockState,
@@ -65,51 +66,45 @@ open class BrainsweepIntermediate : Block(PROP_BLOCK), EntityBlock {
         interactionHand: InteractionHand,
         blockHitResult: BlockHitResult
     ): InteractionResult {
-        val beType = BuiltInRegistries.BLOCK_ENTITY_TYPE.get(BuiltInRegistries.BLOCK.getKey(blockState.block))
-        if (beType is BEType) beType.tick(level, blockPos, blockState, null)
+        tick(level, blockPos, blockState, level.getBlockEntity(blockPos) as BE)
         return InteractionResult.PASS
     }
 
-    open class BEType(src: BrainsweepIntermediate) : BlockEntityType<BE>(src::newBlockEntity, setOf(src), null),
-        BlockEntityTicker<BE> {
+    // contextual data
+    lateinit var level: ServerLevel
+    lateinit var blockPos: BlockPos
+    var sacrifice: LivingEntity? = null
 
-        fun selfId() = BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(this)
-
-        // contextual data
-        lateinit var level: ServerLevel
-        lateinit var blockPos: BlockPos
-        var self: BE? = null
-        var sacrifice: LivingEntity? = null
-
-        @Synchronized
-        override fun tick(level: Level, blockPos: BlockPos, blockState: BlockState, blockEntity: BE?) {
-            if (level.isClientSide) {
-                // TODO: make some fx here?
-                return
-            }
-            this.level = level as ServerLevel
-            this.blockPos = blockPos
-            sacrifice = blockEntity?.sacrifice
-            perform()
+    @Synchronized
+    override fun tick(level: Level, blockPos: BlockPos, blockState: BlockState, blockEntity: BE) {
+        if (level.isClientSide) {
+            // TODO: make some fx here?
+            return
         }
-
-        open fun perform() {
-            // destroy self
-            destroySelf()
-            // spawn item
-            val item = BuiltInRegistries.ITEM[selfId()]
-            popItem(ItemStack(item))
-        }
-
-        fun destroySelf(newBlock: Block = Blocks.AIR) = level.setBlock(blockPos, newBlock.defaultBlockState(), 3)
-        fun popItem(stack: ItemStack) {
-            val e = ItemEntity(EntityType.ITEM, level)
-            e.item = stack
-            e.setPos(blockPos.center)
-            e.setDeltaMovement(0.0, 0.2, 0.0)
-            level.addFreshEntity(e)
-        }
+        this.level = level as ServerLevel
+        this.blockPos = blockPos
+        sacrifice = blockEntity?.sacrifice
+        perform()
     }
+
+    open fun perform() {
+        // destroy self
+        destroySelf()
+        // spawn item
+        val item = asItem()
+        popItem(ItemStack(item))
+    }
+
+    fun destroySelf(newBlock: Block = Blocks.AIR) = level.setBlock(blockPos, newBlock.defaultBlockState(), 3)
+    fun popItem(stack: ItemStack) {
+        val e = ItemEntity(EntityType.ITEM, level)
+        e.item = stack
+        e.setPos(blockPos.center)
+        e.setDeltaMovement(0.0, 0.2, 0.0)
+        level.addFreshEntity(e)
+    }
+
+    open class BEType(src: BrainsweepIntermediate) : BlockEntityType<BE>(src::newBlockEntity, setOf(src), null)
 
     class BE(type: BlockEntityType<*>, pos: @NotNull BlockPos, state: BlockState) : BlockEntity(type, pos, state) {
         companion object {

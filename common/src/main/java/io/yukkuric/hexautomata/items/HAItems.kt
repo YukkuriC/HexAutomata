@@ -4,6 +4,8 @@ import at.petrak.hexcasting.common.items.magic.ItemCreativeUnlocker
 import io.yukkuric.hexautomata.HexAutomata
 import io.yukkuric.hexautomata.HexAutomata.modLoc
 import io.yukkuric.hexautomata.blocks.BrainsweepIntermediate
+import io.yukkuric.hexautomata.blocks.BrainsweepIntermediateType
+import io.yukkuric.hexautomata.blocks.BrainsweepIntermediateType.*
 import io.yukkuric.hexautomata.blocks.BrainsweepRitualIntermediate
 import io.yukkuric.hexautomata.events.BuiltinEventMarker
 import io.yukkuric.hexautomata.events.EventMarker
@@ -32,8 +34,7 @@ object HAItems {
         name: String,
         item: T,
         tab: CreativeModeTab? = Tabs.MAIN,
-        createIntermediate: Boolean = false,
-        createRitualIntermediate: Boolean = false,
+        createIntermediate: BrainsweepIntermediateType = NONE,
     ): T {
         val id = modLoc(name)
         ITEMS[id] = item
@@ -41,13 +42,16 @@ object HAItems {
             val list = ITEMS_BY_TAB.computeIfAbsent(tab) { _ -> ArrayList() }
             list.add(item::getDefaultInstance)
         }
-        if (createRitualIntermediate) BrainsweepRitualIntermediate.create(id)
-        else if (createIntermediate) BrainsweepIntermediate.create(id)
+        when (createIntermediate) {
+            SIMPLE -> BrainsweepIntermediate.create(id)
+            RITUAL -> BrainsweepRitualIntermediate.create(id)
+            NONE -> {}
+        }
         return item
     }
 
     private fun reactiveFocus(type: EventMarker) =
-        create("reactive_focus/${type.name.lowercase()}", ItemReactiveFocus(type), createIntermediate = true)
+        create("reactive_focus/${type.name.lowercase()}", ItemReactiveFocus(type), createIntermediate = SIMPLE)
 
     // load all focuses by event type
     private val FOCUSES_BY_TYPE = HashMap<EventMarker, ItemReactiveFocus>()
@@ -63,7 +67,7 @@ object HAItems {
 
     // other items
     val LOGO = create("logo", ItemCreativeUnlocker(Props.LOGO), null)
-    val FOCUS_BUNDLE = create("focus_bundle", ItemFocusBundle(), createRitualIntermediate = true)
+    val FOCUS_BUNDLE = create("focus_bundle", ItemFocusBundle(), createIntermediate = RITUAL)
 
     object Tabs {
         private val TABS: LinkedHashMap<ResourceLocation, CreativeModeTab> = LinkedHashMap()

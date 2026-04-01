@@ -21,11 +21,12 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import vazkii.patchouli.api.PatchouliAPI
 
-class BrainsweepRitualIntermediate : BrainsweepIntermediate() {
+// leave it mutable for modifications (like modpacks)
+open class BrainsweepRitualIntermediate(var ritualId: ResourceLocation) : BrainsweepIntermediate() {
     companion object {
         fun create(id: ResourceLocation): Pair<BrainsweepRitualIntermediate, BlockEntityType<BE>> {
-            val block = BrainsweepRitualIntermediate()
-            val type = RitualBEType(id, block)
+            val block = BrainsweepRitualIntermediate(id)
+            val type = BEType(block)
             return HABlocks.createBE(id, block, type)
         }
 
@@ -40,51 +41,47 @@ class BrainsweepRitualIntermediate : BrainsweepIntermediate() {
 
     override fun <T : BlockEntity?> getTicker(
         level: Level, blockState: BlockState, blockEntityType: BlockEntityType<T>
-    ) = blockEntityType as? BlockEntityTicker<T>
+    ) = this as BlockEntityTicker<T>
 
-    // leave it mutable for modifications (like modpacks)
-    class RitualBEType(var ritualId: ResourceLocation, src: BrainsweepRitualIntermediate) : BEType(src),
-        BlockEntityTicker<BE> {
-        override fun perform() {
-            val ritual = PatchouliAPI.get().getMultiblock(ritualId)
-            val rot = ritual?.validate(level, blockPos)
-            if (rot == null) {
-                destroySelf(fallbackBlock.get() ?: Blocks.DIRT)
-                val center = blockPos.center
-                sacrifice?.let {
-                    // revert brainsweep
-                    (it as? Mob)?.let(HexAutomata.API::revertBrainsweep)
-                }
-                if (ritual != null) {
-                    val displayCenter = blockPos.offset(0, -1, 0)
-                    for (player in level.getPlayers { it.position().distanceTo(center) < 32 }) {
-                        HAPackets.sendPacketToPlayer(
-                            player,
-                            S2CShowMultiblock(
-                                ritualId,
-                                displayCenter,
-                                Rotation.NONE,
-                                MSG_RITUAL_MISSING
-                            )
+    override fun perform() {
+        val ritual = PatchouliAPI.get().getMultiblock(ritualId)
+        val rot = ritual?.validate(level, blockPos)
+        if (rot == null) {
+            destroySelf(fallbackBlock.get() ?: Blocks.DIRT)
+            val center = blockPos.center
+            sacrifice?.let {
+                // revert brainsweep
+                (it as? Mob)?.let(HexAutomata.API::revertBrainsweep)
+            }
+            if (ritual != null) {
+                val displayCenter = blockPos.offset(0, -1, 0)
+                for (player in level.getPlayers { it.position().distanceTo(center) < 32 }) {
+                    HAPackets.sendPacketToPlayer(
+                        player,
+                        S2CShowMultiblock(
+                            ritualId,
+                            displayCenter,
+                            Rotation.NONE,
+                            MSG_RITUAL_MISSING
                         )
-                    }
+                    )
                 }
-                return
             }
-            super.perform()
-            HARituals.PostRitualEffects[ritualId]?.let { it(level, blockPos, ritual, rot) }
+            return
         }
+        super.perform()
+        HARituals.PostRitualEffects[ritualId]?.let { it(level, blockPos, ritual, rot) }
+    }
 
-        // default: pick source block from recipe
-        var fallbackBlock = Suppliers.memoize {
-            for (recipe in level.recipeManager.getAllRecipesFor(HexRecipeStuffRegistry.BRAINSWEEP_TYPE)) {
-                if (recipe.result.block != src) continue
-                val blockIn = recipe.blockIn
-                if (blockIn is StateIngredientBlock) {
-                    return@memoize blockIn.block
-                }
+    // default: pick source block from recipe
+    var fallbackBlock = Suppliers.memoize {
+        for (recipe in level.recipeManager.getAllRecipesFor(HexRecipeStuffRegistry.BRAINSWEEP_TYPE)) {
+            if (recipe.result.block != this) continue
+            val blockIn = recipe.blockIn
+            if (blockIn is StateIngredientBlock) {
+                return@memoize blockIn.block
             }
-            return@memoize null
         }
+        return@memoize null
     }
 }
