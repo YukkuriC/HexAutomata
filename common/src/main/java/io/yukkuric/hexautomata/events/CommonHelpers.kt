@@ -4,7 +4,7 @@ import at.petrak.hexcasting.api.casting.eval.env.PlayerBasedMishapEnv
 import io.yukkuric.hexautomata.HAConfig
 import io.yukkuric.hexautomata.HexAutomata
 import io.yukkuric.hexautomata.casting.MishapOutEvent
-import io.yukkuric.hexautomata.grantAdvancement
+import io.yukkuric.hexautomata.helpers.grantAdvancement
 import io.yukkuric.hexautomata.tag.HATags
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.damagesource.DamageSource

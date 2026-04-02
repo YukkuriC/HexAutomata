@@ -3,6 +3,7 @@ package io.yukkuric.hexautomata.mixin.hex;
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment;
 import at.petrak.hexcasting.common.recipe.ingredient.brainsweep.EntityTagIngredient;
 import io.yukkuric.hexautomata.blocks.BrainsweepIntermediate;
+import io.yukkuric.hexautomata.helpers.HelpersExtKt;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.tags.TagKey;
@@ -26,12 +27,7 @@ public abstract class MixinBrainsweep {
 
     @Inject(method = "cast(Lat/petrak/hexcasting/api/casting/eval/CastingEnvironment;)V", at = @At("RETURN"), remap = false)
     void hookPostBrainsweep(CastingEnvironment env, CallbackInfo ci) {
-        var level = env.getWorld();
-        var sacrifice = getSacrifice();
-        var be = level.getBlockEntity(getPos());
-        if (be instanceof BrainsweepIntermediate.BE iBE) {
-            iBE.setSacrifice(sacrifice);
-        }
+        HelpersExtKt.tryRecordBrainsweepSacrifice(env.getWorld(), getPos(), getSacrifice());
     }
 
     @Mixin(EntityTagIngredient.class)

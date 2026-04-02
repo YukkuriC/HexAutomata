@@ -9,8 +9,8 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
+import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
-import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
@@ -69,7 +69,7 @@ open class BrainsweepIntermediate : Block(PROP_BLOCK), EntityBlock, BlockEntityT
     // contextual data
     lateinit var level: ServerLevel
     lateinit var blockPos: BlockPos
-    var sacrifice: LivingEntity? = null
+    var sacrifice: Entity? = null
 
     @Synchronized
     override fun tick(level: Level, blockPos: BlockPos, blockState: BlockState, blockEntity: BE) {
@@ -79,7 +79,7 @@ open class BrainsweepIntermediate : Block(PROP_BLOCK), EntityBlock, BlockEntityT
         }
         this.level = level as ServerLevel
         this.blockPos = blockPos
-        sacrifice = blockEntity?.sacrifice
+        sacrifice = blockEntity.sacrifice
         perform()
     }
 
@@ -102,7 +102,9 @@ open class BrainsweepIntermediate : Block(PROP_BLOCK), EntityBlock, BlockEntityT
 
     open class BEType(src: BrainsweepIntermediate) : BlockEntityType<BE>(src::newBlockEntity, setOf(src), null)
 
-    class BE(type: BlockEntityType<*>, pos: @NotNull BlockPos, state: BlockState) : BlockEntity(type, pos, state) {
+    class BE(type: BlockEntityType<*>, pos: @NotNull BlockPos, state: BlockState) :
+        BlockEntity(type, pos, state),
+        ISacrificeRecorder {
         companion object {
             const val KEY_SACRIFICE_UUID = "sacrifice"
         }
@@ -118,8 +120,8 @@ open class BrainsweepIntermediate : Block(PROP_BLOCK), EntityBlock, BlockEntityT
             sacrificeId?.let { data.put(KEY_SACRIFICE_UUID, NbtUtils.createUUID(it)) }
         }
 
-        var sacrifice: LivingEntity?
-            get() = sacrificeId?.let { (level as? ServerLevel)?.getEntity(it) as? LivingEntity }
+        override var sacrifice: Entity?
+            get() = sacrificeId?.let { (level as? ServerLevel)?.getEntity(it) }
             set(target) {
                 sacrificeId = target?.uuid
                 setChanged()

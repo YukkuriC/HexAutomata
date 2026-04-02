@@ -46,10 +46,10 @@ open class BrainsweepRitualIntermediate(var ritualId: ResourceLocation) : Brains
         if (rot == null) {
             destroySelf(fallbackBlock.get() ?: Blocks.DIRT)
             val center = blockPos.center
-            sacrifice?.let {
-                // revert brainsweep
-                (it as? Mob)?.let(HexAutomata.API::revertBrainsweep)
-            }
+
+            // revert brainsweep
+            (sacrifice as? Mob)?.let(HexAutomata.API::revertBrainsweep)
+
             if (ritual != null) {
                 val displayCenter = blockPos.offset(0, -1, 0)
                 for (player in level.getPlayers { it.position().distanceTo(center) < 32 }) {

@@ -3,7 +3,7 @@ package io.yukkuric.hexautomata.events
 import at.petrak.hexcasting.api.casting.mishaps.Mishap
 import io.yukkuric.hexautomata.HAConfig
 import io.yukkuric.hexautomata.HexAutomata
-import io.yukkuric.hexautomata.grantAdvancement
+import io.yukkuric.hexautomata.helpers.grantAdvancement
 import io.yukkuric.hexautomata.items.ItemReactiveFocus
 import io.yukkuric.hexautomata.items.collector.FocusCollector
 import net.minecraft.server.level.ServerPlayer
