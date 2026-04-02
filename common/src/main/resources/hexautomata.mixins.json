@@ -7,6 +7,7 @@
   "client": [
   ],
   "mixins": [
+    "AccessorDamageSources",
     "MixinMob",
     "MixinServerPlayer",
     "hex.AccessorActionRegistryEntry",
