@@ -53,6 +53,18 @@ object OpExtendBrainsweep : PatchAction(OpBrainsweep, BrainsweepEx) {
                 }
             }
 
+            // 2. general callback
+            val entry = BrainsweepCallback[Pair(sacrifice.type, data.type)]?.cast()
+            if (entry?.isValid(sacrifice, data, env) == true) {
+                return SpellAction.Result(
+                    GeneralCallback(entry, sacrifice, data),
+                    entry.cost(sacrifice, data, env),
+                    listOf(
+                        ParticleSpray.cloud(sacrifice.position(), 1.0),
+                    )
+                )
+            }
+
             throw USE_ORIGINAL
         }
 
@@ -74,6 +86,16 @@ object OpExtendBrainsweep : PatchAction(OpBrainsweep, BrainsweepEx) {
                     )
                     sacrifice.hurt(src, if (sacrifice is LivingEntity) sacrifice.health else 114514f)
                 }
+            }
+        }
+
+        data class GeneralCallback(
+            val entry: BrainsweepCallbackEntry<Entity, Iota>,
+            val sacrifice: Entity,
+            val data: Iota,
+        ) : RenderedSpell {
+            override fun cast(env: CastingEnvironment) {
+                entry.run(sacrifice, data, env)
             }
         }
     }
