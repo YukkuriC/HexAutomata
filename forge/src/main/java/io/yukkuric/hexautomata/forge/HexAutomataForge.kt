@@ -9,7 +9,6 @@ import io.yukkuric.hexautomata.forge.interop.CuriosInterop
 import io.yukkuric.hexautomata.network.HAPackets
 import io.yukkuric.hexautomata.network.packet.S2CShowMultiblock
 import net.minecraft.server.level.ServerPlayer
-import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.Mob
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.ModList

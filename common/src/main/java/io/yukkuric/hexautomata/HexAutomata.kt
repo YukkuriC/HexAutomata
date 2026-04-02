@@ -27,6 +27,9 @@ object HexAutomata {
         HARituals.load()
         tryLoadInterop("hexparse", HexParseInterop::run)
         tryLoadInterop("hexoverpowered", HexOPInterop::run)
+    }
+
+    fun commonLateInit() {
         HAPatches.patchAll()
     }
 

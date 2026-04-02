@@ -6,6 +6,7 @@ import at.petrak.hexcasting.fabric.cc.HexCardinalComponents
 import io.yukkuric.hexautomata.HexAutomata
 import io.yukkuric.hexautomata.HexAutomata.IAPI
 import io.yukkuric.hexautomata.HexAutomata.commonInit
+import io.yukkuric.hexautomata.HexAutomata.commonLateInit
 import io.yukkuric.hexautomata.HexAutomataClient
 import io.yukkuric.hexautomata.actions.HAActions
 import io.yukkuric.hexautomata.blocks.HABlocks
@@ -17,6 +18,7 @@ import io.yukkuric.hexautomata.network.packet.S2CShowMultiblock
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.core.Registry
@@ -40,6 +42,13 @@ class HexAutomataFabric : IAPI(), ModInitializer {
         HAFabricEventsListener.load()
         HexAutomata.tryLoadInterop("trinkets", TrinketsInterop::run)
         commonInit()
+
+        var lateInitOnce = false
+        ServerLifecycleEvents.SERVER_STARTING.register {
+            if (lateInitOnce) return@register
+            lateInitOnce = true
+            commonLateInit()
+        }
     }
 
     override fun modLoaded(id: String) = FabricLoader.getInstance().isModLoaded(id)

@@ -2,6 +2,7 @@ package io.yukkuric.hexautomata.forge.events
 
 import at.petrak.hexcasting.common.lib.HexRegistries
 import io.yukkuric.hexautomata.HexAutomata.commonInit
+import io.yukkuric.hexautomata.HexAutomata.commonLateInit
 import io.yukkuric.hexautomata.actions.HAActions
 import io.yukkuric.hexautomata.blocks.HABlocks
 import io.yukkuric.hexautomata.events.BuiltinEventMarker
@@ -96,6 +97,7 @@ class HAForgeEventsListener {
         @SubscribeEvent
         fun OnCommonSetup(e: FMLCommonSetupEvent) {
             commonInit()
+            commonLateInit()
         }
     }
 
