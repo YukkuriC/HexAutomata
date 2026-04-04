@@ -12,6 +12,7 @@ if 'paths':
     # assets
     ROOT_ASSETS = f'{ROOT_RESOURCES}/assets/hexautomata'
     DIR_MODELS = f'{ROOT_ASSETS}/models/item/reactive_focus'
+    DIR_MODELS_BUNDLE = f'{ROOT_ASSETS}/models/item/focus_bundle'
     ROOT_PATCHOULI = (
         f'{ROOT_RESOURCES}/assets/hexcasting/patchouli_books/thehexbook/en_us/entries'
     )
@@ -98,6 +99,12 @@ if 'helpers':
                 [f'hexautomata:item/reactive_focus/inner/{color}']
             )
             dump_json(f'{DIR_MODELS}/{mode}/{id}.json', builder.data)
+
+        for tier in range(1, 9):
+            builder = ModelBuilder().textures(
+                [f'hexautomata:item/focus_bundle/t{tier}']
+            )
+            dump_json(f'{DIR_MODELS_BUNDLE}/t{tier}.json', builder.data)
 
     def dump_tags(data):
         ids = EXTRA_ACC_TAG + ['hexautomata:reactive_focus/' + e['id'] for e in data]

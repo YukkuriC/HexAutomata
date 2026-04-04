@@ -16,13 +16,13 @@ import net.minecraft.world.entity.SlotAccess
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.ClickAction
 import net.minecraft.world.inventory.Slot
-import net.minecraft.world.item.BundleItem
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
 import kotlin.math.min
 
-class ItemFocusBundle : BundleItem(HAItems.Props.STACK_ONE_EPIC) {
+class ItemFocusBundle : Item(HAItems.Props.STACK_ONE_EPIC) {
     companion object {
         val MAX_FOCUS_COUNT = 8
         val KEY_ITEMS = "Items"
@@ -65,10 +65,7 @@ class ItemFocusBundle : BundleItem(HAItems.Props.STACK_ONE_EPIC) {
 
         object Client {
             fun contentsPredicate(stack: ItemStack, level: ClientLevel?, entity: LivingEntity?, i: Int): Float {
-                val cnt = stack.getFocusCount()
-                if (cnt <= 0) return 0f
-                if (cnt <= MAX_FOCUS_COUNT / 2) return 1f
-                return 2f
+                return stack.getFocusCount().toFloat()
             }
         }
     }
@@ -127,4 +124,5 @@ class ItemFocusBundle : BundleItem(HAItems.Props.STACK_ONE_EPIC) {
 
     override fun isBarVisible(stack: ItemStack) = stack.getFocusCount() > 0
     override fun getBarWidth(stack: ItemStack) = min((1 + 12 * stack.getFocusCount() / MAX_FOCUS_COUNT), 13)
+    override fun getBarColor(itemStack: ItemStack): Int = (0xff00ffee).toInt()
 }

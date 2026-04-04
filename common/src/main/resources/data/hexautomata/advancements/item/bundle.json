@@ -23,7 +23,7 @@
     "hidden": true,
     "icon": {
       "item": "hexautomata:focus_bundle",
-      "nbt": "{Items:[{},{},{},{},{},{},{},{}]}"
+      "nbt": "{Items:[{}]}"
     },
     "show_toast": true,
     "title": {
