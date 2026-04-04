@@ -44,7 +44,7 @@ public abstract class MixinBrainsweep {
                 return;
             }
             var allEntities = optional.get();
-            int tick = (int) (System.currentTimeMillis() % allEntities.size());
+            int tick = (int) ((System.currentTimeMillis() / 1000) % allEntities.size());
             var type = allEntities.get(tick).value();
             cir.setReturnValue(cachedTypes.computeIfAbsent(type, t -> t.create(level)));
         }
