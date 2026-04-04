@@ -6,6 +6,8 @@
   "advancement.hexautomata:item/bundle.desc": "制造一个反应核心枢纽",
   "advancement.hexautomata:stack_overflow": "现实坍缩",
   "advancement.hexautomata:stack_overflow.desc": "烫烫烫烫烫烫烫烫烫烫",
+  "advancement.hexautomata:self_exposed": "自我暴露",
+  "advancement.hexautomata:self_exposed.desc": "众将见！",
   // tags
   "tag.hexautomata.ignore_hurt": "忽略伤害事件追踪",
   "tag.hexautomata.ignore_targeting": "忽略锁定事件追踪",

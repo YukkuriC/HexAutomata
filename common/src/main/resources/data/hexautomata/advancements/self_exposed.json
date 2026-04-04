@@ -1,0 +1,28 @@
+{
+  "parent": "hexautomata:root",
+  "criteria": {
+    "root": {
+      "trigger": "impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.hexautomata:self_exposed.desc"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "hexcasting:lens"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.hexautomata:self_exposed"
+    }
+  },
+  "requirements": [
+    [
+      "root"
+    ]
+  ]
+}

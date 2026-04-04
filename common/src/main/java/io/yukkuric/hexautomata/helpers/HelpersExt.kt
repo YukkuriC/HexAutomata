@@ -14,6 +14,12 @@ fun ServerPlayer.grantAdvancement(id: ResourceLocation, vararg criteria: String 
     for (c in criteria) advancements.award(adv, c)
 }
 
+fun ServerPlayer.hasAdvancement(id: ResourceLocation): Boolean {
+    val adv = CACHED_ADVANCEMENTS.computeIfAbsent(id, server.advancements::getAdvancement) ?: return false
+    val progress = advancements.getOrStartProgress(adv)
+    return progress.isDone
+}
+
 fun ServerLevel.tryRecordBrainsweepSacrifice(pos: BlockPos, sacrifice: Entity) {
     val be = getBlockEntity(pos)
     if (be is ISacrificeRecorder) be.sacrifice = sacrifice
