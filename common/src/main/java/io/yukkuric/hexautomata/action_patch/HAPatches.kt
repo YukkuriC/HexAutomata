@@ -1,9 +1,9 @@
-package io.yukkuric.hexautomata.actions.patch
+package io.yukkuric.hexautomata.action_patch
 
 import at.petrak.hexcasting.api.HexAPI
 import at.petrak.hexcasting.api.casting.castables.Action
 import at.petrak.hexcasting.common.lib.hex.HexActions
-import io.yukkuric.hexautomata.actions.patch.brainsweep.OpExtendBrainsweep
+import io.yukkuric.hexautomata.action_patch.brainsweep.OpExtendBrainsweep
 import io.yukkuric.hexautomata.helpers.CustomRegisterObject
 import io.yukkuric.hexautomata.mixin.hex.AccessorActionRegistryEntry
 

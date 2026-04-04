@@ -1,4 +1,4 @@
-package io.yukkuric.hexautomata.actions.patch
+package io.yukkuric.hexautomata.action_patch
 
 import at.petrak.hexcasting.api.casting.castables.Action
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment

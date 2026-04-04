@@ -1,4 +1,4 @@
-package io.yukkuric.hexautomata.actions.patch.brainsweep
+package io.yukkuric.hexautomata.action_patch.brainsweep
 
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
 import at.petrak.hexcasting.api.casting.iota.Iota

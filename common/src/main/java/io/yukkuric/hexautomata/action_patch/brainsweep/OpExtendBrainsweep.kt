@@ -1,4 +1,4 @@
-package io.yukkuric.hexautomata.actions.patch.brainsweep
+package io.yukkuric.hexautomata.action_patch.brainsweep
 
 import at.petrak.hexcasting.api.casting.ParticleSpray
 import at.petrak.hexcasting.api.casting.RenderedSpell
@@ -11,7 +11,7 @@ import at.petrak.hexcasting.common.casting.actions.spells.great.OpBrainsweep
 import at.petrak.hexcasting.common.lib.HexDamageTypes
 import at.petrak.hexcasting.common.recipe.BrainsweepRecipe
 import at.petrak.hexcasting.common.recipe.HexRecipeStuffRegistry
-import io.yukkuric.hexautomata.actions.patch.PatchAction
+import io.yukkuric.hexautomata.action_patch.PatchAction
 import io.yukkuric.hexautomata.mixin.AccessorDamageSources
 import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
