@@ -5,7 +5,8 @@
 
 Provides items with ability listening to various game events and triggering custom spells; along with extending more possibilities about the ancient Brainsweep spell.
 
-[Online HexBook](https://yukkuric.github.io/HexAutomata)
+[<img src="https://github.com/SamsTheNerd/HexGloop/blob/73ea39b3becd/externalassets/hexdoc-badgecozy.svg?raw=true" alt="A badge for hexdoc in the style of Devins Badges" width=180>](https://yukkuric.github.io/HexAutomata)
+[<img src="https://github.com/SamsTheNerd/HexGloop/blob/73ea39b3becd/externalassets/addon-badge-cozy.svg?raw=true" alt="A badge for addons.hexxy.media in the style of Devins Badges" width=160>](https://addons.hexxy.media)
 
 ## Features
 
