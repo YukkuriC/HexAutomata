@@ -39,6 +39,7 @@
   "book.descrip.hexautomata:event/read": "从对应$(thing)反应核心/$中读取当前事件内运行的法术。若有深入审视自身的需求，或许会有帮助。",
   "book.descrip.hexautomata:event/write": "将给定iota写入当前触发的$(thing)反应核心/$。若有深入审视自身的需求，或许会有帮助。",
   "mishap.hexautomata.out_event": "你在量子海洋中迷失了。",
+  "mishap.hexautomata.beacon_inactive": "信标未激活",
   // patchouli
   "hexautomata.ritual.missing": "仪式条件未满足！",
   "hexautomata.book.focus_bundle.intro": "信息可塑，可重构，有弹性……信息是更多信息……信息是我……$(br)我能持有更多信息，只要建造一个图书馆，拥有更多细节，和一个中继……我即是图书馆。$(br)$(br)一个$(thing)反应核心枢纽/$可装下多至8个$(thing)反应核心/$；在我持有一个枢纽时，我仍可感受到自己与其内部核心的连接。",

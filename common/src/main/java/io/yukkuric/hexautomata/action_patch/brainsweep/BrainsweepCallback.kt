@@ -17,23 +17,27 @@ import io.yukkuric.hexautomata.helpers.SinglePutMap
 import io.yukkuric.hexautomata.helpers.grantAdvancement
 import io.yukkuric.hexautomata.helpers.hasAdvancement
 import net.minecraft.core.BlockPos
+import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.entity.BeaconBlockEntity
 
 typealias BCFunc<E, I> = (E, I, CastingEnvironment) -> SpellAction.Result?
 
 object BrainsweepCallback : SinglePutMap<Pair<EntityType<*>, IotaType<*>>, BCFunc<*, *>>() {
-    data class Result(val action: () -> Unit) : RenderedSpell {
-        override fun cast(env: CastingEnvironment) = action()
+    data class Result(val action: (CastingEnvironment) -> Unit) : RenderedSpell {
+        override fun cast(env: CastingEnvironment) = action(env)
 
         companion object {
             @JvmStatic
-            fun build(action: () -> Unit, cost: Long, vararg particles: ParticleSpray) =
+            fun build(action: (CastingEnvironment) -> Unit, cost: Long, vararg particles: ParticleSpray) =
                 SpellAction.Result(Result(action), cost, particles.toList())
+            @JvmStatic
+            fun fail(message: Component) = SpellAction.Result(Result({ it.printMessage(message) }), 0, listOf())
         }
     }
 
@@ -56,6 +60,10 @@ object BrainsweepCallback : SinglePutMap<Pair<EntityType<*>, IotaType<*>>, BCFun
     }
 
     private val LOC_SELF_EXPOSED = HexAutomata.modLoc("self_exposed")
+    private val RESULT_PLAYER_ADV_GATE = Result.fail("hexcasting.message.cant_great_spell".asTranslatedComponent)
+    fun gateAdvancement(player: ServerPlayer) =
+        if (player.hasAdvancement(LOC_SELF_EXPOSED)) null else RESULT_PLAYER_ADV_GATE
+
     val PLAYER_TO_ENTITY = createPlayerCallback(EntityIota.TYPE) { player, data, env ->
         // expose self
         if (data.entity == player) return@createPlayerCallback Result.build(
@@ -69,17 +77,26 @@ object BrainsweepCallback : SinglePutMap<Pair<EntityType<*>, IotaType<*>>, BCFun
             ParticleSpray.cloud(player.eyePosition, 1.0),
         )
 
+        // advancement gate
+        gateAdvancement(player)?.let { return@createPlayerCallback it }
+
         // connect to other entity
         // TODO
         return@createPlayerCallback null
     }
     val PLAYER_TO_BLOCK = createPlayerCallback(Vec3Iota.TYPE) { player, iota, env ->
-        if (!player.hasAdvancement(LOC_SELF_EXPOSED)) return@createPlayerCallback null
+        // advancement gate
+        gateAdvancement(player)?.let { return@createPlayerCallback it }
+
         val pos = BlockPos.containing(iota.vec3)
         when (env.world.getBlockState(pos).block) {
             // teleporting to beacon beam
             Blocks.BEACON -> {
-                // TODO check beacon active
+                // check beacon active
+                val be = env.world.getBlockEntity(pos)
+                if ((be as? BeaconBlockEntity)?.beamSections?.isNotEmpty() != true) return@createPlayerCallback Result.fail(
+                    "mishap.hexautomata.beacon_inactive".asTranslatedComponent
+                )
 
                 val srcFxPos = player.getPosition(player.eyeHeight / 2)
                 val target = pos.center.add(0.0, 0.5, 0.0)

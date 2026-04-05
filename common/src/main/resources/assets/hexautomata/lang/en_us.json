@@ -39,6 +39,7 @@
   "book.descrip.hexautomata:event/read": "Reads the spell currently running during the event from certain $(thing)Reactive Focus/$. Might be helpful if one wants to look into self more thoroughly.",
   "book.descrip.hexautomata:event/write": "Write given iota into the $(thing)Reactive Focus/$ triggering. Might be helpful if one wants to look into self more thoroughly.",
   "mishap.hexautomata.out_event": "You've lost in the Quantum Sea.",
+  "mishap.hexautomata.beacon_inactive": "Beacon not activated",
   // patchouli
   "hexautomata.ritual.missing": "Ritual Conditions not Met!",
   "hexautomata.book.focus_bundle.intro": "Information is flexible, reformable, elastic... information is more information... information is me...$(br)I'm able to hold more information, by building a library, with more details, with a relay... I'm the library.$(br)$(br)One $(thing)Reactive Focus Nexus/$ holds up to 8 $(thing)Reactive Focuses/$; when I take a Nexus with me, I still feel the connections between me and those Focuses inside.",
