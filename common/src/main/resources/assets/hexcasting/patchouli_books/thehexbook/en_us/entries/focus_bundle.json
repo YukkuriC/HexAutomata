@@ -1,6 +1,6 @@
 {
   "name": "item.hexautomata.focus_bundle",
-  "category": "hexcasting:hexautomata/reactive_focus",
+  "category": "hexcasting:hexautomata/main",
   "icon": "hexautomata:focus_bundle",
   "advancement": "hexautomata:root",
   "entry_color": "54398a",
@@ -17,5 +17,6 @@
       "recipe": "hexautomata:brainsweep/focus_bundle",
       "text": "hexautomata.book.focus_bundle.2"
     }
-  ]
+  ],
+  "turnin": "hexautomata:item/bundle"
 }

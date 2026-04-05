@@ -1,6 +1,6 @@
 {
   "name": "hexautomata.book.reactive_focus.patterns.title",
-  "category": "hexcasting:hexautomata/reactive_focus",
+  "category": "hexcasting:hexautomata/main",
   "icon": "hexcasting:scroll",
   "advancement": "hexautomata:root",
   "entry_color": "54398a",

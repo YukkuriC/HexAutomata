@@ -1,6 +1,6 @@
 {
   "name": "item.hexautomata.reactive_focus",
-  "category": "hexcasting:hexautomata/reactive_focus",
+  "category": "hexcasting:hexautomata/main",
   "icon": "hexautomata:reactive_focus/hurt",
   "entry_color": "54398a",
   "pages": [
@@ -42,5 +42,6 @@
       "text": "hexautomata.book.reactive_focus.teleport"
     },
     "hexautomata.book.reactive_focus.3"
-  ]
+  ],
+  "turnin": "hexautomata:root"
 }

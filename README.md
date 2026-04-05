@@ -3,7 +3,7 @@
 [![Curseforge](https://badges.moddingx.org/curseforge/versions/1481923) ![CurseForge](https://badges.moddingx.org/curseforge/downloads/1481923)](https://www.curseforge.com/minecraft/mc-mods/hexautomata)  
 [![Modrinth](https://badges.moddingx.org/modrinth/versions/hexautomata) ![Modrinth](https://badges.moddingx.org/modrinth/downloads/hexautomata)](https://modrinth.com/mod/hexautomata)
 
-Provides items with ability listening to various game events and triggering custom spells.
+Provides items with ability listening to various game events and triggering custom spells; along with extending more possibilities about the ancient Brainsweep spell.
 
 [Online HexBook](https://yukkuric.github.io/HexAutomata)
 
@@ -33,3 +33,8 @@ Provides items with ability listening to various game events and triggering cust
     - crafted with a multiblock structure, ending with another brainsweep (accepting targets with tag `#hexautomata:multi_threaded`)
       ![ritual multiblock](https://github.com/YukkuriC/HexAutomata/blob/main/doc/resources/assets/hexautomata/textures/multiblock/hexdoc/focus_bundle.png?raw=true)
 - Special patterns taking effect exclusively inside triggered events
+
+> _I am mind, and mind is media... Body is the vessel, heavy and fragile... I shall expose my mind, taking me out of the vessel, I shall see more, I ..._
+
+- Another advancement-based progression and functions extending Brainsweep great spell :3
+    - a new way of transportation

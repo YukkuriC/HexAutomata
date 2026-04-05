@@ -45,7 +45,7 @@
   "hexautomata.book.focus_bundle.intro": "Information is flexible, reformable, elastic... information is more information... information is me...$(br)I'm able to hold more information, by building a library, with more details, with a relay... I'm the library.$(br)$(br)One $(thing)Reactive Focus Nexus/$ holds up to 8 $(thing)Reactive Focuses/$; when I take a Nexus with me, I still feel the connections between me and those Focuses inside.",
   "hexautomata.book.focus_bundle.1": "The Library for a Reactive Focus Nexus",
   "hexautomata.book.focus_bundle.2": "After building the library, merge it with a multi-threaded mind to do the final compression",
-  "hexautomata.category.reactive_focus.desc": "I have s$(k)meow$(l:https://github.com/YukkuriC/HexAutomata)meow$(/l)meow/$... I have seen!",
+  "hexautomata.category.main.desc": "I have s$(k)meow$(l:https://github.com/YukkuriC/HexAutomata)meow$(/l)meow/$... I have seen!",
   "hexautomata.book.reactive_focus.intro": "I found a way - using the intelligence from a settled villager mind, with some special $(thing)\"concepts\"/$ from wild creatures - to create a kind of special spell-casters: $(thing)Reactive Focus/$.$(br)These spell holders act like normal focus when reading/writing, while their inner spells get triggered when certain situations happen, drawing media from me directly when casting.",
   "hexautomata.book.reactive_focus.2": "Each type of $(thing)Reactive Focus/$ also sends iota(s) to the initial stack when they're triggered, this usually contains the triggering entity as the first iota.$(br)Additionally, due to $(thing)Quantum Media Entanglement/$ effect between me and whoever triggers a $(thing)Reactive Focus/$, the inner spell has an extra casting ambit of small radius around whom. $(o)How convenient :)/$",
   "hexautomata.book.reactive_focus.3": "That said, even $(thing)Quantum Media Entanglement/$ has its limits: accessing the $(thing)Quantum Sea/$ too frequently risks collapsing reality and breaks further connections for a short period ($(o)about 1/20 seconds/$). This won't happen often, but there are indeed ways to encounter or even invite that risk.",
@@ -58,6 +58,11 @@
   "hexautomata.book.reactive_focus.melee_hit": "Triggers when I hit a target by hand or using melee weapon; receives the target entity and damage value as initial iotas.",
   "hexautomata.book.reactive_focus.kill": "Triggers when I kill something; receives the dying target as initial iota.",
   "hexautomata.book.reactive_focus.teleport": "Triggers when I'm about to be teleported; receives the previous and target position as two initial iotas.$(br)In addition, I'll have small ranges of casting ambit around both positions during this cast.",
+  "hexautomata.book.self_exposure.title": "Self Exposure",
+  "hexautomata.book.self_exposure.intro": "I am mind, and mind is media... Body is the vessel, heavy and fragile... I shall expose my mind, taking me out of the vessel, I shall see more, I ...$(br)The spell I casted on all those poor villagers, could be applied on myself creating a loop-back - a moment the vessel and the spirit split, a glance on my body, all I need to understand myself, and expose my spirit to the $(thing)Sea/$...",
+  "hexautomata.book.self_exposure.1": "I have seen! I have seen the $(thing)Sea/$!$(br)$(br)The mediafied me shall gain more control all across the world, grasping and manipulating the nature. The spirit finally gets freed from the vessel.",
+  "hexautomata.book.self_exposure.beacon_warp.title": "Beacon Warp",
+  "hexautomata.book.self_exposure.beacon_warp": "Brainsweep is just another way of transportation - in the aspect of mind. If I shoot my mind somewhere connected higher, some stable beam within structure of stable spatial constraints, my mind and body will go through the $(thing)Sea/$ and teleport to it, even if the location is out of my casting ambit.",
   // EOL
   "foo": "tired of line end commas."
 }
