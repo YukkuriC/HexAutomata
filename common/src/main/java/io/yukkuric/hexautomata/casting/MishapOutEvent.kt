@@ -9,6 +9,7 @@ import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 
 object MishapOutEvent : Mishap() {
+    override fun fillInStackTrace() = this
     private fun readResolve(): Any = MishapOutEvent
     val ERROR_MSG = Component.translatable("mishap.hexautomata.out_event").withStyle(ChatFormatting.DARK_AQUA)
     override fun accentColor(ctx: CastingEnvironment, errorCtx: Context) = FrozenPigment.ANCIENT.get()

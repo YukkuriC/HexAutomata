@@ -8,6 +8,7 @@ import at.petrak.hexcasting.api.casting.eval.vm.SpellContinuation
 
 open class PatchAction(val original: Action, val patcher: Action) : Action {
     object USE_ORIGINAL : Throwable() {
+        private fun readResolve(): Any = USE_ORIGINAL
         override fun fillInStackTrace() = this
     }
 

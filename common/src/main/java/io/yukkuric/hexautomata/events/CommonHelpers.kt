@@ -4,6 +4,7 @@ import at.petrak.hexcasting.api.casting.eval.env.PlayerBasedMishapEnv
 import io.yukkuric.hexautomata.HAConfig
 import io.yukkuric.hexautomata.HexAutomata
 import io.yukkuric.hexautomata.casting.MishapOutEvent
+import io.yukkuric.hexautomata.helpers.ADV_STACK_OVERFLOW
 import io.yukkuric.hexautomata.helpers.grantAdvancement
 import io.yukkuric.hexautomata.tag.HATags
 import net.minecraft.server.level.ServerPlayer
@@ -67,7 +68,7 @@ object CommonHelpers {
         RECURSIVE_MISHAP_AGE[player] = newVersion
 
         // advnacements
-        player.grantAdvancement(HexAutomata.modLoc("stack_overflow"))
+        player.grantAdvancement(ADV_STACK_OVERFLOW)
 
         // manually call mishap
         val mishapEnv = PlayerBasedMishapEnv(player)

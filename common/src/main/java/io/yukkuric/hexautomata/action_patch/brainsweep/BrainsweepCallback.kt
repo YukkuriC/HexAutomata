@@ -12,12 +12,8 @@ import at.petrak.hexcasting.api.casting.mishaps.MishapOthersName
 import at.petrak.hexcasting.api.misc.MediaConstants
 import at.petrak.hexcasting.api.utils.asTranslatedComponent
 import at.petrak.hexcasting.api.utils.lightPurple
-import io.yukkuric.hexautomata.HexAutomata
-import io.yukkuric.hexautomata.helpers.SinglePutMap
-import io.yukkuric.hexautomata.helpers.grantAdvancement
-import io.yukkuric.hexautomata.helpers.hasAdvancement
+import io.yukkuric.hexautomata.helpers.*
 import net.minecraft.core.BlockPos
-import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.effect.MobEffects
@@ -36,8 +32,6 @@ object BrainsweepCallback : SinglePutMap<Pair<EntityType<*>, IotaType<*>>, BCFun
             @JvmStatic
             fun build(action: (CastingEnvironment) -> Unit, cost: Long, vararg particles: ParticleSpray) =
                 SpellAction.Result(Result(action), cost, particles.toList())
-            @JvmStatic
-            fun fail(message: Component) = SpellAction.Result(Result({ it.printMessage(message) }), 0, listOf())
         }
     }
 
@@ -59,16 +53,15 @@ object BrainsweepCallback : SinglePutMap<Pair<EntityType<*>, IotaType<*>>, BCFun
         return@create playerCallback(player, iota, env)
     }
 
-    private val LOC_SELF_EXPOSED = HexAutomata.modLoc("self_exposed")
-    private val RESULT_PLAYER_ADV_GATE = Result.fail("hexcasting.message.cant_great_spell".asTranslatedComponent)
-    fun gateAdvancement(player: ServerPlayer) =
-        if (player.hasAdvancement(LOC_SELF_EXPOSED)) null else RESULT_PLAYER_ADV_GATE
+    fun gateAdvancement(player: ServerPlayer) {
+        if (!player.hasAdvancement(ADV_SELF_EXPOSED)) throw MISHAP_PLAYER_ADV_GATE
+    }
 
     val PLAYER_TO_ENTITY = createPlayerCallback(EntityIota.TYPE) { player, data, env ->
         // expose self
         if (data.entity == player) return@createPlayerCallback Result.build(
             {
-                if (!player.hasAdvancement(LOC_SELF_EXPOSED)) player.grantAdvancement(LOC_SELF_EXPOSED)
+                if (!player.hasAdvancement(ADV_SELF_EXPOSED)) player.grantAdvancement(ADV_SELF_EXPOSED)
                 env.printMessage("advancement.hexautomata:self_exposed.desc".asTranslatedComponent.lightPurple)
                 player.addEffect(MobEffectInstance(MobEffects.SLOW_FALLING))
             },
@@ -78,15 +71,15 @@ object BrainsweepCallback : SinglePutMap<Pair<EntityType<*>, IotaType<*>>, BCFun
         )
 
         // advancement gate
-        gateAdvancement(player)?.let { return@createPlayerCallback it }
+        gateAdvancement(player)
 
         // connect to other entity
         // TODO
-        return@createPlayerCallback null
+        throw MISHAP_PLAYER_BRAINSWEEP_INVALID_TARGET
     }
     val PLAYER_TO_BLOCK = createPlayerCallback(Vec3Iota.TYPE) { player, iota, env ->
         // advancement gate
-        gateAdvancement(player)?.let { return@createPlayerCallback it }
+        gateAdvancement(player)
 
         val pos = BlockPos.containing(iota.vec3)
         when (env.world.getBlockState(pos).block) {
@@ -94,9 +87,7 @@ object BrainsweepCallback : SinglePutMap<Pair<EntityType<*>, IotaType<*>>, BCFun
             Blocks.BEACON -> {
                 // check beacon active
                 val be = env.world.getBlockEntity(pos)
-                if ((be as? BeaconBlockEntity)?.beamSections?.isNotEmpty() != true) return@createPlayerCallback Result.fail(
-                    "mishap.hexautomata.beacon_inactive".asTranslatedComponent
-                )
+                if ((be as? BeaconBlockEntity)?.beamSections?.isNotEmpty() != true) throw MISHAP_BEACON_INACTIVE
 
                 val srcFxPos = player.getPosition(player.eyeHeight / 2)
                 val target = pos.center.add(0.0, 0.5, 0.0)
@@ -111,6 +102,6 @@ object BrainsweepCallback : SinglePutMap<Pair<EntityType<*>, IotaType<*>>, BCFun
                 )
             }
         }
-        null
+        throw MISHAP_PLAYER_BRAINSWEEP_INVALID_TARGET
     }
 }
