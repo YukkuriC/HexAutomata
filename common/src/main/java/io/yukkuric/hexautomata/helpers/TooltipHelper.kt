@@ -7,7 +7,6 @@ import io.yukkuric.hexautomata.items.collector.FocusCollector
 import net.minecraft.network.chat.Component
 
 object TooltipHelper {
-    @JvmStatic
     fun appendScopeTooltip(pTooltipComponents: MutableList<Component?>) {
         var atLeastOne = false
         val tooltip = Component.translatable("tooltip.hexautomata.listeners").white

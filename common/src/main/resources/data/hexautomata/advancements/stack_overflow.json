@@ -1,0 +1,28 @@
+{
+  "parent": "hexautomata:root",
+  "criteria": {
+    "root": {
+      "trigger": "impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.hexautomata:stack_overflow.desc"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "hexautomata:logo"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.hexautomata:stack_overflow"
+    }
+  },
+  "requirements": [
+    [
+      "root"
+    ]
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "magma_cube",
+    {
+      "id": "#forge:slimes",
+      "required": false
+    },
+    "slime"
+  ]
+}

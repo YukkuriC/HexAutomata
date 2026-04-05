@@ -7,8 +7,12 @@
   "client": [
   ],
   "mixins": [
+    "AccessorDamageSources",
     "MixinMob",
-    "MixinServerPlayer"
+    "MixinServerPlayer",
+    "hex.AccessorActionRegistryEntry",
+    "hex.MixinBrainsweep",
+    "hex.MixinBrainsweep$EntityTagIngredientDisplay"
   ],
   "injectors": {
     "defaultRequire": 1

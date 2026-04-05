@@ -5,15 +5,51 @@
   },
   "overrides": [
     {
-      "model": "hexautomata:item/focus_bundle_1",
+      "model": "hexautomata:item/focus_bundle/t1",
       "predicate": {
         "hexautomata:contents": 1
       }
     },
     {
-      "model": "hexautomata:item/focus_bundle_2",
+      "model": "hexautomata:item/focus_bundle/t2",
       "predicate": {
         "hexautomata:contents": 2
+      }
+    },
+    {
+      "model": "hexautomata:item/focus_bundle/t3",
+      "predicate": {
+        "hexautomata:contents": 3
+      }
+    },
+    {
+      "model": "hexautomata:item/focus_bundle/t4",
+      "predicate": {
+        "hexautomata:contents": 4
+      }
+    },
+    {
+      "model": "hexautomata:item/focus_bundle/t5",
+      "predicate": {
+        "hexautomata:contents": 5
+      }
+    },
+    {
+      "model": "hexautomata:item/focus_bundle/t6",
+      "predicate": {
+        "hexautomata:contents": 6
+      }
+    },
+    {
+      "model": "hexautomata:item/focus_bundle/t7",
+      "predicate": {
+        "hexautomata:contents": 7
+      }
+    },
+    {
+      "model": "hexautomata:item/focus_bundle/t8",
+      "predicate": {
+        "hexautomata:contents": 8
       }
     }
   ]

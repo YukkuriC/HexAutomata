@@ -1,5 +1,17 @@
 {
   "itemGroup.hexautomata.main": "咒法自动机",
+  // advancements
+  "advancement.hexautomata:root.desc": "触发了一次反应核心",
+  "advancement.hexautomata:item/bundle": "便携门格海绵",
+  "advancement.hexautomata:item/bundle.desc": "制造一个反应核心枢纽",
+  "advancement.hexautomata:stack_overflow": "现实坍缩",
+  "advancement.hexautomata:stack_overflow.desc": "烫烫烫烫烫烫烫烫烫烫",
+  "advancement.hexautomata:self_exposed": "自我暴露",
+  "advancement.hexautomata:self_exposed.desc": "众将见！",
+  // tags
+  "tag.hexautomata.ignore_hurt": "忽略伤害事件追踪",
+  "tag.hexautomata.ignore_targeting": "忽略锁定事件追踪",
+  "tag.hexautomata.multi_threaded": "多线程思维",
   // item info
   "item.hexautomata.reactive_focus": "反应核心",
   "item.hexautomata.reactive_focus.template": "反应核心：%s",
@@ -27,12 +39,14 @@
   "book.descrip.hexautomata:event/read": "从对应$(thing)反应核心/$中读取当前事件内运行的法术。若有深入审视自身的需求，或许会有帮助。",
   "book.descrip.hexautomata:event/write": "将给定iota写入当前触发的$(thing)反应核心/$。若有深入审视自身的需求，或许会有帮助。",
   "mishap.hexautomata.out_event": "你在量子海洋中迷失了。",
+  "mishap.hexautomata.beacon_inactive": "信标未激活",
+  "mishap.hexautomata.player_brainsweep.not_target": "那里无法容纳我的意识",
   // patchouli
   "hexautomata.ritual.missing": "仪式条件未满足！",
   "hexautomata.book.focus_bundle.intro": "信息可塑，可重构，有弹性……信息是更多信息……信息是我……$(br)我能持有更多信息，只要建造一个图书馆，拥有更多细节，和一个中继……我即是图书馆。$(br)$(br)一个$(thing)反应核心枢纽/$可装下多至8个$(thing)反应核心/$；在我持有一个枢纽时，我仍可感受到自己与其内部核心的连接。",
   "hexautomata.book.focus_bundle.1": "反应核心枢纽图书馆",
   "hexautomata.book.focus_bundle.2": "在建造图书馆后，融入一个多线程的思维，以完成最终的压缩",
-  "hexautomata.category.reactive_focus.desc": "我已冂$(k)meow$(l:https://github.com/YukkuriC/HexAutomata)meow$(/l)meow/$……我已见！",
+  "hexautomata.category.main.desc": "我已冂$(k)meow$(l:https://github.com/YukkuriC/HexAutomata)meow$(/l)meow/$……我已见！",
   "hexautomata.book.reactive_focus.intro": "我找到一个方法 - 通过一个固定的村民意识的智能，佐以源自野生生物的$(thing)\"概念\"/$ - 创造一类特别的施法物品：$(thing)反应核心/$。$(br)这些法术容器在读写时与普通核心无异，但它们容纳的法术会在特定情形下触发，并从我身上直接抽取媒质以施法。",
   "hexautomata.book.reactive_focus.2": "每类$(thing)反应核心/$在触发时也会发送 iota 至法术的初始栈，其中通常以触发者实体作为栈内首个元素。$(br)另外，基于我和触发$(thing)反应核心/$者之间的$(thing)量子媒质纠缠/$效应，内部法术在触发者周围会有一小块额外的施法范围。$(o)太便利了 :)/$",
   "hexautomata.book.reactive_focus.3": "话虽如此，即使是$(thing)量子媒质纠缠/$也有其局限性：过于频繁地访问$(thing)量子海洋/$可能会导致现实坍缩，并在短时间内（大约1/20秒）断开进一步的连接。这种情况不会经常发生，但确实存在有一些方法可以遭遇乃至诱发这种风险。",
@@ -45,6 +59,11 @@
   "hexautomata.book.reactive_focus.melee_hit": "在我用空手或近战武器攻击目标时触发，初始iota为目标实体与伤害数值。",
   "hexautomata.book.reactive_focus.kill": "在我击杀某物时触发，初始iota为正在死去的目标。",
   "hexautomata.book.reactive_focus.teleport": "在我将被传送时触发；接收我原先与目标坐标作为两个初始iota。$(br)另外，在当次施法期间我会额外拥有前后两坐标周围小片区域的施法范围。",
+  "hexautomata.book.self_exposure.title": "自我暴露",
+  "hexautomata.book.self_exposure.intro": "我即是思维，思维即是媒质……身体是沉重而脆弱的容器……我将暴露我的思维，将我从容器内解放，我将见，我……$(br)我对那些可怜村民施放的法术，也可施于我自己，创建一个回环——一个容器与精神分离的瞬间，对我身体的一瞥，即是我理解自身，与暴露精神于$(thing)海洋/$，所需的全部……",
+  "hexautomata.book.self_exposure.1": "我已见！我看见了$(thing)海洋/$！$(br)$(br)媒质化的我将对这个世界获得更多掌控，以攫取与操纵自然。精神终从容器中获得自由。",
+  "hexautomata.book.self_exposure.beacon_warp.title": "信标折跃",
+  "hexautomata.book.self_exposure.beacon_warp": "意识剥离只是另一种交通方式——从思维的角度来看。如果我将思维发射至与更高处相连的某处，被稳定的空间约束结构限制的光束内，我的思维与身体将穿过$(thing)海洋/$并传送至其位置，即使其位于我的施法范围之外。",
   // EOL
   "foo": "拒绝json行尾逗号"
 }

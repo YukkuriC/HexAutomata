@@ -1,0 +1,47 @@
+{
+  "name": "hexautomata.book.self_exposure.title",
+  "category": "hexcasting:hexautomata/main",
+  "icon": "hexcasting:lens",
+  "entry_color": "54398a",
+  "advancement": "hexautomata:root",
+  "pages": [
+    "hexautomata.book.self_exposure.intro",
+    {
+      "type": "text",
+      "text": "hexautomata.book.self_exposure.1",
+      "advancement": "hexautomata:self_exposed"
+    },
+    {
+      "type": "multiblock",
+      "name": "hexautomata.book.self_exposure.beacon_warp.title",
+      "multiblock": {
+        "pattern": [
+          [
+            "   ",
+            " X ",
+            "   "
+          ],
+          [
+            "BBB",
+            "B0B",
+            "BBB"
+          ]
+        ],
+        "mapping": {
+          "X": "beacon",
+          "0": "#beacon_base_blocks",
+          "B": "#beacon_base_blocks"
+        }
+      },
+      "advancement": "hexautomata:self_exposed"
+    },
+    {
+      "type": "text",
+      "text": "hexautomata.book.self_exposure.beacon_warp",
+      "advancement": "hexautomata:self_exposed"
+    }
+  ],
+  "priority": true,
+  "secret": true,
+  "turnin": "hexautomata:self_exposed"
+}

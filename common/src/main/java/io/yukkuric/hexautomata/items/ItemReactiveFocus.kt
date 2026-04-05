@@ -20,10 +20,11 @@ class ItemReactiveFocus(val type: EventMarker, props: Properties) : ItemFocus(pr
 
     open fun isListening(stack: ItemStack, marker: EventMarker) = type == marker
 
-    open fun runCallback(stack: ItemStack, event: IHAEvent, player: ServerPlayer) {
-        val spell = readIota(stack, player.serverLevel()) ?: return
+    open fun runCallback(stack: ItemStack, event: IHAEvent, player: ServerPlayer): Boolean {
+        val spell = readIota(stack, player.serverLevel()) ?: return false
         val list = if (spell is ListIota) spell.list.toList() else listOf(spell)
         EntityEventEnv(event, stack, player).executeIotasWithTax(list)
+        return true
     }
 
     override fun getName(focus: ItemStack): Component {

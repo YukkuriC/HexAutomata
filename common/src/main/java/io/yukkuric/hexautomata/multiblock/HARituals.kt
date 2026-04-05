@@ -12,7 +12,7 @@ import vazkii.patchouli.api.PatchouliAPI
 object HARituals : CustomRegisterObject<Supplier<IMultiblock>>() {
     fun load() {
         val api = PatchouliAPI.get()
-        for (pair in entries) {
+        for (pair in MAP.entries) {
             api.registerMultiblock(pair.key, pair.value.get())
         }
     }

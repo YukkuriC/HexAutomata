@@ -1,6 +1,7 @@
 package io.yukkuric.hexautomata.forge
 
 import at.petrak.hexcasting.common.msgs.IMessage
+import at.petrak.hexcasting.forge.xplat.ForgeXplatImpl.TAG_BRAINSWEPT
 import io.yukkuric.hexautomata.HexAutomata
 import io.yukkuric.hexautomata.HexAutomataClient
 import io.yukkuric.hexautomata.forge.events.HAForgeEventsListener
@@ -8,6 +9,7 @@ import io.yukkuric.hexautomata.forge.interop.CuriosInterop
 import io.yukkuric.hexautomata.network.HAPackets
 import io.yukkuric.hexautomata.network.packet.S2CShowMultiblock
 import net.minecraft.server.level.ServerPlayer
+import net.minecraft.world.entity.Mob
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.ModList
 import net.minecraftforge.fml.ModLoadingContext
@@ -30,7 +32,12 @@ class HexAutomataForge : HexAutomata.IAPI() {
     }
 
     override fun modLoaded(id: String) = ModList.get().isLoaded(id)
+    override fun revertBrainsweep(mob: Mob) {
+        mob.persistentData.remove(TAG_BRAINSWEPT)
+        forceRefresh(mob)
+    }
 
+    @Suppress("INACCESSIBLE_TYPE")
     object Network : HAPackets.Client, HAPackets.Server {
         const val PROTOCOL_VERSION: String = "1"
         val CHANNEL: SimpleChannel = NetworkRegistry.newSimpleChannel(

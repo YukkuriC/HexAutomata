@@ -1,0 +1,15 @@
+{
+  "type": "hexcasting:brainsweep",
+  "blockIn": {
+    "type": "block",
+    "block": "beacon"
+  },
+  "cost": 100000,
+  "entityIn": {
+    "type": "entity_tag",
+    "tag": "hexautomata:multi_threaded"
+  },
+  "result": {
+    "name": "hexautomata:focus_bundle"
+  }
+}
