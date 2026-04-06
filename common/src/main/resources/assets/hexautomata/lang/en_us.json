@@ -65,7 +65,7 @@
   "hexautomata.book.self_exposure.1": "I have seen! I have seen the $(thing)Sea/$!$(br)$(br)The mediafied me shall gain more control all across the world, grasping and manipulating the nature. The spirit finally gets freed from the vessel.",
   "hexautomata.book.self_exposure.beacon_warp.title": "Beacon Warp",
   "hexautomata.book.self_exposure.beacon_warp": "Brainsweep is just another way of transportation - in the aspect of mind.",
-  "hexautomata.book.self_exposure.beacon_warp.2": "If I shoot my mind somewhere connected higher, some stable beam within structure of stable spatial constraints, my mind and body will go through the $(thing)Sea/$ and teleport to it, even if the location is out of my casting ambit.",
+  "hexautomata.book.self_exposure.beacon_warp.2": "If I shoot my mind somewhere connected higher, some stable beam within structure of stable spatial constraints, my mind and body will go through the $(thing)Sea/$ and teleport to it, even if the location is out of my casting ambit.$(br)$(br)Sometimes for locations too far away, the beacon beam might not be connected instantly, and trying again a few times may help.",
   // EOL
   "foo": "tired of line end commas."
 }
