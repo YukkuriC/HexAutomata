@@ -53,7 +53,7 @@ open class BrainsweepRitualIntermediate(var ritualId: ResourceLocation) : Brains
             if (ritual != null) {
                 val displayCenter = blockPos.offset(0, -1, 0)
                 for (player in level.getPlayers { it.position().distanceTo(center) < 32 }) {
-                    HAPackets.sendPacketToPlayer(
+                    HAPackets.SERVER?.sendPacketToPlayer(
                         player, S2CShowMultiblock(
                             ritualId, displayCenter, Rotation.NONE, MSG_RITUAL_MISSING
                         )

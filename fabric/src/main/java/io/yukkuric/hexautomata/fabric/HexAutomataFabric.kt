@@ -3,6 +3,7 @@ package io.yukkuric.hexautomata.fabric
 import at.petrak.hexcasting.common.lib.hex.HexActions
 import at.petrak.hexcasting.common.msgs.IMessage
 import at.petrak.hexcasting.fabric.cc.HexCardinalComponents
+import at.petrak.hexcasting.fabric.xplat.FabricXplatImpl
 import io.yukkuric.hexautomata.HexAutomata
 import io.yukkuric.hexautomata.HexAutomata.IAPI
 import io.yukkuric.hexautomata.HexAutomata.commonInit
@@ -14,6 +15,7 @@ import io.yukkuric.hexautomata.fabric.events.HAFabricEventsListener
 import io.yukkuric.hexautomata.fabric.interop.TrinketsInterop
 import io.yukkuric.hexautomata.items.HAItems
 import io.yukkuric.hexautomata.network.HAPackets
+import io.yukkuric.hexautomata.network.packet.S2CPlayerExposureEffect
 import io.yukkuric.hexautomata.network.packet.S2CShowMultiblock
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.ModInitializer
@@ -26,6 +28,7 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
+import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.Mob
 
 class HexAutomataFabric : IAPI(), ModInitializer {
@@ -78,6 +81,11 @@ class HexAutomataFabric : IAPI(), ModInitializer {
         override fun sendPacketToPlayer(player: ServerPlayer, packet: IMessage) {
             ServerPlayNetworking.send(player, packet.fabricId, packet.toBuf())
         }
+
+        override fun sendPacketTracking(entity: Entity, packet: IMessage) {
+            // no channel differences for fabric packets
+            FabricXplatImpl.INSTANCE.sendPacketTracking(entity, packet)
+        }
     }
 }
 
@@ -92,6 +100,11 @@ class HexAutomataFabricClient : ClientModInitializer {
             ClientPlayNetworking.registerGlobalReceiver(
                 S2CShowMultiblock.ID, make(
                     S2CShowMultiblock::deserialize, S2CShowMultiblock::handle
+                )
+            )
+            ClientPlayNetworking.registerGlobalReceiver(
+                S2CPlayerExposureEffect.ID, make(
+                    S2CPlayerExposureEffect::deserialize, S2CPlayerExposureEffect::handle
                 )
             )
         }

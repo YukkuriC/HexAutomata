@@ -13,6 +13,8 @@ import at.petrak.hexcasting.api.misc.MediaConstants
 import at.petrak.hexcasting.api.utils.asTranslatedComponent
 import at.petrak.hexcasting.api.utils.lightPurple
 import io.yukkuric.hexautomata.helpers.*
+import io.yukkuric.hexautomata.network.HAPackets
+import io.yukkuric.hexautomata.network.packet.S2CPlayerExposureEffect
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.effect.MobEffectInstance
@@ -63,7 +65,10 @@ object BrainsweepCallback : SinglePutMap<Pair<EntityType<*>, IotaType<*>>, BCFun
             {
                 if (!player.hasAdvancement(ADV_SELF_EXPOSED)) player.grantAdvancement(ADV_SELF_EXPOSED)
                 env.printMessage("advancement.hexautomata:self_exposed.desc".asTranslatedComponent.lightPurple)
-                player.addEffect(MobEffectInstance(MobEffects.SLOW_FALLING))
+                player.addEffect(MobEffectInstance(MobEffects.LEVITATION, 50))
+                player.addEffect(MobEffectInstance(MobEffects.SLOW_FALLING, 100))
+                // env.world.broadcastEntityEvent(player, 35.toByte())
+                HAPackets.SERVER?.sendPacketToPlayerAndTracking(player, S2CPlayerExposureEffect(player))
             },
             10 * MediaConstants.CRYSTAL_UNIT,
             ParticleSpray.cloud(player.position(), 1.0),

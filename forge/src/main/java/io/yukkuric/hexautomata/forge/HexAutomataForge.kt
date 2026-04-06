@@ -7,8 +7,10 @@ import io.yukkuric.hexautomata.HexAutomataClient
 import io.yukkuric.hexautomata.forge.events.HAForgeEventsListener
 import io.yukkuric.hexautomata.forge.interop.CuriosInterop
 import io.yukkuric.hexautomata.network.HAPackets
+import io.yukkuric.hexautomata.network.packet.S2CPlayerExposureEffect
 import io.yukkuric.hexautomata.network.packet.S2CShowMultiblock
 import net.minecraft.server.level.ServerPlayer
+import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.Mob
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.ModList
@@ -60,6 +62,13 @@ class HexAutomataForge : HexAutomata.IAPI() {
                 S2CShowMultiblock::deserialize,
                 makeS2C(S2CShowMultiblock::handle)
             )
+            CHANNEL.registerMessage(
+                idx++,
+                S2CPlayerExposureEffect::class.java,
+                S2CPlayerExposureEffect::serialize,
+                S2CPlayerExposureEffect::deserialize,
+                makeS2C(S2CPlayerExposureEffect::handle)
+            )
         }
 
         private fun <T> makeS2C(consumer: (T) -> Unit) =
@@ -72,6 +81,14 @@ class HexAutomataForge : HexAutomata.IAPI() {
 
         override fun sendPacketToPlayer(player: ServerPlayer, packet: IMessage) =
             CHANNEL.send(PacketDistributor.PLAYER.with { player }, packet)
+
+        override fun sendPacketTracking(entity: Entity, packet: IMessage) {
+            CHANNEL.send(PacketDistributor.TRACKING_ENTITY.with { entity }, packet)
+        }
+
+        override fun sendPacketToPlayerAndTracking(player: ServerPlayer, packet: IMessage) {
+            CHANNEL.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with { player }, packet)
+        }
     }
 }
 
