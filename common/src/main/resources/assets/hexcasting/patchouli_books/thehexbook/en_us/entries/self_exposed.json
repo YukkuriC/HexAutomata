@@ -1,0 +1,35 @@
+{
+  "name": "hexautomata.book.self_exposed.title",
+  "category": "hexcasting:hexautomata/main",
+  "icon": "hexautomata:logo",
+  "entry_color": "54398a",
+  "advancement": "hexautomata:self_exposed",
+  "pages": [
+    {
+      "type": "multiblock",
+      "name": "hexautomata.book.self_exposure.beacon_warp.title",
+      "multiblock": {
+        "pattern": [
+          [
+            "   ",
+            " X ",
+            "   "
+          ],
+          [
+            "BBB",
+            "B0B",
+            "BBB"
+          ]
+        ],
+        "mapping": {
+          "X": "beacon",
+          "0": "#beacon_base_blocks",
+          "B": "#beacon_base_blocks"
+        }
+      },
+      "text": "hexautomata.book.self_exposure.beacon_warp"
+    },
+    "hexautomata.book.self_exposure.beacon_warp.2"
+  ],
+  "secret": true
+}
