@@ -11,18 +11,20 @@ import net.minecraft.nbt.ListTag
 import net.minecraft.nbt.Tag
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.SlotAccess
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.ClickAction
 import net.minecraft.world.inventory.Slot
-import net.minecraft.world.item.Item
+import net.minecraft.world.item.BundleItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
 import kotlin.math.min
 
-class ItemFocusBundle : Item(HAItems.Props.STACK_ONE_EPIC) {
+class ItemFocusBundle : BundleItem(HAItems.Props.STACK_ONE_EPIC) {
     companion object {
         val MAX_FOCUS_COUNT = 8
         val KEY_ITEMS = "Items"
@@ -68,6 +70,15 @@ class ItemFocusBundle : Item(HAItems.Props.STACK_ONE_EPIC) {
                 return stack.getFocusCount().toFloat()
             }
         }
+    }
+
+    override fun use(
+        level: Level,
+        player: Player,
+        interactionHand: InteractionHand
+    ): InteractionResultHolder<ItemStack> {
+        // TBD, but not dropping all
+        return InteractionResultHolder.pass(player.getItemInHand(interactionHand))
     }
 
     override fun appendHoverText(
