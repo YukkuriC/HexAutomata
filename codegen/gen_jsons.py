@@ -96,7 +96,7 @@ if 'helpers':
 
         for mode in 'active', 'idle':
             builder = ModelBuilder(f'{ID_PRE}/_{mode}').textures(
-                [f'hexautomata:item/reactive_focus/inner/{color}']
+                [f'hexautomata:item/reactive_focus/inner_{mode}/{color}']
             )
             dump_json(f'{DIR_MODELS}/{mode}/{id}.json', builder.data)
 
