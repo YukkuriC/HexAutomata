@@ -1,6 +1,6 @@
 {
   "parent": "hexautomata:item/reactive_focus/_idle",
   "textures": {
-    "layer0": "hexautomata:item/reactive_focus/inner/cyan"
+    "layer0": "hexautomata:item/reactive_focus/inner_idle/cyan"
   }
 }

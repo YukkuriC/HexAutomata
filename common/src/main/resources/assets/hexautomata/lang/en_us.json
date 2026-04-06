@@ -7,7 +7,7 @@
   "advancement.hexautomata:stack_overflow": "Reality Collapsed",
   "advancement.hexautomata:stack_overflow.desc": "Aieeeeeeeeeee...",
   "advancement.hexautomata:self_exposed": "Self Exposed",
-  "advancement.hexautomata:self_exposed.desc": "I have seen!",
+  "advancement.hexautomata:self_exposed.desc": "All shall see!",
   // tags
   "tag.hexautomata.ignore_hurt": "Ignoring Hurt Events Tracking",
   "tag.hexautomata.ignore_targeting": "Ignoring Targeting Events Tracking",
@@ -60,10 +60,12 @@
   "hexautomata.book.reactive_focus.kill": "Triggers when I kill something; receives the dying target as initial iota.",
   "hexautomata.book.reactive_focus.teleport": "Triggers when I'm about to be teleported; receives the previous and target position as two initial iotas.$(br)In addition, I'll have small ranges of casting ambit around both positions during this cast.",
   "hexautomata.book.self_exposure.title": "Self Exposure",
+  "hexautomata.book.self_exposed.title": "Self Exposed",
   "hexautomata.book.self_exposure.intro": "I am mind, and mind is media... Body is the vessel, heavy and fragile... I shall expose my mind, taking me out of the vessel, I shall see more, I ...$(br)The spell I casted on all those poor villagers, could be applied on myself creating a loop-back - a moment the vessel and the spirit split, a glance on my body, all I need to understand myself, and expose my spirit to the $(thing)Sea/$...",
   "hexautomata.book.self_exposure.1": "I have seen! I have seen the $(thing)Sea/$!$(br)$(br)The mediafied me shall gain more control all across the world, grasping and manipulating the nature. The spirit finally gets freed from the vessel.",
   "hexautomata.book.self_exposure.beacon_warp.title": "Beacon Warp",
-  "hexautomata.book.self_exposure.beacon_warp": "Brainsweep is just another way of transportation - in the aspect of mind. If I shoot my mind somewhere connected higher, some stable beam within structure of stable spatial constraints, my mind and body will go through the $(thing)Sea/$ and teleport to it, even if the location is out of my casting ambit.",
+  "hexautomata.book.self_exposure.beacon_warp": "Brainsweep is just another way of transportation - in the aspect of mind.",
+  "hexautomata.book.self_exposure.beacon_warp.2": "If I shoot my mind somewhere connected higher, some stable beam within structure of stable spatial constraints, my mind and body will go through the $(thing)Sea/$ and teleport to it, even if the location is out of my casting ambit.$(br)$(br)Sometimes for locations too far away, the beacon beam might not be connected instantly, and trying again a few times may help.",
   // EOL
   "foo": "tired of line end commas."
 }

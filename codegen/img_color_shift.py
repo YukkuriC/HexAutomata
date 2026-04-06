@@ -1,5 +1,6 @@
 from PIL import Image
 import os
+import shutil
 
 
 def hue_shift(image, shift_degrees):
@@ -61,7 +62,10 @@ if 'data':
     def process_group(subpath):
         folder = os.path.join(ROOT_DIR, subpath)
         tofile = lambda color: os.path.join(folder, color + '.png')
-        base_img = Image.open(tofile(BASE_COLOR))
+        base_img_dir = tofile(BASE_COLOR)
+        base_img = Image.open(base_img_dir)
+        base_meta_dir = base_img_dir + '.mcmeta'
+        has_meta = os.path.isfile(base_meta_dir)
 
         for color, shift in HUE_MAP.items():
             shifted = hue_shift(base_img, shift)
@@ -69,5 +73,9 @@ if 'data':
             shifted.save(output_dir)
             print('Output:', os.path.relpath(output_dir, ROOT_DIR))
 
+            if has_meta:
+                shutil.copyfile(base_meta_dir, output_dir + '.mcmeta')
 
-process_group('item/reactive_focus/inner')
+
+process_group('item/reactive_focus/inner_idle')
+process_group('item/reactive_focus/inner_active')

@@ -1,6 +1,6 @@
 {
   "parent": "hexautomata:item/reactive_focus/_active",
   "textures": {
-    "layer0": "hexautomata:item/reactive_focus/inner/green"
+    "layer0": "hexautomata:item/reactive_focus/inner_active/green"
   }
 }

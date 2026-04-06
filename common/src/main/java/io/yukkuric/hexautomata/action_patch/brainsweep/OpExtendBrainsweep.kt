@@ -22,7 +22,7 @@ import net.minecraft.world.entity.Mob
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.Vec3
 
-object  OpExtendBrainsweep : PatchAction(OpBrainsweep, BrainsweepEx) {
+object OpExtendBrainsweep : PatchAction(OpBrainsweep, BrainsweepEx) {
     object BrainsweepEx : SpellAction {
         override val argc = 2
 
@@ -32,7 +32,11 @@ object  OpExtendBrainsweep : PatchAction(OpBrainsweep, BrainsweepEx) {
             env.assertEntityInRange(sacrifice)
             val data = args[1]
 
-            // 1. non-mob recipes
+            // 1. general callback first
+            val entry = BrainsweepCallback[Pair(sacrifice.type, data.type)]
+            (entry as? BCFunc<Entity, Iota>)?.let { it(sacrifice, data, env) }?.let { return it }
+
+            // 2. non-mob recipes
             if (data is Vec3Iota && sacrifice !is Mob) {
                 val pos = BlockPos.containing(data.vec3)
                 env.assertPosInRangeForEditing(pos)
@@ -52,10 +56,6 @@ object  OpExtendBrainsweep : PatchAction(OpBrainsweep, BrainsweepEx) {
                     )
                 }
             }
-
-            // 2. general callback
-            val entry = BrainsweepCallback[Pair(sacrifice.type, data.type)]
-            (entry as? BCFunc<Entity, Iota>)?.let { it(sacrifice, data, env) }?.let { return it }
 
             throw USE_ORIGINAL
         }

@@ -13,12 +13,16 @@ import at.petrak.hexcasting.api.misc.MediaConstants
 import at.petrak.hexcasting.api.utils.asTranslatedComponent
 import at.petrak.hexcasting.api.utils.lightPurple
 import io.yukkuric.hexautomata.helpers.*
+import io.yukkuric.hexautomata.network.HAPackets
+import io.yukkuric.hexautomata.network.packet.S2CPlayerExposureEffect
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerPlayer
+import net.minecraft.server.level.TicketType
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
+import net.minecraft.world.level.ChunkPos
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.entity.BeaconBlockEntity
 
@@ -63,7 +67,10 @@ object BrainsweepCallback : SinglePutMap<Pair<EntityType<*>, IotaType<*>>, BCFun
             {
                 if (!player.hasAdvancement(ADV_SELF_EXPOSED)) player.grantAdvancement(ADV_SELF_EXPOSED)
                 env.printMessage("advancement.hexautomata:self_exposed.desc".asTranslatedComponent.lightPurple)
-                player.addEffect(MobEffectInstance(MobEffects.SLOW_FALLING))
+                player.addEffect(MobEffectInstance(MobEffects.LEVITATION, 50))
+                player.addEffect(MobEffectInstance(MobEffects.SLOW_FALLING, 100))
+                // env.world.broadcastEntityEvent(player, 35.toByte())
+                HAPackets.SERVER?.sendPacketToPlayerAndTracking(player, S2CPlayerExposureEffect(player))
             },
             10 * MediaConstants.CRYSTAL_UNIT,
             ParticleSpray.cloud(player.position(), 1.0),
@@ -81,13 +88,24 @@ object BrainsweepCallback : SinglePutMap<Pair<EntityType<*>, IotaType<*>>, BCFun
         // advancement gate
         gateAdvancement(player)
 
+        val world = env.world
         val pos = BlockPos.containing(iota.vec3)
-        when (env.world.getBlockState(pos).block) {
+        val isChunkLoaded = world.isLoaded(pos)
+        val state = env.world.getBlockState(pos)
+        val block = state.block
+        when (block) {
             // teleporting to beacon beam
             Blocks.BEACON -> {
                 // check beacon active
-                val be = env.world.getBlockEntity(pos)
-                if ((be as? BeaconBlockEntity)?.beamSections?.isNotEmpty() != true) throw MISHAP_BEACON_INACTIVE
+                val be = world.getBlockEntity(pos)
+                if (isChunkLoaded)
+                    (be as? BeaconBlockEntity)?.let {
+                        if (it.beamSections.isEmpty()) throw MISHAP_BEACON_INACTIVE
+                    }
+                else {
+                    world.chunkSource.addRegionTicket(TicketType.PORTAL, ChunkPos(pos), 1, pos)
+                    throw MISHAP_BEACON_INACTIVE
+                }
 
                 val srcFxPos = player.getPosition(player.eyeHeight / 2)
                 val target = pos.center.add(0.0, 0.5, 0.0)

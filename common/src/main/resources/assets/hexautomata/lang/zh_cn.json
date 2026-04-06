@@ -60,10 +60,12 @@
   "hexautomata.book.reactive_focus.kill": "在我击杀某物时触发，初始iota为正在死去的目标。",
   "hexautomata.book.reactive_focus.teleport": "在我将被传送时触发；接收我原先与目标坐标作为两个初始iota。$(br)另外，在当次施法期间我会额外拥有前后两坐标周围小片区域的施法范围。",
   "hexautomata.book.self_exposure.title": "自我暴露",
+  "hexautomata.book.self_exposed.title": "自我暴露之后",
   "hexautomata.book.self_exposure.intro": "我即是思维，思维即是媒质……身体是沉重而脆弱的容器……我将暴露我的思维，将我从容器内解放，我将见，我……$(br)我对那些可怜村民施放的法术，也可施于我自己，创建一个回环——一个容器与精神分离的瞬间，对我身体的一瞥，即是我理解自身，与暴露精神于$(thing)海洋/$，所需的全部……",
   "hexautomata.book.self_exposure.1": "我已见！我看见了$(thing)海洋/$！$(br)$(br)媒质化的我将对这个世界获得更多掌控，以攫取与操纵自然。精神终从容器中获得自由。",
   "hexautomata.book.self_exposure.beacon_warp.title": "信标折跃",
-  "hexautomata.book.self_exposure.beacon_warp": "意识剥离只是另一种交通方式——从思维的角度来看。如果我将思维发射至与更高处相连的某处，被稳定的空间约束结构限制的光束内，我的思维与身体将穿过$(thing)海洋/$并传送至其位置，即使其位于我的施法范围之外。",
+  "hexautomata.book.self_exposure.beacon_warp": "意识剥离只是另一种交通方式——从思维的角度来看。",
+  "hexautomata.book.self_exposure.beacon_warp.2": "如果我将思维发射至与更高处相连的某处，被稳定的空间约束结构限制的光束内，我的思维与身体将穿过$(thing)海洋/$并传送至其位置，即使其位于我的施法范围之外。$(br)$(br)有时，对于过于遥远的地点，信标光束可能不会即时连接，这时重试几次或许会有帮助。",
   // EOL
   "foo": "拒绝json行尾逗号"
 }

@@ -16,7 +16,6 @@ data class S2CShowMultiblock(
         @JvmStatic
         val ID = HexAutomata.modLoc("show_multiblock")
 
-        @JvmStatic
         fun deserialize(buf: FriendlyByteBuf): S2CShowMultiblock {
             val id = buf.readResourceLocation()
             val pos = buf.readBlockPos()
@@ -25,7 +24,6 @@ data class S2CShowMultiblock(
             return S2CShowMultiblock(id, pos, rot, msg)
         }
 
-        @JvmStatic
         fun handle(packet: S2CShowMultiblock) {
             val api = PatchouliAPI.get()
             val ritual = api.getMultiblock(packet.id) ?: return
