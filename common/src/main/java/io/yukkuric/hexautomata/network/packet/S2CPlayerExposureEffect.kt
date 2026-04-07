@@ -25,11 +25,13 @@ data class S2CPlayerExposureEffect(val entityID: Int) : IMessage {
             val level = mc.level ?: return
             val entity = level.getEntity(packet.entityID) ?: return
 
-            mc.particleEngine.createTrackingEmitter(entity, ParticleTypes.TOTEM_OF_UNDYING, 30)
-            level.playLocalSound(
-                entity.x, entity.y, entity.z, SoundEvents.TOTEM_USE, entity.soundSource, 1.0f, 1.0f, false
-            )
-            if (entity === mc.player) mc.gameRenderer.displayItemActivation(LENS.value)
+            mc.execute {
+                mc.particleEngine.createTrackingEmitter(entity, ParticleTypes.TOTEM_OF_UNDYING, 30)
+                level.playLocalSound(
+                    entity.x, entity.y, entity.z, SoundEvents.TOTEM_USE, entity.soundSource, 1.0f, 1.0f, false
+                )
+                if (entity === mc.player) mc.gameRenderer.displayItemActivation(LENS.value)
+            }
         }
     }
 
