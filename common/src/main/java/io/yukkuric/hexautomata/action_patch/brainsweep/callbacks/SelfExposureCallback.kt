@@ -22,12 +22,13 @@ import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.level.ChunkPos
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.entity.BeaconBlockEntity
 
 abstract class SelfExposureCallback<I : Iota>(
     priority: Int,
-    limitIota: IotaType<I>
+    limitIota: IotaType<I>?
 ) : BrainsweepCallback<ServerPlayer, I>(priority, EntityType.PLAYER as EntityType<ServerPlayer>, limitIota) {
     override fun call(entity: ServerPlayer, iota: I, env: CastingEnvironment): SpellAction.Result? {
         if (entity != env.castingEntity) throw MishapOthersName(entity)
@@ -40,8 +41,8 @@ abstract class SelfExposureCallback<I : Iota>(
         if (!player.hasAdvancement(ADV_SELF_EXPOSED)) throw MISHAP_PLAYER_ADV_GATE
     }
 
-    object Entity : SelfExposureCallback<EntityIota>(0, EntityIota.TYPE) {
-        override fun callInner(player: ServerPlayer, iota: EntityIota, env: CastingEnvironment): SpellAction.Result {
+    object ENTITY : SelfExposureCallback<EntityIota>(0, EntityIota.TYPE) {
+        override fun callInner(player: ServerPlayer, iota: EntityIota, env: CastingEnvironment): SpellAction.Result? {
             // expose self
             if (iota.entity == player) return buildResult(
                 {
@@ -60,14 +61,18 @@ abstract class SelfExposureCallback<I : Iota>(
             // advancement gate
             gateAdvancement(player)
 
-            // connect to other entity
-            // TODO
+            return null
+        }
+    }
+
+    object FALLBACK : SelfExposureCallback<Iota>(Int.MAX_VALUE, null) {
+        override fun callInner(player: ServerPlayer, iota: Iota, env: CastingEnvironment): SpellAction.Result? {
             throw MISHAP_PLAYER_BRAINSWEEP_INVALID_TARGET
         }
     }
 
-    object Block : SelfExposureCallback<Vec3Iota>(0, Vec3Iota.TYPE) {
-        override fun callInner(player: ServerPlayer, iota: Vec3Iota, env: CastingEnvironment): SpellAction.Result {
+    object BLOCK : SelfExposureCallback<Vec3Iota>(0, Vec3Iota.TYPE) {
+        override fun callInner(player: ServerPlayer, iota: Vec3Iota, env: CastingEnvironment): SpellAction.Result? {
             // advancement gate
             gateAdvancement(player)
 
@@ -76,23 +81,29 @@ abstract class SelfExposureCallback<I : Iota>(
             val isChunkLoaded = world.isLoaded(pos)
             val state = env.world.getBlockState(pos)
             val block = state.block
-            when (block) {
-                // teleporting to beacon beam
-                Blocks.BEACON -> {
+            Sub[block]?.let { it(player, pos, env, isChunkLoaded) }?.let { return it }
+            return null
+        }
+
+        object Sub :
+            SinglePutMap<Block, (ServerPlayer, BlockPos, CastingEnvironment, chunkLoaded: Boolean) -> SpellAction.Result?>() {
+            init {
+                this[Blocks.BEACON] = { player, pos, env, isChunkLoaded ->
                     // check beacon active
-                    val be = world.getBlockEntity(pos)
+                    val be = env.world.getBlockEntity(pos)
                     if (isChunkLoaded) (be as? BeaconBlockEntity)?.let {
                         if (it.beamSections.isEmpty()) throw MISHAP_BEACON_INACTIVE
                     }
                     else {
-                        world.chunkSource.addRegionTicket(TicketType.PORTAL, ChunkPos(pos), 1, pos)
+                        env.world.chunkSource.addRegionTicket(TicketType.PORTAL, ChunkPos(pos), 1, pos)
                         throw MISHAP_BEACON_INACTIVE
                     }
 
                     val srcFxPos = player.getPosition(player.eyeHeight / 2)
                     val target = pos.center.add(0.0, 0.5, 0.0)
                     val targetFxPos = target.add(0.0, (player.eyeHeight / 2).toDouble(), 0.0)
-                    return buildResult(
+
+                    buildResult(
                         {
                             player.teleportTo(target.x, target.y, target.z)
                         },
@@ -102,7 +113,6 @@ abstract class SelfExposureCallback<I : Iota>(
                     )
                 }
             }
-            throw MISHAP_PLAYER_BRAINSWEEP_INVALID_TARGET
         }
     }
 }

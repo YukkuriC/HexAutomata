@@ -17,9 +17,9 @@ abstract class BrainsweepCallback<E : Entity, I : Iota>(
     val limitIota: IotaType<I>?,
 ) {
     /**
-     * return null for check fail
-     * throw exceptions for stronger rejection
-     * editing OpExtendBrainsweep for extra data flow
+     * - return null for check fail
+     * - throw exceptions for stronger rejection
+     * - editing OpExtendBrainsweep.resultStack for extra data flow
      */
     abstract fun call(entity: E, iota: I, env: CastingEnvironment): SpellAction.Result?
 
@@ -30,8 +30,9 @@ abstract class BrainsweepCallback<E : Entity, I : Iota>(
     companion object : SinglePutMap<String, BrainsweepCallback<*, *>>() {
         private val _cacheSorted = HashMap<Pair<EntityType<*>, IotaType<*>>, List<BrainsweepCallback<*, *>>>()
 
-        val PLAYER_TO_ENTITY = set("player2entity", SelfExposureCallback.Entity)
-        val PLAYER_TO_BLOCK = set("player2pos", SelfExposureCallback.Block)
+        val PLAYER_TO_ENTITY = set("player2entity", SelfExposureCallback.ENTITY)
+        val PLAYER_TO_BLOCK = set("player2pos", SelfExposureCallback.BLOCK)
+        val PLAYER_MISS = set("player_miss", SelfExposureCallback.FALLBACK)
 
         override fun setChanged() {
             _cacheSorted.clear()
