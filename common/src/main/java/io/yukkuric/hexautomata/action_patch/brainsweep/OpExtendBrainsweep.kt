@@ -54,8 +54,7 @@ object OpExtendBrainsweep : PatchAction(OpBrainsweep, BrainsweepEx) {
             val data = args[1]
 
             // 1. general callback first
-            val entry = BrainsweepCallback[Pair(sacrifice.type, data.type)]
-            (entry as? BCFunc<Entity, Iota>)?.let { it(sacrifice, data, env) }?.let { return it }
+            BrainsweepCallback.callAll(sacrifice, data, env)?.let { return it }
 
             // 2. non-mob recipes
             if (data is Vec3Iota && sacrifice !is Mob) {

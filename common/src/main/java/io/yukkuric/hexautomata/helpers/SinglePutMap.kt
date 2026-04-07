@@ -6,6 +6,9 @@ open class SinglePutMap<K, T> {
     operator fun set(key: K, obj: T): T {
         val old = MAP.put(key, obj)
         if (old != null) throw IllegalArgumentException("duped id $key in type $javaClass")
+        setChanged()
         return obj
     }
+
+    open fun setChanged() {}
 }
