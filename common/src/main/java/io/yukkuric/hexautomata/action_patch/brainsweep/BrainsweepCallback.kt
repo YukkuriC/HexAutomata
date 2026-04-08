@@ -30,9 +30,9 @@ abstract class BrainsweepCallback<E : Entity, I : Iota>(
     companion object : SinglePutMap<String, BrainsweepCallback<*, *>>() {
         private val _cacheSorted = HashMap<Pair<EntityType<*>, IotaType<*>>, List<BrainsweepCallback<*, *>>>()
 
-        val PLAYER_TO_ENTITY = set("player2entity", SelfExposureCallback.ENTITY)
-        val PLAYER_TO_BLOCK = set("player2pos", SelfExposureCallback.BLOCK)
-        val PLAYER_MISS = set("player_miss", SelfExposureCallback.FALLBACK)
+        init {
+            SelfExposureCallback.loadAll()
+        }
 
         override fun setChanged() {
             _cacheSorted.clear()

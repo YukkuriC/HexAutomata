@@ -37,11 +37,20 @@ abstract class SelfExposureCallback<I : Iota>(
 
     abstract fun callInner(player: ServerPlayer, iota: I, env: CastingEnvironment): SpellAction.Result?
 
-    fun gateAdvancement(player: ServerPlayer) {
-        if (!player.hasAdvancement(ADV_SELF_EXPOSED)) throw MISHAP_PLAYER_ADV_GATE
+    companion object {
+        fun gateAdvancement(player: ServerPlayer) {
+            if (!player.hasAdvancement(ADV_SELF_EXPOSED)) throw MISHAP_PLAYER_ADV_GATE
+        }
+
+        fun loadAll() {
+            set("player/unlocker", SELF)
+            set("player/gate", GATE)
+            set("player/pos", BLOCK)
+            set("player/miss", FALLBACK)
+        }
     }
 
-    object ENTITY : SelfExposureCallback<EntityIota>(0, EntityIota.TYPE) {
+    object SELF : SelfExposureCallback<EntityIota>(Int.MIN_VALUE, EntityIota.TYPE) {
         override fun callInner(player: ServerPlayer, iota: EntityIota, env: CastingEnvironment): SpellAction.Result? {
             // expose self
             if (iota.entity == player) return buildResult(
@@ -58,9 +67,13 @@ abstract class SelfExposureCallback<I : Iota>(
                 ParticleSpray.cloud(player.eyePosition, 1.0),
             )
 
-            // advancement gate
-            gateAdvancement(player)
+            return null
+        }
+    }
 
+    object GATE : SelfExposureCallback<Iota>(Int.MIN_VALUE + 1, null) {
+        override fun callInner(player: ServerPlayer, iota: Iota, env: CastingEnvironment): SpellAction.Result? {
+            gateAdvancement(player)
             return null
         }
     }
@@ -73,9 +86,6 @@ abstract class SelfExposureCallback<I : Iota>(
 
     object BLOCK : SelfExposureCallback<Vec3Iota>(0, Vec3Iota.TYPE) {
         override fun callInner(player: ServerPlayer, iota: Vec3Iota, env: CastingEnvironment): SpellAction.Result? {
-            // advancement gate
-            gateAdvancement(player)
-
             val world = env.world
             val pos = BlockPos.containing(iota.vec3)
             val isChunkLoaded = world.isLoaded(pos)
