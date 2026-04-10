@@ -28,7 +28,11 @@ abstract class BrainsweepCallback<E : Entity, I : Iota>(
     }
 
     companion object : SinglePutMap<String, BrainsweepCallback<*, *>>() {
-        private val _cacheSorted = HashMap<Pair<EntityType<*>, IotaType<*>>, List<BrainsweepCallback<*, *>>>()
+        private val _cacheSorted = HashMap<Pair<EntityType<*>?, IotaType<*>?>, List<BrainsweepCallback<*, *>>>()
+        private val _allEntityTypes = HashSet<EntityType<*>>()
+        private val _allIotaTypes = HashSet<IotaType<*>>()
+        private var _keySetLoaded = false
+
 
         init {
             SelfExposureCallback.loadAll()
@@ -36,6 +40,9 @@ abstract class BrainsweepCallback<E : Entity, I : Iota>(
 
         override fun setChanged() {
             _cacheSorted.clear()
+            _allIotaTypes.clear()
+            _allEntityTypes.clear()
+            _keySetLoaded = false
         }
 
         @JvmStatic
@@ -44,10 +51,24 @@ abstract class BrainsweepCallback<E : Entity, I : Iota>(
 
         @JvmStatic
         fun callAll(entity: Entity, iota: Iota, env: CastingEnvironment): SpellAction.Result? {
-            val callbacks = _cacheSorted.computeIfAbsent(Pair(entity.type, iota.type)) {
+            var entityType: EntityType<*>? = entity.type
+            var iotaType: IotaType<*>? = iota.type
+
+            // filter key set
+            if (!_keySetLoaded) {
+                for (c in MAP.values) {
+                    c.limitEntity?.let(_allEntityTypes::add)
+                    c.limitIota?.let(_allIotaTypes::add)
+                }
+                _keySetLoaded = true
+            }
+            if (entityType !in _allEntityTypes) entityType = null
+            if (iotaType !in _allIotaTypes) iotaType = null
+
+            val callbacks = _cacheSorted.computeIfAbsent(Pair(entityType, iotaType)) {
                 MAP.values.filter {
-                    if (it.limitEntity != null && it.limitEntity != entity.type) return@filter false
-                    if (it.limitIota != null && it.limitIota != iota.type) return@filter false
+                    if (it.limitEntity != entityType) return@filter false
+                    if (it.limitIota != iotaType) return@filter false
                     return@filter true
                 }.sortedBy { it.priority }
             }
