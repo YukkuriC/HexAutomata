@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Mixin(targets = "at.petrak.hexcasting.common.casting.actions.spells.great.OpBrainsweep$Spell")
@@ -30,7 +31,7 @@ public abstract class MixinBrainsweep {
 
     @Mixin(EntityTagIngredient.class)
     static class EntityTagIngredientDisplay {
-        private Map<EntityType<?>, Entity> cachedTypes;
+        private static Map<EntityType<?>, Entity> cachedTypes = new HashMap<>();
 
         @Shadow(remap = false)
         @Final
