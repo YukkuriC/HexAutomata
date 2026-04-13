@@ -4,6 +4,9 @@ import at.petrak.hexcasting.api.casting.ParticleSpray
 import at.petrak.hexcasting.api.casting.RenderedSpell
 import at.petrak.hexcasting.api.casting.castables.SpellAction
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
+import at.petrak.hexcasting.api.casting.eval.OperationResult
+import at.petrak.hexcasting.api.casting.eval.vm.CastingImage
+import at.petrak.hexcasting.api.casting.eval.vm.SpellContinuation
 import at.petrak.hexcasting.api.casting.getEntity
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.iota.Vec3Iota
@@ -23,8 +26,26 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.Vec3
 
 object OpExtendBrainsweep : PatchAction(OpBrainsweep, BrainsweepEx) {
+    private lateinit var _stack: MutableList<Iota>
+    var resultStack: MutableList<Iota>
+        get() = _stack
+        private set(v) {
+            _stack = v
+        }
+
     object BrainsweepEx : SpellAction {
         override val argc = 2
+
+        @Synchronized
+        override fun operate(
+            env: CastingEnvironment,
+            image: CastingImage,
+            continuation: SpellContinuation
+        ): OperationResult {
+            val ret = super.operate(env, image, continuation)
+            resultStack = ret.newImage.stack as MutableList<Iota>
+            return ret
+        }
 
         override fun execute(args: List<Iota>, env: CastingEnvironment): SpellAction.Result {
             val world = env.world
@@ -33,8 +54,7 @@ object OpExtendBrainsweep : PatchAction(OpBrainsweep, BrainsweepEx) {
             val data = args[1]
 
             // 1. general callback first
-            val entry = BrainsweepCallback[Pair(sacrifice.type, data.type)]
-            (entry as? BCFunc<Entity, Iota>)?.let { it(sacrifice, data, env) }?.let { return it }
+            BrainsweepCallback.callAll(sacrifice, data, env)?.let { return it }
 
             // 2. non-mob recipes
             if (data is Vec3Iota && sacrifice !is Mob) {
