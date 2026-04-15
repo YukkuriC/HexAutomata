@@ -7,7 +7,6 @@ import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.iota.IotaType
 import at.petrak.hexcasting.common.lib.hex.HexIotaTypes
-import io.yukkuric.hexautomata.action_patch.PatchAction
 import io.yukkuric.hexautomata.action_patch.brainsweep.callbacks.SelfExposureCallback
 import io.yukkuric.hexautomata.helpers.SinglePutMap
 import net.minecraft.core.registries.BuiltInRegistries
@@ -109,10 +108,5 @@ abstract class BrainsweepCallback<E : Entity, I : Iota>(
 
         @JvmStatic
         override fun forceSet(key: String, obj: BrainsweepCallback<*, *>) = super.forceSet(key, obj)
-
-        @JvmStatic
-        val USE_ORIGINAL = PatchAction.USE_ORIGINAL
-        @JvmStatic
-        val STOP_ALL = PatchAction.STOP_ALL
     }
 }

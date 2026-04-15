@@ -44,7 +44,14 @@ Provides items with ability listening to various game events and triggering cust
 
 ### KubeJS
 
-Exposes `BrainsweepCallback` to server/startup scripts binding, allowing custom brainsweep callbacks to be registered.
+#### `HAPatches` and `PatchAction`
+
+Allowing packmakers to patch actions the same way as `OpBrainsweep`.  
+Also exposes two special errors: `USE_ORIGINAL` and `STOP_ALL` for better control over custom brainsweeps.
+
+#### `BrainsweepCallback`
+
+Exposes `BrainsweepCallback` to server/startup scripts binding, allowing custom brainsweep callbacks to be registered.  
 
 **Registering a callback:**
 
@@ -55,7 +62,9 @@ BrainsweepCallback.create(priority,
         // return SpellAction.Result or null
         return BrainsweepCallback.buildResult(env => {
             // do something
-        }, 0);
+            // or stop here
+            throw PatchAction.STOP_ALL
+        }, 0)
     }
 );
 ```
