@@ -10,5 +10,11 @@ open class SinglePutMap<K, T> {
         return obj
     }
 
+    // well...
+    open fun forceSet(key: K, obj: T): T {
+        MAP.remove(key)
+        return set(key, obj)
+    }
+
     open fun setChanged() {}
 }

@@ -71,6 +71,9 @@ subprojects {
         modImplementation "curse.maven:cloth-config-348521:5729105"
         // interop dep
         modImplementation "curse.maven:hexparse-1148731:7676910"
+        modImplementation "curse.maven:hexoverpowered-1173074:7733501"
+        ["kubejs-238086:5853326", "rhino-416294:6186971", "architectury-api-419699:5137938"]
+                .forEach { modImplementation("curse.maven:$it") }
         // helpers in runClient
         // modImplementation "curse.maven:jade-324717:6855440"
         modImplementation "curse.maven:just-enough-characters-250702:7411324"
