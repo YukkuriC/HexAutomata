@@ -39,3 +39,30 @@ Provides items with ability listening to various game events and triggering cust
 
 - Another advancement-based progression and functions extending Brainsweep great spell :3
     - a new way of transportation
+
+## Interop
+
+### KubeJS
+
+Exposes `BrainsweepCallback` to server/startup scripts binding, allowing custom brainsweep callbacks to be registered.
+
+**Registering a callback:**
+
+```js
+BrainsweepCallback.create(priority,
+    entityId, iotaTypeId, // nullable type ids
+    (entity, iota, env) => {
+        // return SpellAction.Result or null
+        return BrainsweepCallback.buildResult(env => {
+            // do something
+        }, 0);
+    }
+);
+```
+
+- `entityId` and `iotaTypeId` accept `ResourceLocation` strings. Iota type IDs under the `minecraft` namespace are automatically remapped to `hexcasting`.
+- Use `BrainsweepCallback.forceSet(key, callback)` to override an existing callback registration.
+
+### HexParse
+
+Registers `Reactive Focus` as an item I/O handler via `HexParseAPI.CreateItemIOMethod`, enabling HexParse to read and write iotas directly from/to Reactive Focus items.
