@@ -5,11 +5,18 @@ import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
 import at.petrak.hexcasting.api.casting.eval.OperationResult
 import at.petrak.hexcasting.api.casting.eval.vm.CastingImage
 import at.petrak.hexcasting.api.casting.eval.vm.SpellContinuation
+import at.petrak.hexcasting.common.lib.hex.HexEvalSounds
+import dev.latvian.mods.rhino.JavaScriptException
+import dev.latvian.mods.rhino.NativeJavaObject
+import io.yukkuric.hexautomata.HexAutomata
+import io.yukkuric.hexautomata.helpers.NoTraced
 
 open class PatchAction(val original: Action, val patcher: Action) : Action {
-    object USE_ORIGINAL : Throwable() {
-        private fun readResolve(): Any = USE_ORIGINAL
-        override fun fillInStackTrace() = this
+    companion object {
+        @JvmStatic
+        val USE_ORIGINAL = NoTraced()
+        @JvmStatic
+        val STOP_ALL = NoTraced()
     }
 
     override fun operate(
@@ -18,7 +25,20 @@ open class PatchAction(val original: Action, val patcher: Action) : Action {
         try {
             return patcher.operate(env, image, continuation)
         } catch (e: Throwable) {
-            if (e == USE_ORIGINAL) return original.operate(env, image, continuation)
+            var e = e.let unwrapper@{
+                if (HexAutomata.API.modLoaded("kubejs")) {
+                    (((e as? JavaScriptException)?.value as? NativeJavaObject)?.unwrap() as? Throwable)
+                        ?.let { return@unwrapper it }
+                }
+                return@unwrapper e
+            }
+            when (e) {
+                USE_ORIGINAL -> return original.operate(env, image, continuation)
+                STOP_ALL -> return OperationResult(
+                    image.withUsedOp(), listOf(), SpellContinuation.Done,
+                    HexEvalSounds.NOTHING,
+                )
+            }
             throw e
         }
     }

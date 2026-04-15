@@ -7,6 +7,7 @@ import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.iota.IotaType
 import at.petrak.hexcasting.common.lib.hex.HexIotaTypes
+import io.yukkuric.hexautomata.action_patch.PatchAction
 import io.yukkuric.hexautomata.action_patch.brainsweep.callbacks.SelfExposureCallback
 import io.yukkuric.hexautomata.helpers.SinglePutMap
 import net.minecraft.core.registries.BuiltInRegistries
@@ -82,12 +83,12 @@ abstract class BrainsweepCallback<E : Entity, I : Iota>(
 
         // ====== KubeJS interop ======
         @JvmStatic
-        fun create(
+        fun createRaw(
             priority: Int,
             et: EntityType<*>?,
             it: IotaType<*>?,
             callback: (entity: Entity, iota: Iota, env: CastingEnvironment) -> SpellAction.Result?
-        ) = object : BrainsweepCallback<Entity, Iota>(priority, et as EntityType<Entity>, it as IotaType<Iota>) {
+        ) = object : BrainsweepCallback<Entity, Iota>(priority, et as EntityType<Entity>?, it as IotaType<Iota>?) {
             override fun call(entity: Entity, iota: Iota, env: CastingEnvironment) = callback(entity, iota, env)
         }
 
@@ -103,10 +104,15 @@ abstract class BrainsweepCallback<E : Entity, I : Iota>(
                 val wrapId = if (it.namespace == "minecraft") ResourceLocation("hexcasting", it.path) else it
                 HexIotaTypes.REGISTRY.get(wrapId)
             }
-            return create(priority, et, it, callback)
+            return createRaw(priority, et, it, callback)
         }
 
         @JvmStatic
         override fun forceSet(key: String, obj: BrainsweepCallback<*, *>) = super.forceSet(key, obj)
+
+        @JvmStatic
+        val USE_ORIGINAL = PatchAction.USE_ORIGINAL
+        @JvmStatic
+        val STOP_ALL = PatchAction.STOP_ALL
     }
 }
