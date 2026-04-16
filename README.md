@@ -39,3 +39,49 @@ Provides items with ability listening to various game events and triggering cust
 
 - Another advancement-based progression and functions extending Brainsweep great spell :3
     - a new way of transportation
+
+## Interop
+
+### KubeJS
+
+#### `HAPatches` and `PatchAction`
+
+Allowing packmakers to patch actions the same way as `OpBrainsweep`.  
+Also exposes two special errors: `USE_ORIGINAL` and `STOP_ALL` for better control over custom brainsweeps.
+
+See also: [How to Create `PatchAction` and Inject Existing Pattern Logic](how-to/en_us/patch-action.md)
+
+#### `BrainsweepCallback`
+
+Exposes `BrainsweepCallback` to server/startup scripts binding, allowing custom brainsweep callbacks to be registered.  
+
+See also: [How to Create Custom `BrainsweepCallback`](how-to/en_us/custom-brainsweep-callback.md)
+
+**Registering a callback:**
+
+```js
+BrainsweepCallback.create(priority,
+    entityId, iotaTypeId, // nullable type ids
+    (entity, iota, env) => {
+        // return SpellAction.Result as a normal spell action
+        if (some_condition) {
+            return BrainsweepCallback.buildResult(env => {
+                // do something
+            }, 0)
+        }
+        // continue to more matched callbacks with lower priority
+        else if (other_condition) {
+            return null
+        }
+        // or interrupt with `PatchAction` special errors
+        throw PatchAction.STOP_ALL
+    }
+);
+```
+
+- `entityId` and `iotaTypeId` accept `ResourceLocation` strings. Iota type IDs under the `minecraft` namespace are automatically remapped to `hexcasting`.
+- Use `BrainsweepCallback.forceSet(key, callback)` to override an existing callback registration.
+
+### HexParse
+
+Registers `Reactive Focus` as an item I/O handler via `HexParseAPI.CreateItemIOMethod`, enabling HexParse to read and write iotas directly from/to Reactive Focus items.
