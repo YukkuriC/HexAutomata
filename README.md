@@ -49,9 +49,13 @@ Provides items with ability listening to various game events and triggering cust
 Allowing packmakers to patch actions the same way as `OpBrainsweep`.  
 Also exposes two special errors: `USE_ORIGINAL` and `STOP_ALL` for better control over custom brainsweeps.
 
+See also: [How to Create `PatchAction` and Inject Existing Pattern Logic](how-to/en_us/patch-action.md)
+
 #### `BrainsweepCallback`
 
 Exposes `BrainsweepCallback` to server/startup scripts binding, allowing custom brainsweep callbacks to be registered.  
+
+See also: [How to Create Custom `BrainsweepCallback`](how-to/en_us/custom-brainsweep-callback.md)
 
 **Registering a callback:**
 
