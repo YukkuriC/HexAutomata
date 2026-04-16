@@ -59,12 +59,18 @@ Exposes `BrainsweepCallback` to server/startup scripts binding, allowing custom 
 BrainsweepCallback.create(priority,
     entityId, iotaTypeId, // nullable type ids
     (entity, iota, env) => {
-        // return SpellAction.Result or null
-        return BrainsweepCallback.buildResult(env => {
-            // do something
-            // or stop here
-            throw PatchAction.STOP_ALL
-        }, 0)
+        // return SpellAction.Result as a normal spell action
+        if (some_condition) {
+            return BrainsweepCallback.buildResult(env => {
+                // do something
+            }, 0)
+        }
+        // continue to more matched callbacks with lower priority
+        else if (other_condition) {
+            return null
+        }
+        // or interrupt with `PatchAction` special errors
+        throw PatchAction.STOP_ALL
     }
 );
 ```
