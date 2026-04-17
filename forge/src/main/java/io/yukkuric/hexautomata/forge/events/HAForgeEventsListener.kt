@@ -5,6 +5,7 @@ import io.yukkuric.hexautomata.HexAutomata.commonInit
 import io.yukkuric.hexautomata.HexAutomata.commonLateInit
 import io.yukkuric.hexautomata.actions.HAActions
 import io.yukkuric.hexautomata.blocks.HABlocks
+import io.yukkuric.hexautomata.entity.HAEntities
 import io.yukkuric.hexautomata.events.BuiltinEventMarker
 import io.yukkuric.hexautomata.events.CommonEventsHandler
 import io.yukkuric.hexautomata.events.CommonHelpers
@@ -16,9 +17,11 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.damagesource.DamageTypes
+import net.minecraft.world.entity.ai.attributes.DefaultAttributes
 import net.minecraft.world.entity.projectile.Projectile
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent
 import net.minecraftforge.event.entity.EntityJoinLevelEvent
 import net.minecraftforge.event.entity.ProjectileImpactEvent
 import net.minecraftforge.event.entity.living.LivingDeathEvent
@@ -85,6 +88,7 @@ class HAForgeEventsListener {
             bindReg(HexRegistries.ACTION, HAActions::register)
             bindReg(Registries.ITEM, HAItems::register)
             bindReg(Registries.CREATIVE_MODE_TAB, HAItems.Tabs::register)
+            bindReg(Registries.ENTITY_TYPE, HAEntities::register)
 
             // brainsweep intermediate
             bindReg(Registries.BLOCK, HABlocks::register)
@@ -98,6 +102,10 @@ class HAForgeEventsListener {
         fun OnCommonSetup(e: FMLCommonSetupEvent) {
             commonInit()
             commonLateInit()
+        }
+        @SubscribeEvent
+        fun OnAttributeCreation(e: EntityAttributeCreationEvent) {
+            e.put(HAEntities.THE_SLIME, DefaultAttributes.getSupplier(net.minecraft.world.entity.EntityType.SLIME))
         }
     }
 

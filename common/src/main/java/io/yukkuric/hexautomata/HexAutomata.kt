@@ -3,6 +3,8 @@ package io.yukkuric.hexautomata
 import at.petrak.hexcasting.xplat.IClientXplatAbstractions
 import com.mojang.logging.LogUtils
 import io.yukkuric.hexautomata.action_patch.HAPatches
+import io.yukkuric.hexautomata.entity.HAEntities
+import io.yukkuric.hexautomata.entity.client.MediaSlimeRenderer
 import io.yukkuric.hexautomata.interop.HexOPInterop
 import io.yukkuric.hexautomata.interop.HexParseInterop
 import io.yukkuric.hexautomata.items.HAItems
@@ -60,14 +62,22 @@ object HexAutomata {
             }
         }
     }
+
+    object Client {
+        fun init() {
+            var x = IClientXplatAbstractions.INSTANCE;
+            x.registerEntityRenderer(HAEntities.THE_SLIME, ::MediaSlimeRenderer)
+        }
+    }
 }
 
 // client stuff
 object HexAutomataClient {
     fun load() {
+        val ClientXPlat = IClientXplatAbstractions.INSTANCE
         // all focus model variant
         for (focus in HAItems.AllFocuses()) {
-            IClientXplatAbstractions.INSTANCE.registerItemProperty(
+            ClientXPlat.registerItemProperty(
                 focus, ItemReactiveFocus.DATA_PRED
             ) { stack, _, holder, _ ->
                 if (holder is Player &&
@@ -75,10 +85,11 @@ object HexAutomataClient {
                 ) 1F else 0F
             }
         }
-        IClientXplatAbstractions.INSTANCE.registerItemProperty(
+        ClientXPlat.registerItemProperty(
             HAItems.FOCUS_BUNDLE,
             ItemFocusBundle.CONTENTS_PRED,
             ItemFocusBundle.Companion.Client::contentsPredicate
         )
+        ClientXPlat.registerEntityRenderer(HAEntities.THE_SLIME, ::MediaSlimeRenderer)
     }
 }
