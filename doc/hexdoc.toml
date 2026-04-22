@@ -46,4 +46,4 @@ src = "../common/src"
 src = "../fabric/src"
 
 [_forge]
-src = "../forge/src"
+src = "../neoforge/src"
