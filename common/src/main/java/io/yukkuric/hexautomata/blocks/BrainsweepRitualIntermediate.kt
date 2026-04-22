@@ -1,7 +1,7 @@
 package io.yukkuric.hexautomata.blocks
 
 import at.petrak.hexcasting.common.recipe.HexRecipeStuffRegistry
-import at.petrak.hexcasting.common.recipe.ingredient.StateIngredientBlock
+import at.petrak.hexcasting.common.recipe.ingredient.state.StateIngredientBlock
 import com.google.common.base.Suppliers
 import io.yukkuric.hexautomata.HexAutomata
 import io.yukkuric.hexautomata.multiblock.HARituals
@@ -68,7 +68,8 @@ open class BrainsweepRitualIntermediate(var ritualId: ResourceLocation) : Brains
 
     // default: pick source block from recipe
     var fallbackBlock = Suppliers.memoize {
-        for (recipe in level.recipeManager.getAllRecipesFor(HexRecipeStuffRegistry.BRAINSWEEP_TYPE)) {
+        for (recipeHolder in level.recipeManager.getAllRecipesFor(HexRecipeStuffRegistry.BRAINSWEEP_TYPE)) {
+            val recipe = recipeHolder.value
             if (recipe.result.block != this) continue
             val blockIn = recipe.blockIn
             if (blockIn is StateIngredientBlock) {

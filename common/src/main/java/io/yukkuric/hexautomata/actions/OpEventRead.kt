@@ -12,7 +12,7 @@ object OpEventRead : EventLimitedAction() {
         val stack = env.stack
         val datumHolder = IXplatAbstractions.INSTANCE.findDataHolder(stack)
             ?: throw MishapBadOffhandItem.of(stack, "iota.read")
-        val datum = datumHolder.readIota(env.world)
+        val datum = datumHolder.readIota()
             ?: datumHolder.emptyIota()
             ?: throw MishapBadOffhandItem.of(stack, "iota.read")
         return listOf(datum)

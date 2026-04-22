@@ -2,12 +2,12 @@ package io.yukkuric.hexautomata.blocks
 
 import io.yukkuric.hexautomata.blocks.BrainsweepIntermediate.BE
 import net.minecraft.core.BlockPos
+import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.NbtUtils
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
@@ -54,12 +54,11 @@ open class BrainsweepIntermediate : Block(PROP_BLOCK), EntityBlock, BlockEntityT
         blockEntityType: BlockEntityType<T>
     ) = this as BlockEntityTicker<T>
 
-    override fun use(
+    override fun useWithoutItem(
         blockState: BlockState,
         level: Level,
         blockPos: BlockPos,
         player: Player,
-        interactionHand: InteractionHand,
         blockHitResult: BlockHitResult
     ): InteractionResult {
         tick(level, blockPos, blockState, level.getBlockEntity(blockPos) as BE)
@@ -111,12 +110,12 @@ open class BrainsweepIntermediate : Block(PROP_BLOCK), EntityBlock, BlockEntityT
 
         private var sacrificeId: UUID? = null
 
-        override fun load(data: CompoundTag) {
+        override fun loadAdditional(data: CompoundTag, provider: HolderLookup.Provider) {
             sacrificeId = if (data.contains(KEY_SACRIFICE_UUID, 11)) NbtUtils.loadUUID(data[KEY_SACRIFICE_UUID])
             else null
         }
 
-        override fun saveAdditional(data: CompoundTag) {
+        override fun saveAdditional(data: CompoundTag, provider: HolderLookup.Provider) {
             sacrificeId?.let { data.put(KEY_SACRIFICE_UUID, NbtUtils.createUUID(it)) }
         }
 

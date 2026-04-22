@@ -13,7 +13,6 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
-import net.minecraft.world.level.Level
 
 class ItemReactiveFocus(val type: EventMarker, props: Properties) : ItemFocus(props) {
     constructor(type: EventMarker) : this(type, HAItems.Props.STACK_ONE)
@@ -21,7 +20,7 @@ class ItemReactiveFocus(val type: EventMarker, props: Properties) : ItemFocus(pr
     open fun isListening(stack: ItemStack, marker: EventMarker) = type == marker
 
     open fun runCallback(stack: ItemStack, event: IHAEvent, player: ServerPlayer): Boolean {
-        val spell = readIota(stack, player.serverLevel()) ?: return false
+        val spell = readIota(stack) ?: return false
         val list = if (spell is ListIota) spell.list.toList() else listOf(spell)
         EntityEventEnv(event, stack, player).executeIotasWithTax(list)
         return true
@@ -35,12 +34,12 @@ class ItemReactiveFocus(val type: EventMarker, props: Properties) : ItemFocus(pr
 
     override fun appendHoverText(
         stack: ItemStack,
-        lvl: Level?,
+        tooltipContext: TooltipContext,
         tooltips: MutableList<Component?>,
         advanced: TooltipFlag
     ) {
         TooltipHelper.appendScopeTooltip(tooltips)
-        super.appendHoverText(stack, lvl, tooltips, advanced)
+        super.appendHoverText(stack, tooltipContext, tooltips, advanced)
     }
 
     companion object {

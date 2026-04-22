@@ -1,5 +1,6 @@
 package io.yukkuric.hexautomata.action_patch.brainsweep
 
+import at.petrak.hexcasting.api.HexAPI
 import at.petrak.hexcasting.api.casting.ParticleSpray
 import at.petrak.hexcasting.api.casting.RenderedSpell
 import at.petrak.hexcasting.api.casting.castables.SpellAction
@@ -85,7 +86,7 @@ abstract class BrainsweepCallback<E : Entity, I : Iota>(
         ): BrainsweepCallback<Entity, Iota> {
             val et = etid?.let { BuiltInRegistries.ENTITY_TYPE.get(etid) }
             val it = itid?.let {
-                val wrapId = if (it.namespace == "minecraft") ResourceLocation("hexcasting", it.path) else it
+                val wrapId = if (it.namespace == "minecraft") HexAPI.modLoc(it.path) else it
                 HexIotaTypes.REGISTRY.get(wrapId)
             }
             return createRaw(priority, et, it, callback)

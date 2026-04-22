@@ -20,7 +20,7 @@ object OpQuantumSwap : EventLimitedAction() {
             oldPosTarget = it.extraAmbitCenter()
         }
         val oldPosCaster = caster.position()
-        caster.teleportToWithTicket(oldPosTarget.x, oldPosTarget.y, oldPosTarget.z)
+        caster.teleportTo(oldPosTarget.x, oldPosTarget.y, oldPosTarget.z)
         sprayParticleAt(caster, env)
         if (target != caster) {
             target.teleportTo(oldPosCaster.x, oldPosCaster.y, oldPosCaster.z)

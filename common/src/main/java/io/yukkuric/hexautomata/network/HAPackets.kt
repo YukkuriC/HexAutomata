@@ -1,6 +1,6 @@
 package io.yukkuric.hexautomata.network
 
-import at.petrak.hexcasting.common.msgs.IMessage
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.Entity
 
@@ -10,13 +10,13 @@ object HAPackets {
     var SERVER: Server? = null
 
     interface Client {
-        fun sendPacketToServer(packet: IMessage)
+        fun sendPacketToServer(packet: CustomPacketPayload)
     }
 
     interface Server {
-        fun sendPacketToPlayer(player: ServerPlayer, packet: IMessage)
-        fun sendPacketTracking(entity: Entity, packet: IMessage)
-        fun sendPacketToPlayerAndTracking(player: ServerPlayer, packet: IMessage) {
+        fun sendPacketToPlayer(player: ServerPlayer, packet: CustomPacketPayload)
+        fun sendPacketTracking(entity: Entity, packet: CustomPacketPayload)
+        fun sendPacketToPlayerAndTracking(player: ServerPlayer, packet: CustomPacketPayload) {
             sendPacketToPlayer(player, packet)
             sendPacketTracking(player, packet)
         }

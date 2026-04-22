@@ -1,20 +1,28 @@
 package io.yukkuric.hexautomata.network.packet
 
-import at.petrak.hexcasting.common.msgs.IMessage
 import io.yukkuric.hexautomata.HexAutomata
 import io.yukkuric.hexautomata.items.HAItems
 import net.minecraft.client.Minecraft
 import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.network.FriendlyByteBuf
+import net.minecraft.network.RegistryFriendlyByteBuf
+import net.minecraft.network.codec.StreamCodec
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.entity.Entity
 
-data class S2CPlayerExposureEffect(val entityID: Int) : IMessage {
+data class S2CPlayerExposureEffect(val entityID: Int) : CustomPacketPayload {
     constructor(entity: Entity) : this(entity.id)
 
     companion object {
         @JvmStatic
         val ID = HexAutomata.modLoc("player_exposure")
+        val TYPE = CustomPacketPayload.Type<S2CPlayerExposureEffect>(ID)
+
+        object STREAM_CODEC : StreamCodec<RegistryFriendlyByteBuf, S2CPlayerExposureEffect> {
+            override fun decode(buf: RegistryFriendlyByteBuf) = deserialize(buf)
+            override fun encode(buf: RegistryFriendlyByteBuf, packet: S2CPlayerExposureEffect) = packet.serialize(buf)
+        }
 
         private val LENS = lazy { HAItems.LOGO.defaultInstance }
 
@@ -35,9 +43,9 @@ data class S2CPlayerExposureEffect(val entityID: Int) : IMessage {
         }
     }
 
-    override fun serialize(buf: FriendlyByteBuf) {
+    fun serialize(buf: FriendlyByteBuf) {
         buf.writeInt(entityID)
     }
 
-    override fun getFabricId() = ID
+    override fun type() = TYPE
 }

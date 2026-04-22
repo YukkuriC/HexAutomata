@@ -2,13 +2,11 @@ package io.yukkuric.hexautomata.items
 
 import at.petrak.hexcasting.api.utils.asTranslatedComponent
 import at.petrak.hexcasting.api.utils.gray
-import at.petrak.hexcasting.api.utils.putList
 import io.yukkuric.hexautomata.HexAutomata
 import io.yukkuric.hexautomata.helpers.TooltipHelper
+import io.yukkuric.hexautomata.mixin.AccessorBundleContents
 import net.minecraft.client.multiplayer.ClientLevel
-import net.minecraft.nbt.CompoundTag
-import net.minecraft.nbt.ListTag
-import net.minecraft.nbt.Tag
+import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.InteractionHand
@@ -21,6 +19,7 @@ import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.BundleItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
+import net.minecraft.world.item.component.BundleContents
 import net.minecraft.world.level.Level
 import kotlin.math.min
 
@@ -28,40 +27,32 @@ class ItemFocusBundle : BundleItem(HAItems.Props.STACK_ONE_EPIC) {
     companion object {
         val MAX_FOCUS_COUNT = 8
         val KEY_ITEMS = "Items"
-        private val STUB_LIST = ListTag()
+        private val STUB_LIST = listOf<ItemStack>()
 
         fun pushOne(bundleStack: ItemStack, otherStack: ItemStack) {
-            val listTag = bundleStack.listTag(true)
-            val dump = CompoundTag()
-            otherStack.save(dump)
-            listTag.add(dump)
+            val contents = bundleStack.get(DataComponents.BUNDLE_CONTENTS) ?: return
+            val mutable = BundleContents.Mutable(contents)
+            (mutable as AccessorBundleContents).items.add(otherStack)
+            bundleStack.set(DataComponents.BUNDLE_CONTENTS, mutable.toImmutable())
         }
 
         fun popOne(bundleStack: ItemStack): ItemStack? {
-            val listTag = bundleStack.listTag(false)
-            if (listTag.isEmpty()) return null
-            val pop = listTag.removeAt(0) as CompoundTag
-            return ItemStack.of(pop)
+            val contents = bundleStack.get(DataComponents.BUNDLE_CONTENTS) ?: return null
+            val mutable = BundleContents.Mutable(contents)
+            val items = (mutable as AccessorBundleContents).items
+            if (items.isEmpty()) return null
+            val ret = items.removeLast()
+            bundleStack.set(DataComponents.BUNDLE_CONTENTS, mutable.toImmutable())
+            return ret
         }
 
-        private fun ItemStack.listTag(create: Boolean = false): ListTag {
-            val tag = if (create) this.orCreateTag else this.tag ?: return STUB_LIST
-            if (!tag.contains(KEY_ITEMS)) {
-                if (!create) return STUB_LIST
-                tag.putList(KEY_ITEMS, ListTag())
-            }
-            return tag.getList(KEY_ITEMS, Tag.TAG_COMPOUND.toInt())
+        private fun ItemStack.listTag(): List<ItemStack> {
+            val contents = get(DataComponents.BUNDLE_CONTENTS) ?: return STUB_LIST
+            return (contents as AccessorBundleContents).items
         }
 
         private fun ItemStack.getFocusCount() = this.listTag().size
         private fun ItemStack.isFull() = this.getFocusCount() >= MAX_FOCUS_COUNT
-
-        private val _dummyItemMap = HashMap<String, ItemStack>()
-        private fun cachedStack(src: CompoundTag): ItemStack {
-            val dummyStack = _dummyItemMap.computeIfAbsent(src.getString("id")) { ItemStack.of(src) }
-            dummyStack.tag = src.getCompound("tag")
-            return dummyStack
-        }
 
         val CONTENTS_PRED: ResourceLocation = HexAutomata.modLoc("contents")
 
@@ -83,7 +74,7 @@ class ItemFocusBundle : BundleItem(HAItems.Props.STACK_ONE_EPIC) {
 
     override fun appendHoverText(
         stack: ItemStack,
-        lvl: Level?,
+        tooltipContext: TooltipContext,
         tooltips: MutableList<Component?>,
         advanced: TooltipFlag
     ) {
@@ -131,7 +122,7 @@ class ItemFocusBundle : BundleItem(HAItems.Props.STACK_ONE_EPIC) {
     }
 
     fun getContentsSequence(stack: ItemStack) =
-        Sequence(stack.listTag()::iterator).map { tag -> cachedStack(tag as CompoundTag) }
+        Sequence(stack.listTag()::iterator)
 
     override fun isBarVisible(stack: ItemStack) = stack.getFocusCount() > 0
     override fun getBarWidth(stack: ItemStack) = min((1 + 12 * stack.getFocusCount() / MAX_FOCUS_COUNT), 13)

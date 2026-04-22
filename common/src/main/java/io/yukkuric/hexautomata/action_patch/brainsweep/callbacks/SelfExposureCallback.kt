@@ -53,7 +53,7 @@ abstract class SelfExposureCallback<I : Iota>(
     object SELF : SelfExposureCallback<EntityIota>(Int.MIN_VALUE, EntityIota.TYPE) {
         override fun callInner(player: ServerPlayer, iota: EntityIota, env: CastingEnvironment): SpellAction.Result? {
             // expose self
-            if (iota.entity == player) return buildResult(
+            if (iota.getOrFindEntity(env.world) == player) return buildResult(
                 {
                     if (!player.hasAdvancement(ADV_SELF_EXPOSED)) player.grantAdvancement(ADV_SELF_EXPOSED)
                     env.printMessage("advancement.hexautomata:self_exposed.desc".asTranslatedComponent.lightPurple)

@@ -12,11 +12,11 @@ object MishapOutEvent : Mishap() {
     override fun fillInStackTrace() = this
     private fun readResolve(): Any = MishapOutEvent
     val ERROR_MSG = Component.translatable("mishap.hexautomata.out_event").withStyle(ChatFormatting.DARK_AQUA)
-    override fun accentColor(ctx: CastingEnvironment, errorCtx: Context) = FrozenPigment.ANCIENT.get()
+    override fun accentColor(ctx: CastingEnvironment, errorCtx: Context) = FrozenPigment.DEFAULT.get() // TODO: where's ancient pigment?
     override fun errorMessage(ctx: CastingEnvironment, errorCtx: Context) = ERROR_MSG
     override fun execute(env: CastingEnvironment, errorCtx: Context, stack: MutableList<Iota>) {
         for (i in 0 until stack.size) {
-            if (Math.random() < 0.5) stack[i] = GarbageIota()
+            if (Math.random() < 0.5) stack[i] = GarbageIota.INSTANCE
         }
     }
 }

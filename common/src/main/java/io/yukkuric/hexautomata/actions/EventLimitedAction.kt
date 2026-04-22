@@ -39,6 +39,6 @@ abstract class EventLimitedAction : ConstMediaAction {
         val lst = mutableListOf(caster.x, caster.y, caster.z)
         lst.shuffle()
         for (i in 0 until 3) if (Math.random() < 0.5) lst[i] *= -1.0
-        caster.teleportToWithTicket(lst[0], lst[1], lst[2])
+        caster.teleportTo(lst[0], lst[1], lst[2])
     }
 }

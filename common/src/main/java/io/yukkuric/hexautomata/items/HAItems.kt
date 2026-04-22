@@ -82,6 +82,6 @@ object HAItems : CustomRegisterObject<Item>() {
         val STACK_ONE = Properties().rarity(Rarity.RARE).stacksTo(1)
         val STACK_ONE_EPIC = Properties().rarity(Rarity.EPIC).stacksTo(1)
         val LOGO = Properties().stacksTo(1)
-            .food(FoodProperties.Builder().fast().alwaysEat().nutrition(20).saturationMod(1f).build())
+            .food(FoodProperties.Builder().fast().alwaysEdible().nutrition(20).saturationModifier(1f).build())
     }
 }

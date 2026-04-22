@@ -20,7 +20,7 @@ object HexAutomata {
     val LOGGER: Logger = LogUtils.getLogger()
     @JvmStatic
     fun modLoc(path: String): ResourceLocation {
-        return ResourceLocation(MOD_ID, path)
+        return ResourceLocation.tryBuild(MOD_ID, path)!!
     }
 
     fun commonInit() {
@@ -71,7 +71,7 @@ object HexAutomataClient {
                 focus, ItemReactiveFocus.DATA_PRED
             ) { stack, _, holder, _ ->
                 if (holder is Player &&
-                    focus.readIotaTag(stack) != null
+                    focus.readIota(stack) != null
                 ) 1F else 0F
             }
         }

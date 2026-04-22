@@ -49,7 +49,7 @@ object OpExtendBrainsweep : PatchAction(OpBrainsweep, BrainsweepEx) {
 
         override fun execute(args: List<Iota>, env: CastingEnvironment): SpellAction.Result {
             val world = env.world
-            val sacrifice = args.getEntity(0, argc)
+            val sacrifice = args.getEntity(env.world, 0, argc)
             env.assertEntityInRange(sacrifice)
             val data = args[1]
 
@@ -64,6 +64,7 @@ object OpExtendBrainsweep : PatchAction(OpBrainsweep, BrainsweepEx) {
                 // fetch recipe
                 val state = world.getBlockState(pos)
                 val recipe = world.recipeManager.getAllRecipesFor(HexRecipeStuffRegistry.BRAINSWEEP_TYPE)
+                    .map { it.value }
                     .find { it.matches(state, sacrifice, world) }
                 if (recipe != null) {
                     return SpellAction.Result(
