@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[43,)"
+loaderVersion = "[0,)"
 issueTrackerURL = "https://github.com/YukkuriC/${mod_name}/issues"
 license = "MIT"
 
@@ -12,26 +12,22 @@ description = '''
 Provides items with ability listening to various game events and triggering custom spells.
 '''
 logoFile = "logo.png"
-updateJSONURL = "https://api.modrinth.com/updates/${modid}/forge_updates.json"
+updateJSONURL = "https://api.modrinth.com/updates/${modid}/neoforge_updates.json"
 displayURL = "https://modrinth.com/mod/${modid}"
 
-[[dependencies.${modid}]]
-modId = "forge"
-mandatory = true
-versionRange = "[43,)"
-ordering = "NONE"
-side = "BOTH"
+[[mixins]]
+config = "hexautomata.mixins.json"
 
 [[dependencies.${modid}]]
 modId = "minecraft"
-mandatory = true
-versionRange = "[${mc_version},${mc_version}.1)"
+type = "required"
+versionRange = "[0,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.${modid}]]
 modId = "hexcasting"
-mandatory = true
+type = "required"
 versionRange = "[0,)"
 ordering = "AFTER"
 side = "BOTH"
