@@ -1,36 +1,33 @@
 package io.yukkuric.hexautomata.forge
 
-import at.petrak.hexcasting.common.msgs.IMessage
 import at.petrak.hexcasting.forge.xplat.ForgeXplatImpl.TAG_BRAINSWEPT
 import io.yukkuric.hexautomata.HexAutomata
 import io.yukkuric.hexautomata.HexAutomataClient
 import io.yukkuric.hexautomata.forge.events.HAForgeEventsListener
-import io.yukkuric.hexautomata.forge.interop.CuriosInterop
 import io.yukkuric.hexautomata.network.HAPackets
 import io.yukkuric.hexautomata.network.packet.S2CPlayerExposureEffect
 import io.yukkuric.hexautomata.network.packet.S2CShowMultiblock
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.Mob
-import net.minecraftforge.eventbus.api.SubscribeEvent
-import net.minecraftforge.fml.ModList
-import net.minecraftforge.fml.ModLoadingContext
-import net.minecraftforge.fml.common.Mod
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
-import net.minecraftforge.network.NetworkEvent
-import net.minecraftforge.network.NetworkRegistry
-import net.minecraftforge.network.PacketDistributor
-import net.minecraftforge.network.simple.SimpleChannel
-import java.util.function.BiConsumer
-import java.util.function.Supplier
+import net.neoforged.bus.api.IEventBus
+import net.neoforged.bus.api.SubscribeEvent
+import net.neoforged.fml.ModContainer
+import net.neoforged.fml.ModList
+import net.neoforged.fml.common.Mod
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent
+import net.neoforged.neoforge.network.PacketDistributor
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
+import net.neoforged.neoforge.network.handling.IPayloadHandler
 
 @Mod(HexAutomata.MOD_ID)
-class HexAutomataForge : HexAutomata.IAPI() {
+class HexAutomataForge(modContainer: ModContainer) : HexAutomata.IAPI() {
     init {
-        HAForgeEventsListener.load()
-        HAConfigForge.register(ModLoadingContext.get())
-        HexAutomata.tryLoadInterop("curios", CuriosInterop::run)
-        Network // hook init
+        HAForgeEventsListener.load(modContainer)
+        HAConfigForge.register(modContainer)
+        // HexAutomata.tryLoadInterop("curios", CuriosInterop::run)
+        Network.init(modContainer.eventBus!!)
     }
 
     override fun modLoaded(id: String) = ModList.get().isLoaded(id)
@@ -42,52 +39,43 @@ class HexAutomataForge : HexAutomata.IAPI() {
     @Suppress("INACCESSIBLE_TYPE")
     object Network : HAPackets.Client, HAPackets.Server {
         const val PROTOCOL_VERSION: String = "1"
-        val CHANNEL: SimpleChannel = NetworkRegistry.newSimpleChannel(
-            HexAutomata.modLoc("network"), { PROTOCOL_VERSION }, PROTOCOL_VERSION::equals, PROTOCOL_VERSION::equals
-        )
-
-        init {
+        fun init(modBus: IEventBus) {
             HAPackets.CLIENT = this
             HAPackets.SERVER = this
 
-            // packets
-            var idx = 0
-
-            // clipboard
-            // server show patchouli multiblock
-            CHANNEL.registerMessage(
-                idx++,
-                S2CShowMultiblock::class.java,
-                S2CShowMultiblock::serialize,
-                S2CShowMultiblock::deserialize,
-                makeS2C(S2CShowMultiblock::handle)
-            )
-            CHANNEL.registerMessage(
-                idx++,
-                S2CPlayerExposureEffect::class.java,
-                S2CPlayerExposureEffect::serialize,
-                S2CPlayerExposureEffect::deserialize,
-                makeS2C(S2CPlayerExposureEffect::handle)
-            )
+            modBus.addListener(RegisterPayloadHandlersEvent::class.java, { e ->
+                val reg = e.registrar(PROTOCOL_VERSION)
+                // server show patchouli multiblock
+                reg.playToClient(
+                    S2CShowMultiblock.TYPE,
+                    S2CShowMultiblock.STREAM_CODEC,
+                    makeS2C(S2CShowMultiblock::handle)
+                )
+                reg.playToClient(
+                    S2CPlayerExposureEffect.TYPE,
+                    S2CPlayerExposureEffect.STREAM_CODEC,
+                    makeS2C(S2CPlayerExposureEffect::handle)
+                )
+            })
         }
 
-        private fun <T> makeS2C(consumer: (T) -> Unit) =
-            BiConsumer { packet: T, ctx: Supplier<NetworkEvent.Context> ->
-                consumer(packet)
-                ctx.get().packetHandled = true
+        private fun <T : CustomPacketPayload?> makeS2C(consumer: (T) -> Unit) =
+            IPayloadHandler<T> { m, ctx ->
+                consumer(m)
             }
 
-        override fun sendPacketToServer(packet: IMessage) = CHANNEL.sendToServer(packet)
+        override fun sendPacketToServer(packet: CustomPacketPayload) =
+            PacketDistributor.sendToServer(packet)
 
-        override fun sendPacketToPlayer(player: ServerPlayer, packet: IMessage) =
-            CHANNEL.send(PacketDistributor.PLAYER.with { player }, packet)
+        override fun sendPacketToPlayer(player: ServerPlayer, packet: CustomPacketPayload) =
+            PacketDistributor.sendToPlayer(player, packet)
 
-        override fun sendPacketTracking(entity: Entity, packet: IMessage) {
-            CHANNEL.send(PacketDistributor.TRACKING_ENTITY.with { entity }, packet)
+        override fun sendPacketTracking(entity: Entity, packet: CustomPacketPayload) {
+            PacketDistributor.sendToPlayersTrackingEntity(entity, packet)
         }
 
-        override fun sendPacketToPlayerAndTracking(player: ServerPlayer, packet: IMessage) {
-            CHANNEL.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with { player }, packet)
+        override fun sendPacketToPlayerAndTracking(player: ServerPlayer, packet: CustomPacketPayload) {
+            PacketDistributor.sendToPlayersTrackingEntityAndSelf(player, packet)
         }
     }
 }

@@ -19,7 +19,7 @@ data class S2CPlayerExposureEffect(val entityID: Int) : CustomPacketPayload {
         val ID = HexAutomata.modLoc("player_exposure")
         val TYPE = CustomPacketPayload.Type<S2CPlayerExposureEffect>(ID)
 
-        object STREAM_CODEC : StreamCodec<RegistryFriendlyByteBuf, S2CPlayerExposureEffect> {
+        val STREAM_CODEC = object : StreamCodec<RegistryFriendlyByteBuf, S2CPlayerExposureEffect> {
             override fun decode(buf: RegistryFriendlyByteBuf) = deserialize(buf)
             override fun encode(buf: RegistryFriendlyByteBuf, packet: S2CPlayerExposureEffect) = packet.serialize(buf)
         }

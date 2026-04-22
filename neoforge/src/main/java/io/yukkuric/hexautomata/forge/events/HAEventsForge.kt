@@ -1,18 +1,19 @@
 package io.yukkuric.hexautomata.forge.events
 
 import io.yukkuric.hexautomata.events.IHAEvent
-import net.minecraftforge.event.entity.EntityJoinLevelEvent
-import net.minecraftforge.event.entity.ProjectileImpactEvent
-import net.minecraftforge.event.entity.living.LivingDeathEvent
-import net.minecraftforge.event.entity.living.LivingHurtEvent
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent
+import net.neoforged.neoforge.event.entity.ProjectileImpactEvent
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent
 
 object HAEventsForge {
-    open class Hurt(override val raw: LivingHurtEvent) : IHAEvent.ExtraDouble(), IHAForgeEvent<LivingHurtEvent> {
-        override val data = raw.amount.toDouble()
+    open class Hurt(override val raw: LivingDamageEvent.Pre) : IHAEvent.ExtraDouble(),
+        IHAForgeEvent<LivingDamageEvent.Pre> {
+        override val data = raw.newDamage.toDouble()
         override val entity = raw.source.entity
     }
 
-    class PlayerAttack(raw: LivingHurtEvent) : Hurt(raw) {
+    class PlayerAttack(raw: LivingDamageEvent.Pre) : Hurt(raw) {
         override val entity = raw.entity
     }
 

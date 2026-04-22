@@ -19,7 +19,7 @@ data class S2CShowMultiblock(
         val ID = HexAutomata.modLoc("show_multiblock")
         val TYPE = CustomPacketPayload.Type<S2CShowMultiblock>(ID)
 
-        object STREAM_CODEC : StreamCodec<RegistryFriendlyByteBuf, S2CShowMultiblock> {
+        val STREAM_CODEC = object : StreamCodec<RegistryFriendlyByteBuf, S2CShowMultiblock> {
             override fun decode(buf: RegistryFriendlyByteBuf) = deserialize(buf)
             override fun encode(buf: RegistryFriendlyByteBuf, packet: S2CShowMultiblock) = packet.serialize(buf)
         }

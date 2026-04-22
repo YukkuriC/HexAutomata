@@ -1,8 +1,8 @@
 package io.yukkuric.hexautomata.forge;
 
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.config.ModConfig;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.config.ModConfig;
 import org.apache.commons.lang3.tuple.Pair;
 
 import static io.yukkuric.hexautomata.HAConfig.*;
@@ -32,17 +32,17 @@ public class HAConfigForge implements API {
         return cfg_EventTriggerTax.get();
     }
 
-    public ForgeConfigSpec.BooleanValue
+    public ModConfigSpec.BooleanValue
             cfg_EnablesFocusInHands,
             cfg_EnablesFocusInsideInventory,
             cfg_EnablesFocusInsideEnderChest,
             cfg_EnablesFocusInsideAccessories,
             cfg_FirstFocusOnly;
-    public ForgeConfigSpec.IntValue
+    public ModConfigSpec.IntValue
             cfg_MaxRecursiveEventsPerTick,
             cfg_EventTriggerTax;
 
-    public HAConfigForge(ForgeConfigSpec.Builder builder) {
+    public HAConfigForge(ModConfigSpec.Builder builder) {
         builder.push("Scope");
         cfg_EnablesFocusInHands = builder.comment(desc_EnablesFocusInHands).define("EnablesFocusInHands", true);
         cfg_EnablesFocusInsideInventory = builder.comment(desc_EnablesFocusInsideInventory).define("EnablesFocusInsideInventory", false);
@@ -59,14 +59,14 @@ public class HAConfigForge implements API {
         INSTANCE = this;
     }
 
-    private static final Pair<HAConfigForge, ForgeConfigSpec> CFG_REGISTRY;
+    private static final Pair<HAConfigForge, ModConfigSpec> CFG_REGISTRY;
 
     static {
-        CFG_REGISTRY = new ForgeConfigSpec.Builder().configure(HAConfigForge::new);
+        CFG_REGISTRY = new ModConfigSpec.Builder().configure(HAConfigForge::new);
     }
 
-    public static void register(ModLoadingContext ctx) {
+    public static void register(ModContainer modContainer) {
         bindConfigImp(CFG_REGISTRY.getKey());
-        ctx.registerConfig(ModConfig.Type.COMMON, CFG_REGISTRY.getValue());
+        modContainer.registerConfig(ModConfig.Type.COMMON, CFG_REGISTRY.getValue());
     }
 }

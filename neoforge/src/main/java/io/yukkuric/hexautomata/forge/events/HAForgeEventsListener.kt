@@ -10,6 +10,7 @@ import io.yukkuric.hexautomata.events.CommonEventsHandler
 import io.yukkuric.hexautomata.events.CommonHelpers
 import io.yukkuric.hexautomata.forge.HexAutomataForgeClient
 import io.yukkuric.hexautomata.items.HAItems
+import io.yukkuric.hexparse.forge.DistExecutor
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
@@ -17,26 +18,25 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.damagesource.DamageTypes
 import net.minecraft.world.entity.projectile.Projectile
-import net.minecraftforge.api.distmarker.Dist
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent
-import net.minecraftforge.event.entity.EntityJoinLevelEvent
-import net.minecraftforge.event.entity.ProjectileImpactEvent
-import net.minecraftforge.event.entity.living.LivingDeathEvent
-import net.minecraftforge.event.entity.living.LivingHurtEvent
-import net.minecraftforge.eventbus.api.EventPriority
-import net.minecraftforge.eventbus.api.SubscribeEvent
-import net.minecraftforge.fml.Bindings
-import net.minecraftforge.fml.DistExecutor
-import net.minecraftforge.fml.common.Mod
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
-import net.minecraftforge.registries.RegisterEvent
+import net.neoforged.api.distmarker.Dist
+import net.neoforged.bus.api.EventPriority
+import net.neoforged.bus.api.SubscribeEvent
+import net.neoforged.fml.ModContainer
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
+import net.neoforged.neoforge.common.NeoForge
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent
+import net.neoforged.neoforge.event.entity.ProjectileImpactEvent
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent
+import net.neoforged.neoforge.registries.RegisterEvent
 
 
 class HAForgeEventsListener {
     private object ForgeBus {
         @SubscribeEvent(priority = EventPriority.LOWEST)
-        fun OnHurt(e: LivingHurtEvent) {
-            if (e.isCanceled || e.amount <= 0) return
+        fun OnHurt(e: LivingDamageEvent.Pre) {
+            if (e.newDamage <= 0) return
             // player hurt
             e.entity.let { it as? ServerPlayer }?.let {
                 if (CommonHelpers.shouldIgnoreHurt(e.source)) return@let
@@ -102,9 +102,9 @@ class HAForgeEventsListener {
     }
 
     companion object {
-        fun load() {
-            Bindings.getForgeBus().get().register(ForgeBus)
-            val modBus = Mod.EventBusSubscriber.Bus.MOD.bus().get()
+        fun load(modContainer: ModContainer) {
+            NeoForge.EVENT_BUS.register(ForgeBus)
+            val modBus = modContainer.eventBus!!
             modBus.register(ModBus)
 
             DistExecutor.unsafeRunWhenOn(

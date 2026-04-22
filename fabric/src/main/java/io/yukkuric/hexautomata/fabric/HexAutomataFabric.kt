@@ -1,10 +1,8 @@
 package io.yukkuric.hexautomata.fabric
 
 import at.petrak.hexcasting.common.lib.hex.HexActions
-import at.petrak.hexcasting.common.msgs.IMessage
 import at.petrak.hexcasting.fabric.cc.HexCardinalComponents
 import at.petrak.hexcasting.fabric.xplat.FabricXplatImpl
-import io.yukkuric.hexautomata.HexAutomata
 import io.yukkuric.hexautomata.HexAutomata.IAPI
 import io.yukkuric.hexautomata.HexAutomata.commonInit
 import io.yukkuric.hexautomata.HexAutomata.commonLateInit
@@ -12,7 +10,6 @@ import io.yukkuric.hexautomata.HexAutomataClient
 import io.yukkuric.hexautomata.actions.HAActions
 import io.yukkuric.hexautomata.blocks.HABlocks
 import io.yukkuric.hexautomata.fabric.events.HAFabricEventsListener
-import io.yukkuric.hexautomata.fabric.interop.TrinketsInterop
 import io.yukkuric.hexautomata.items.HAItems
 import io.yukkuric.hexautomata.network.HAPackets
 import io.yukkuric.hexautomata.network.packet.S2CPlayerExposureEffect
@@ -26,6 +23,7 @@ import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.FriendlyByteBuf
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.Entity
@@ -43,7 +41,7 @@ class HexAutomataFabric : IAPI(), ModInitializer {
         bindReg(BuiltInRegistries.BLOCK, HABlocks::register)
         bindReg(BuiltInRegistries.BLOCK_ENTITY_TYPE, HABlocks.BETypes::register)
         HAFabricEventsListener.load()
-        HexAutomata.tryLoadInterop("trinkets", TrinketsInterop::run)
+        // HexAutomata.tryLoadInterop("trinkets", TrinketsInterop::run)
         commonInit()
 
         var lateInitOnce = false
@@ -72,17 +70,17 @@ class HexAutomataFabric : IAPI(), ModInitializer {
             HAPackets.SERVER = this
         }
 
-        private fun <T> make(
+        private fun <T : CustomPacketPayload?> make(
             decoder: (FriendlyByteBuf) -> T, handle: (T, ServerPlayer) -> Unit
-        ) = ServerPlayNetworking.PlayChannelHandler { _, player: ServerPlayer, _, buf: FriendlyByteBuf, _ ->
-            handle(decoder(buf), player)
+        ) = ServerPlayNetworking.PlayPayloadHandler<T> { packet, context ->
+            handle(packet, context.player())
         }
 
-        override fun sendPacketToPlayer(player: ServerPlayer, packet: IMessage) {
-            ServerPlayNetworking.send(player, packet.fabricId, packet.toBuf())
+        override fun sendPacketToPlayer(player: ServerPlayer, packet: CustomPacketPayload) {
+            ServerPlayNetworking.send(player, packet)
         }
 
-        override fun sendPacketTracking(entity: Entity, packet: IMessage) {
+        override fun sendPacketTracking(entity: Entity, packet: CustomPacketPayload) {
             // no channel differences for fabric packets
             FabricXplatImpl.INSTANCE.sendPacketTracking(entity, packet)
         }
@@ -98,23 +96,18 @@ class HexAutomataFabricClient : ClientModInitializer {
         init {
             HAPackets.CLIENT = this
             ClientPlayNetworking.registerGlobalReceiver(
-                S2CShowMultiblock.ID, make(
-                    S2CShowMultiblock::deserialize, S2CShowMultiblock::handle
-                )
+                S2CShowMultiblock.TYPE, make(S2CShowMultiblock::handle)
             )
             ClientPlayNetworking.registerGlobalReceiver(
-                S2CPlayerExposureEffect.ID, make(
-                    S2CPlayerExposureEffect::deserialize, S2CPlayerExposureEffect::handle
-                )
+                S2CPlayerExposureEffect.TYPE, make(S2CPlayerExposureEffect::handle)
             )
         }
 
-        private fun <T> make(
-            decoder: (FriendlyByteBuf) -> T, handler: (T) -> Unit
-        ) = ClientPlayNetworking.PlayChannelHandler { _, _, buf, _ -> handler(decoder(buf)) }
+        private fun <T : CustomPacketPayload?> make(handler: (T) -> Unit) =
+            ClientPlayNetworking.PlayPayloadHandler<T> { payload, _ -> handler(payload) }
 
-        override fun sendPacketToServer(packet: IMessage) {
-            ClientPlayNetworking.send(packet.fabricId, packet.toBuf())
+        override fun sendPacketToServer(packet: CustomPacketPayload) {
+            ClientPlayNetworking.send(packet)
         }
     }
 }
