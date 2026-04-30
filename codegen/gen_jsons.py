@@ -7,7 +7,7 @@ open = partial(open, encoding='utf-8')
 if 'paths':
     ROOT_RESOURCES = '../common/src/main/resources'
     ROOT_FABRIC = '../fabric/src/main/resources'
-    ROOT_FORGE = '../forge/src/main/resources'
+    ROOT_FORGE = '../neoforge/src/main/resources'
 
     # assets
     ROOT_ASSETS = f'{ROOT_RESOURCES}/assets/hexautomata'
@@ -19,7 +19,7 @@ if 'paths':
 
     # data
     ROOT_DATA = f'{ROOT_RESOURCES}/data/hexautomata'
-    DIR_RECIPES = f'{ROOT_DATA}/recipes/brainsweep/reactive_focus'
+    DIR_RECIPES = f'{ROOT_DATA}/recipe/brainsweep/reactive_focus'
 
     # resloc
     ID_PRE = 'hexautomata:item/reactive_focus'
@@ -76,10 +76,10 @@ if 'helpers':
     ):
         obj = {
             "type": "hexcasting:brainsweep",
-            "blockIn": {"type": "block", "block": src_block},
+            "blockIn": {"type": "hexcasting:block", "block": src_block},
             "cost": cost,
-            "entityIn": {"type": "entity_type", "entityType": entity},
-            "result": {"name": f"hexautomata:reactive_focus/{id}"},
+            "entityIn": {"type": "hexcasting:entity_type", "entityType": entity},
+            "result": {"Name": f"hexautomata:reactive_focus/{id}"},
         }
         dump_json(f'{DIR_RECIPES}/{id}.json', obj)
 
@@ -110,8 +110,8 @@ if 'helpers':
         ids = EXTRA_ACC_TAG + ['hexautomata:reactive_focus/' + e['id'] for e in data]
         if 'curios/trinkets':
             obj = {"replace": False, "values": ids}
-            dump_json(f'{ROOT_FABRIC}/data/trinkets/tags/items/all.json', obj)
-            dump_json(f'{ROOT_FORGE}/data/curios/tags/items/curio.json', obj)
+            dump_json(f'{ROOT_FABRIC}/data/trinkets/tags/item/all.json', obj)
+            dump_json(f'{ROOT_FORGE}/data/curios/tags/item/curio.json', obj)
 
     def extend_patchouli(path, data, insert_pos=None):
         with open(path) as f:

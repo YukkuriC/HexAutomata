@@ -1,15 +1,15 @@
 {
   "type": "hexcasting:brainsweep",
   "blockIn": {
-    "type": "block",
+    "type": "hexcasting:block",
     "block": "hexcasting:akashic_record"
   },
   "cost": 1000000,
   "entityIn": {
-    "type": "entity_type",
-    "entityType": "endermite"
+    "type": "hexcasting:entity_type",
+    "entityType": "vindicator"
   },
   "result": {
-    "name": "hexautomata:reactive_focus/teleport"
+    "Name": "hexautomata:reactive_focus/melee_hit"
   }
 }

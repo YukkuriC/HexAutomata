@@ -1,15 +1,15 @@
 {
   "type": "hexcasting:brainsweep",
   "blockIn": {
-    "type": "block",
+    "type": "hexcasting:block",
     "block": "beacon"
   },
   "cost": 100000,
   "entityIn": {
-    "type": "entity_type",
+    "type": "hexcasting:entity_type",
     "entityType": "slime"
   },
   "result": {
-    "name": "hexautomata:focus_bundle"
+    "Name": "hexautomata:focus_bundle"
   }
 }
