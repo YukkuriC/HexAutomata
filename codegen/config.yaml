@@ -30,7 +30,7 @@
   side: common
 - name: MaxRecursiveEventsPerTick
   type: int
-  default: 10, 0, 114514
+  default: 10, 1, 114514
   category: Execute
   descrip: Recursive triggered events in a tick deeper than this value will be rejected (e.g. teleport self inside `Teleported` focus)
   side: common
