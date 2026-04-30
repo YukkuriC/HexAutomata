@@ -52,7 +52,7 @@ public class HAConfigForge implements API {
         builder.pop();
 
         builder.push("Execute");
-        cfg_MaxRecursiveEventsPerTick = builder.comment(desc_MaxRecursiveEventsPerTick).defineInRange("MaxRecursiveEventsPerTick", 10, 0, 114514);
+        cfg_MaxRecursiveEventsPerTick = builder.comment(desc_MaxRecursiveEventsPerTick).defineInRange("MaxRecursiveEventsPerTick", 10, 1, 114514);
         cfg_EventTriggerTax = builder.comment(desc_EventTriggerTax).defineInRange("EventTriggerTax", 0, 0, Integer.MAX_VALUE);
         builder.pop();
 
