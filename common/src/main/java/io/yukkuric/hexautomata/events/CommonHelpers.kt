@@ -50,10 +50,14 @@ object CommonHelpers {
             RECURSIVE_COUNTER[player] = 0
             COUNTER_VERSION[player] = newVersion
         }
-        val newRecursed = RECURSIVE_COUNTER.getOrDefault(player, 0) + 1
-        RECURSIVE_COUNTER[player] = newRecursed
-        val overflow = newRecursed > HAConfig.MaxRecursiveEventsPerTick()
-        if (overflow) recursiveMishap(player)
+        val oldRecursed = RECURSIVE_COUNTER.getOrDefault(player, 0)
+        val overflow = oldRecursed >= HAConfig.MaxRecursiveEventsPerTick()
+        if (overflow) {
+            RECURSIVE_COUNTER[player] = Int.MAX_VALUE // melted
+            recursiveMishap(player)
+        } else {
+            RECURSIVE_COUNTER[player] = oldRecursed + 1
+        }
         return overflow
     }
     @JvmStatic

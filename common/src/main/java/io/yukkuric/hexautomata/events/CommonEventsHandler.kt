@@ -18,7 +18,7 @@ object CommonEventsHandler {
                 val hit = (stack.item as ItemReactiveFocus).runCallback(stack, event, player)
                 if (hit) {
                     player.grantAdvancement(ADV_ROOT)
-                    if (HAConfig.FirstFocusOnly()) return
+                    if (HAConfig.FirstFocusOnly()) break
                 }
             }
             CommonHelpers.releaseRecursive(player)
