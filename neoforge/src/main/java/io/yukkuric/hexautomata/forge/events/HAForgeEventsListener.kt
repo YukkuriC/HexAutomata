@@ -8,9 +8,9 @@ import io.yukkuric.hexautomata.blocks.HABlocks
 import io.yukkuric.hexautomata.events.BuiltinEventMarker
 import io.yukkuric.hexautomata.events.CommonEventsHandler
 import io.yukkuric.hexautomata.events.CommonHelpers
+import io.yukkuric.hexautomata.forge.DistExecutor
 import io.yukkuric.hexautomata.forge.HexAutomataForgeClient
 import io.yukkuric.hexautomata.items.HAItems
-import io.yukkuric.hexparse.forge.DistExecutor
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
