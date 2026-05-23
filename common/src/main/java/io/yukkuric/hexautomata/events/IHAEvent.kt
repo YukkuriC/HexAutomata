@@ -11,7 +11,7 @@ import net.minecraft.world.phys.Vec3
 interface IHAEvent {
     val entity: Entity?
     fun extra(): Iota? = null
-    fun initStack() = listOfNotNull(entity?.let { EntityIota(it) } ?: NullIota.INSTANCE, extra())
+    fun initStack() = listOfNotNull(entity?.let { EntityIota(it) } ?: NullIota(), extra())
     fun extraAmbitCenter(): Vec3? = null
     fun extraAmbitCenters() = listOfNotNull(
         entity?.position(),
@@ -37,7 +37,7 @@ interface IHAEvent {
         override fun extra() = when (hit) {
             is BlockHitResult -> Vec3Iota(hit.blockPos.center)
             is EntityHitResult -> EntityIota(hit.entity)
-            else -> NullIota.INSTANCE
+            else -> NullIota()
         }
 
         override fun extraAmbitCenter(): Vec3 = hit.location
