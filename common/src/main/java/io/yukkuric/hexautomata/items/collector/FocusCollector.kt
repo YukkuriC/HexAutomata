@@ -1,6 +1,7 @@
 package io.yukkuric.hexautomata.items.collector
 
 import io.yukkuric.hexautomata.HAConfig
+import io.yukkuric.hexautomata.HexAutomata
 import io.yukkuric.hexautomata.events.EventMarker
 import io.yukkuric.hexautomata.items.ItemFocusBundle
 import io.yukkuric.hexautomata.items.ItemReactiveFocus
@@ -31,14 +32,18 @@ abstract class FocusCollector {
             return sequence {
                 for (getter in MAP.values) {
                     if (!getter.enabled()) continue
-                    val raw = getter.extract(player)
+                    val raw = getter.extractWithChained(player)
                     yieldAll(filterSeq(raw, type))
                 }
             }
         }
+
         fun register(id: String, obj: FocusCollector): FocusCollector {
-            MAP.put(id, obj) ?: return obj
-            throw IllegalArgumentException("duplicate focus collector id: $id")
+            MAP.put(id, obj)?.let { old ->
+                obj.chain(old)
+                HexAutomata.LOGGER.warn("duplicate focus collector id: $id; objects: $old chained $obj")
+            }
+            return obj
         }
     }
 
@@ -60,6 +65,22 @@ abstract class FocusCollector {
         override fun extract(player: ServerPlayer) = sequence {
             val inv = player.enderChestInventory
             for (i in 0 until inv.containerSize) yield(inv.getItem(i))
+        }
+    }
+
+    // chain with others
+    private var chained: FocusCollector? = null
+    fun chain(old: FocusCollector) {
+        chained?.let {
+            return it.chain(old)
+        }
+        chained = old
+    }
+
+    fun extractWithChained(player: ServerPlayer): Sequence<ItemStack> {
+        return sequence {
+            yieldAll(extract(player))
+            chained?.let { yieldAll(it.extractWithChained(player)) }
         }
     }
 }
