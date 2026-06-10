@@ -26,6 +26,8 @@ interface IHAEvent {
         override fun extra() = DoubleIota(data)
     }
 
+    open class CommonProjShoot(override val entity: Projectile) : IHAEvent
+
     abstract class CommonProjHit(override val entity: Projectile, val hit: HitResult) : IHAEvent {
         val invalid: Boolean
 

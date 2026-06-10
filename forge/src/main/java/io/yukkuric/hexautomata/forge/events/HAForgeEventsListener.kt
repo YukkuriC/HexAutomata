@@ -16,10 +16,8 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.damagesource.DamageTypes
-import net.minecraft.world.entity.projectile.Projectile
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent
-import net.minecraftforge.event.entity.EntityJoinLevelEvent
 import net.minecraftforge.event.entity.ProjectileImpactEvent
 import net.minecraftforge.event.entity.living.LivingDeathEvent
 import net.minecraftforge.event.entity.living.LivingHurtEvent
@@ -45,14 +43,6 @@ class HAForgeEventsListener {
             // player melee
             if (e.source.`is`(DamageTypes.PLAYER_ATTACK)) e.source.entity.let { it as? ServerPlayer }?.let {
                 CommonEventsHandler.trigger(BuiltinEventMarker.MELEE_HIT, it, HAEventsForge.PlayerAttack(e))
-            }
-        }
-        @SubscribeEvent(priority = EventPriority.LOWEST)
-        fun OnEntitySpawn(e: EntityJoinLevelEvent) {
-            if (e.isCanceled || e.loadedFromDisk()) return
-            // check player projectile shoot
-            (e.entity as? Projectile)?.owner?.let { it as? ServerPlayer }?.let {
-                CommonEventsHandler.trigger(BuiltinEventMarker.SHOOT, it, HAEventsForge.Shoot(e))
             }
         }
         @SubscribeEvent(priority = EventPriority.LOWEST)
