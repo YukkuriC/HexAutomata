@@ -3,6 +3,7 @@ package io.yukkuric.hexautomata.fabric
 import at.petrak.hexcasting.common.lib.hex.HexActions
 import at.petrak.hexcasting.fabric.cc.HexCardinalComponents
 import at.petrak.hexcasting.fabric.xplat.FabricXplatImpl
+import io.yukkuric.hexautomata.HexAutomata
 import io.yukkuric.hexautomata.HexAutomata.IAPI
 import io.yukkuric.hexautomata.HexAutomata.commonInit
 import io.yukkuric.hexautomata.HexAutomata.commonLateInit
@@ -10,6 +11,7 @@ import io.yukkuric.hexautomata.HexAutomataClient
 import io.yukkuric.hexautomata.actions.HAActions
 import io.yukkuric.hexautomata.blocks.HABlocks
 import io.yukkuric.hexautomata.fabric.events.HAFabricEventsListener
+import io.yukkuric.hexautomata.fabric.interop.TrinketsInterop
 import io.yukkuric.hexautomata.items.HAItems
 import io.yukkuric.hexautomata.network.HAPackets
 import io.yukkuric.hexautomata.network.packet.S2CPlayerExposureEffect
@@ -41,7 +43,7 @@ class HexAutomataFabric : IAPI(), ModInitializer {
         bindReg(BuiltInRegistries.BLOCK, HABlocks::register)
         bindReg(BuiltInRegistries.BLOCK_ENTITY_TYPE, HABlocks.BETypes::register)
         HAFabricEventsListener.load()
-        // HexAutomata.tryLoadInterop("trinkets", TrinketsInterop::run)
+        HexAutomata.tryLoadInterop("trinkets", TrinketsInterop::run)
         commonInit()
 
         var lateInitOnce = false

@@ -35,7 +35,7 @@ dependencies {
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionNeoForge')
 
-    modImplementation "curse.maven:curios-309927:5066845"
+    modImplementation "curse.maven:curios-309927:6529130"
 }
 
 processResources {

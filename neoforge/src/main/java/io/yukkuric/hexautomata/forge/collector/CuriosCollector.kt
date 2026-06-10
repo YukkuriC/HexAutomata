@@ -9,7 +9,7 @@ import top.theillusivec4.curios.api.CuriosApi
 object CuriosCollector : FocusCollector() {
     override fun enabled() = HAConfig.EnablesFocusInsideAccessories()
     override fun extract(player: ServerPlayer): Sequence<ItemStack> {
-        val api = CuriosApi.getCuriosHelper().getEquippedCurios(player).orElse(null) ?: return sequenceOf()
+        val api = CuriosApi.getCuriosInventory(player).orElse(null)?.equippedCurios ?: return sequenceOf()
         return sequence {
             for (i in 0 until api.slots) {
                 val stack = api.getStackInSlot(i)

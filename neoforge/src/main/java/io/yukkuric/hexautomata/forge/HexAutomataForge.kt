@@ -4,6 +4,7 @@ import at.petrak.hexcasting.forge.xplat.ForgeXplatImpl.TAG_BRAINSWEPT
 import io.yukkuric.hexautomata.HexAutomata
 import io.yukkuric.hexautomata.HexAutomataClient
 import io.yukkuric.hexautomata.forge.events.HAForgeEventsListener
+import io.yukkuric.hexautomata.forge.interop.CuriosInterop
 import io.yukkuric.hexautomata.network.HAPackets
 import io.yukkuric.hexautomata.network.packet.S2CPlayerExposureEffect
 import io.yukkuric.hexautomata.network.packet.S2CShowMultiblock
@@ -26,7 +27,7 @@ class HexAutomataForge(modContainer: ModContainer) : HexAutomata.IAPI() {
     init {
         HAForgeEventsListener.load(modContainer)
         HAConfigForge.register(modContainer)
-        // HexAutomata.tryLoadInterop("curios", CuriosInterop::run)
+        HexAutomata.tryLoadInterop("curios", CuriosInterop::run)
         Network.init(modContainer.eventBus!!)
     }
 
