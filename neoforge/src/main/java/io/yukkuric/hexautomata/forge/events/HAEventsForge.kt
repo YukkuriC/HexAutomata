@@ -1,7 +1,6 @@
 package io.yukkuric.hexautomata.forge.events
 
 import io.yukkuric.hexautomata.events.IHAEvent
-import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent
@@ -17,7 +16,6 @@ object HAEventsForge {
         override val entity = raw.entity
     }
 
-    class Shoot(raw: EntityJoinLevelEvent) : IHAForgeEvent.Simple<EntityJoinLevelEvent>(raw)
     class Kill(raw: LivingDeathEvent) : IHAForgeEvent.Simple<LivingDeathEvent>(raw)
 
     class ProjectileHit(override val raw: ProjectileImpactEvent) :

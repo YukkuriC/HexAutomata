@@ -17,7 +17,6 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.damagesource.DamageTypes
-import net.minecraft.world.entity.projectile.Projectile
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.EventPriority
 import net.neoforged.bus.api.SubscribeEvent
@@ -25,7 +24,6 @@ import net.neoforged.fml.ModContainer
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.neoforge.common.NeoForge
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
-import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent
@@ -45,14 +43,6 @@ class HAForgeEventsListener {
             // player melee
             if (e.source.`is`(DamageTypes.PLAYER_ATTACK)) e.source.entity.let { it as? ServerPlayer }?.let {
                 CommonEventsHandler.trigger(BuiltinEventMarker.MELEE_HIT, it, HAEventsForge.PlayerAttack(e))
-            }
-        }
-        @SubscribeEvent(priority = EventPriority.LOWEST)
-        fun OnEntitySpawn(e: EntityJoinLevelEvent) {
-            if (e.isCanceled || e.loadedFromDisk()) return
-            // check player projectile shoot
-            (e.entity as? Projectile)?.owner?.let { it as? ServerPlayer }?.let {
-                CommonEventsHandler.trigger(BuiltinEventMarker.SHOOT, it, HAEventsForge.Shoot(e))
             }
         }
         @SubscribeEvent(priority = EventPriority.LOWEST)
