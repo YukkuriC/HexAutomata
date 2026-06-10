@@ -9,6 +9,7 @@
   "mixins": [
     "AccessorDamageSources",
     "MixinMob",
+    "MixinServerLevel",
     "MixinServerPlayer",
     "hex.AccessorActionRegistryEntry",
     "hex.MixinBrainsweep",
