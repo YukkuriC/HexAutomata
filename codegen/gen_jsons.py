@@ -112,6 +112,7 @@ if 'helpers':
             obj = {"replace": False, "values": ids}
             dump_json(f'{ROOT_FABRIC}/data/trinkets/tags/item/all.json', obj)
             dump_json(f'{ROOT_FORGE}/data/curios/tags/item/curio.json', obj)
+            dump_json(f'{ROOT_RESOURCES}/data/accessories/tags/item/all.json', obj)
 
     def extend_patchouli(path, data, insert_pos=None):
         with open(path) as f:
