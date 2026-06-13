@@ -13,8 +13,7 @@
     "MixinServerLevel",
     "MixinServerPlayer",
     "hex.AccessorActionRegistryEntry",
-    "hex.MixinBrainsweep",
-    "hex.MixinBrainsweep$EntityTagIngredientDisplay"
+    "hex.MixinBrainsweep"
   ],
   "injectors": {
     "defaultRequire": 1

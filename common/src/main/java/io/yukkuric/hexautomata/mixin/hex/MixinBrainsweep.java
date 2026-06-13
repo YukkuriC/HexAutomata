@@ -28,26 +28,4 @@ public abstract class MixinBrainsweep {
     void hookPostBrainsweep(CastingEnvironment env, CallbackInfo ci) {
         HelpersExtKt.tryRecordBrainsweepSacrifice(env.getWorld(), getPos(), getSacrifice());
     }
-
-    @Mixin(EntityTagIngredient.class)
-    static class EntityTagIngredientDisplay {
-        private static Map<EntityType<?>, Entity> cachedTypes = new HashMap<>();
-
-        @Shadow(remap = false)
-        @Final
-        public TagKey<EntityType<?>> entityTypeTag;
-        @Inject(method = "exampleEntity", at = @At("HEAD"), remap = false, cancellable = true)
-        void loopedEntityList(Level level, CallbackInfoReturnable<Entity> cir) {
-            if (!level.isClientSide) return;
-            var optional = BuiltInRegistries.ENTITY_TYPE.getTag(entityTypeTag);
-            if (optional.isEmpty()) {
-                cir.setReturnValue(null);
-                return;
-            }
-            var allEntities = optional.get();
-            int tick = (int) ((System.currentTimeMillis() / 1000) % allEntities.size());
-            var type = allEntities.get(tick).value();
-            cir.setReturnValue(cachedTypes.computeIfAbsent(type, t -> t.create(level)));
-        }
-    }
 }
