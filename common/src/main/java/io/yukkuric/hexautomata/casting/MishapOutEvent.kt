@@ -20,7 +20,7 @@ object MishapOutEvent : Mishap() {
     override fun execute(env: CastingEnvironment, errorCtx: Context, stack: TreeList<Iota>): TreeList<Iota> {
         val mutable = stack.toMutableList()
         for (i in 0 until stack.size) {
-            if (Math.random() < 0.5) stack[i] = GarbageIota()
+            if (Math.random() < 0.5) mutable[i] = GarbageIota()
         }
         return TreeList.from(mutable)
     }
