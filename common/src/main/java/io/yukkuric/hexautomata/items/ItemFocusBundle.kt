@@ -28,11 +28,12 @@ class ItemFocusBundle : BundleItem(HAItems.Props.STACK_ONE_EPIC) {
         val MAX_FOCUS_COUNT = 8
         val KEY_ITEMS = "Items"
         private val STUB_LIST = listOf<ItemStack>()
+        private val STUB_CONTENTS = BundleContents(STUB_LIST)
 
         fun pushOne(bundleStack: ItemStack, otherStack: ItemStack) {
-            val contents = bundleStack.get(DataComponents.BUNDLE_CONTENTS) ?: return
+            val contents = bundleStack.get(DataComponents.BUNDLE_CONTENTS) ?: STUB_CONTENTS
             val mutable = BundleContents.Mutable(contents)
-            (mutable as AccessorBundleContents).items.add(otherStack)
+            (mutable as AccessorBundleContents).items.add(otherStack.copy())
             bundleStack.set(DataComponents.BUNDLE_CONTENTS, mutable.toImmutable())
         }
 
