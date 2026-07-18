@@ -8,6 +8,7 @@ import at.petrak.hexcasting.api.casting.eval.vm.CastingVM
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.mishaps.Mishap
 import at.petrak.hexcasting.api.casting.mishaps.MishapNotEnoughMedia
+import at.petrak.hexcasting.api.utils.TreeList
 import io.yukkuric.hexautomata.HAConfig
 import io.yukkuric.hexautomata.events.IHAEvent
 import net.minecraft.server.level.ServerPlayer
@@ -36,7 +37,7 @@ class EntityEventEnv(
     }
 
     fun executeIotasWithTax(iotas: List<Iota>) {
-        val image = CastingImage().copy(stack = event.initStack())
+        val image = CastingImage().copy(stack = TreeList.from(event.initStack()))
         val vm = CastingVM(image, this)
 
         val tax = HAConfig.EventTriggerTax().toLong()
