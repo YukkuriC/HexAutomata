@@ -36,7 +36,7 @@ open class PatchAction(val original: Action, val patcher: Action) : Action {
                 USE_ORIGINAL -> return original.operate(env, image, continuation)
                 STOP_ALL -> return OperationResult(
                     image.withUsedOp(), listOf(), SpellContinuation.Done,
-                    HexEvalSounds.NOTHING,
+                    HexEvalSounds.NOTHING.get(),
                 )
             }
             throw e

@@ -18,9 +18,9 @@ object OpEventWrite : EventLimitedAction() {
         if (!datumHolder.writeIota(datum, true))
             throw MishapBadOffhandItem.of(stack, "iota.readonly", datum.display())
 
-        val trueName = MishapOthersName.getTrueNameFromDatum(env.world, datum, env.castingEntity as? ServerPlayer)
+        val trueName = MishapOthersName.getTrueNameMishapFromDatum(env.world, datum, env.castingEntity as? ServerPlayer)
         if (trueName != null)
-            throw MishapOthersName(trueName)
+            throw trueName
 
         datumHolder.writeIota(datum, false)
         return listOf()

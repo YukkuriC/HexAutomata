@@ -68,7 +68,7 @@ open class BrainsweepRitualIntermediate(var ritualId: ResourceLocation) : Brains
 
     // default: pick source block from recipe
     var fallbackBlock = Suppliers.memoize {
-        for (recipeHolder in level.recipeManager.getAllRecipesFor(HexRecipeStuffRegistry.BRAINSWEEP_TYPE)) {
+        for (recipeHolder in level.recipeManager.getAllRecipesFor(HexRecipeStuffRegistry.BRAINSWEEP_TYPE.get())) {
             val recipe = recipeHolder.value
             if (recipe.result.block != this) continue
             val blockIn = recipe.blockIn

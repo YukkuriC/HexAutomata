@@ -26,7 +26,7 @@ abstract class EventLimitedAction : ConstMediaAction {
                 image,
                 listOf(OperatorSideEffect.DoMishap(MishapOutEvent, Mishap.Context(null, null))),
                 SpellContinuation.Done,
-                HexEvalSounds.MISHAP,
+                HexEvalSounds.MISHAP.get(),
             )
         }
         return super.operate(env, image, continuation)

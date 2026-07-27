@@ -63,7 +63,7 @@ object OpExtendBrainsweep : PatchAction(OpBrainsweep, BrainsweepEx) {
 
                 // fetch recipe
                 val state = world.getBlockState(pos)
-                val recipe = world.recipeManager.getAllRecipesFor(HexRecipeStuffRegistry.BRAINSWEEP_TYPE)
+                val recipe = world.recipeManager.getAllRecipesFor(HexRecipeStuffRegistry.BRAINSWEEP_TYPE.get())
                     .map { it.value }
                     .find { it.matches(state, sacrifice, world) }
                 if (recipe != null) {

@@ -15,6 +15,7 @@ import vazkii.patchouli.api.IMultiblock
 import vazkii.patchouli.api.IStateMatcher
 import vazkii.patchouli.common.multiblock.SparseMultiblock
 import vazkii.patchouli.common.multiblock.StateMatcher
+import java.util.function.Supplier
 
 object RitualFocusBundle : RitualCollector() {
     override val idStr = "focus_bundle"
@@ -32,7 +33,7 @@ object RitualFocusBundle : RitualCollector() {
             for (y in 0 until 9)
                 for (z in 0 until 9)
                     if (isMenger(3, x, y, z)) matchers[BlockPos(x, y, z)] = matcherBody
-        val matcherRecord = StateMatcher.fromBlockLoose(HexBlocks.AKASHIC_RECORD)
+        val matcherRecord = StateMatcher.fromBlockLoose(HexBlocks.AKASHIC_RECORD.get())
         for (delta in -2..2 step 4) {
             matchers[BlockPos(4, 0, 4 + delta)] = matcherRecord
             matchers[BlockPos(4 + delta, 0, 4)] = matcherRecord
@@ -59,13 +60,14 @@ object RitualFocusBundle : RitualCollector() {
                     if (shiftPos == null) {
                         level.setBlock(
                             record.worldPosition,
-                            DECAYED_BLOCK_SET.random().defaultBlockState().rotate(Rotation.getRandom(level.random)),
+                            DECAYED_BLOCK_SET.random().get().defaultBlockState()
+                                .rotate(Rotation.getRandom(level.random)),
                             3
                         )
                     } else {
                         level.setBlock(
                             shiftPos,
-                            (if (Math.random() < 0.05) DECAYED_BLOCK_SET_RARE else DECAYED_BLOCK_SET).random()
+                            (if (Math.random() < 0.05) DECAYED_BLOCK_SET_RARE else DECAYED_BLOCK_SET).random().get()
                                 .defaultBlockState().rotate(Rotation.getRandom(level.random)),
                             3
                         )
@@ -78,21 +80,21 @@ object RitualFocusBundle : RitualCollector() {
         }
     }
 
-    private val matcherBody = MultiMatcher(HexBlocks.AKASHIC_LIGATURE, HexBlocks.AKASHIC_BOOKSHELF)
+    private val matcherBody = MultiMatcher(HexBlocks.AKASHIC_LIGATURE.get(), HexBlocks.AKASHIC_BOOKSHELF.get())
     var DECAYED_BLOCK_SET = mutableListOf(
         HexBlocks.AMETHYST_BRICKS,
         HexBlocks.QUENCHED_ALLAY_BRICKS,
         HexBlocks.QUENCHED_ALLAY_BRICKS_SMALL,
         HexBlocks.EDIFIED_PLANKS,
-        Blocks.AMETHYST_BLOCK,
+        Supplier { Blocks.AMETHYST_BLOCK },
         HexBlocks.AKASHIC_BOOKSHELF,
         HexBlocks.AKASHIC_LIGATURE,
     )
     var DECAYED_BLOCK_SET_RARE = mutableListOf(
         HexBlocks.AKASHIC_RECORD,
-        Blocks.SHULKER_BOX,
+        Supplier { Blocks.SHULKER_BOX },
         HexBlocks.QUENCHED_ALLAY,
-        Blocks.BUDDING_AMETHYST,
-        Blocks.DIAMOND_BLOCK,
+        Supplier { Blocks.BUDDING_AMETHYST },
+        Supplier { Blocks.DIAMOND_BLOCK },
     )
 }
