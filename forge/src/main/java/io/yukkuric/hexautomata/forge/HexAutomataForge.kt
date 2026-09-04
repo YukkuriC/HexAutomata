@@ -13,7 +13,6 @@ import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.Mob
 import net.minecraftforge.eventbus.api.SubscribeEvent
-import net.minecraftforge.fml.ModList
 import net.minecraftforge.fml.ModLoadingContext
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
@@ -33,7 +32,6 @@ class HexAutomataForge : HexAutomata.IAPI() {
         Network // hook init
     }
 
-    override fun modLoaded(id: String) = ModList.get().isLoaded(id)
     override fun revertBrainsweep(mob: Mob) {
         mob.persistentData.remove(TAG_BRAINSWEPT)
         forceRefresh(mob)

@@ -22,7 +22,6 @@ import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
-import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.FriendlyByteBuf
@@ -54,7 +53,6 @@ class HexAutomataFabric : IAPI(), ModInitializer {
         }
     }
 
-    override fun modLoaded(id: String) = FabricLoader.getInstance().isModLoaded(id)
     override fun revertBrainsweep(mob: Mob) {
         val comp = HexCardinalComponents.BRAINSWEPT.get(mob)
         comp.isBrainswept = false
