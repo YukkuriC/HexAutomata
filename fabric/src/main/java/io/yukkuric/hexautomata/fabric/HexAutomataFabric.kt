@@ -3,7 +3,6 @@ package io.yukkuric.hexautomata.fabric
 import at.petrak.hexcasting.common.lib.hex.HexActions
 import at.petrak.hexcasting.fabric.cc.HexCardinalComponents
 import at.petrak.hexcasting.fabric.xplat.FabricXplatImpl
-import io.yukkuric.hexautomata.HexAutomata
 import io.yukkuric.hexautomata.HexAutomata.IAPI
 import io.yukkuric.hexautomata.HexAutomata.commonInit
 import io.yukkuric.hexautomata.HexAutomata.commonLateInit
@@ -16,12 +15,12 @@ import io.yukkuric.hexautomata.items.HAItems
 import io.yukkuric.hexautomata.network.HAPackets
 import io.yukkuric.hexautomata.network.packet.S2CPlayerExposureEffect
 import io.yukkuric.hexautomata.network.packet.S2CShowMultiblock
+import io.yukkuric.yclib.YCLib
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
-import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.FriendlyByteBuf
@@ -43,7 +42,7 @@ class HexAutomataFabric : IAPI(), ModInitializer {
         bindReg(BuiltInRegistries.BLOCK, HABlocks::register)
         bindReg(BuiltInRegistries.BLOCK_ENTITY_TYPE, HABlocks.BETypes::register)
         HAFabricEventsListener.load()
-        HexAutomata.tryLoadInterop("trinkets", TrinketsInterop::run)
+        YCLib.tryLoadInterop("trinkets", TrinketsInterop::run)
         commonInit()
 
         var lateInitOnce = false
@@ -54,7 +53,6 @@ class HexAutomataFabric : IAPI(), ModInitializer {
         }
     }
 
-    override fun modLoaded(id: String) = FabricLoader.getInstance().isModLoaded(id)
     override fun revertBrainsweep(mob: Mob) {
         val comp = HexCardinalComponents.BRAINSWEPT.get(mob)
         comp.isBrainswept = false

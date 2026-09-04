@@ -10,6 +10,7 @@ import io.yukkuric.hexautomata.items.HAItems
 import io.yukkuric.hexautomata.items.ItemFocusBundle
 import io.yukkuric.hexautomata.items.ItemReactiveFocus
 import io.yukkuric.hexautomata.multiblock.HARituals
+import io.yukkuric.yclib.YCLib.tryLoadInterop
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.Mob
@@ -35,15 +36,6 @@ object HexAutomata {
         HAPatches.patchAll()
     }
 
-    fun tryLoadInterop(modId: String, loadFunc: () -> Any) {
-        if (!API.modLoaded(modId)) return
-        try {
-            loadFunc()
-        } catch (e: Throwable) {
-            LOGGER.error("error trying to load interop of $modId; error: ${e.stackTraceToString()}")
-        }
-    }
-
     lateinit var API: IAPI
 
     abstract class IAPI {
@@ -51,7 +43,6 @@ object HexAutomata {
             API = this
         }
 
-        abstract fun modLoaded(id: String): Boolean
         abstract fun revertBrainsweep(mob: Mob)
 
         open fun forceRefresh(mob: Mob) = mob.level().let { level ->
