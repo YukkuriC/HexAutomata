@@ -15,7 +15,7 @@ object HAActions : CustomRegisterObject<ActionRegistryEntry>() {
     }
 
     private fun wrap(name: String, signature: String, dir: HexDir, action: Action?): ActionRegistryEntry {
-        val pattern = HexPattern.fromAngles(signature, dir)
+        val pattern = HexPattern.fromAngleString(signature, dir, false)
         val key = modLoc(name)
         val entry = ActionRegistryEntry(pattern, action)
         this[key] = entry
