@@ -8,8 +8,8 @@ import at.petrak.hexcasting.api.casting.eval.vm.SpellContinuation
 import at.petrak.hexcasting.common.lib.hex.HexEvalSounds
 import dev.latvian.mods.rhino.JavaScriptException
 import dev.latvian.mods.rhino.NativeJavaObject
-import io.yukkuric.hexautomata.HexAutomata
 import io.yukkuric.hexautomata.helpers.NoTraced
+import io.yukkuric.yclib.YCLib
 
 open class PatchAction(val original: Action, val patcher: Action) : Action {
     companion object {
@@ -26,7 +26,7 @@ open class PatchAction(val original: Action, val patcher: Action) : Action {
             return patcher.operate(env, image, continuation)
         } catch (e: Throwable) {
             var e = e.let unwrapper@{
-                if (HexAutomata.API.modLoaded("kubejs")) {
+                if (YCLib.modLoaded("kubejs")) {
                     (((e as? JavaScriptException)?.value as? NativeJavaObject)?.unwrap() as? Throwable)
                         ?.let { return@unwrapper it }
                 }

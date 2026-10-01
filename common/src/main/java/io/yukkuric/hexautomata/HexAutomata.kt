@@ -9,6 +9,7 @@ import io.yukkuric.hexautomata.items.HAItems
 import io.yukkuric.hexautomata.items.ItemFocusBundle
 import io.yukkuric.hexautomata.items.ItemReactiveFocus
 import io.yukkuric.hexautomata.multiblock.HARituals
+import io.yukkuric.yclib.YCLib
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.Mob
@@ -34,7 +35,7 @@ object HexAutomata {
     }
 
     fun tryLoadInterop(modId: String, loadFunc: () -> Any) {
-        if (!API.modLoaded(modId)) return
+        if (!YCLib.modLoaded(modId)) return
         try {
             loadFunc()
         } catch (e: Throwable) {
@@ -49,7 +50,6 @@ object HexAutomata {
             API = this
         }
 
-        abstract fun modLoaded(id: String): Boolean
         abstract fun revertBrainsweep(mob: Mob)
 
         open fun forceRefresh(mob: Mob) = mob.level().let { level ->
