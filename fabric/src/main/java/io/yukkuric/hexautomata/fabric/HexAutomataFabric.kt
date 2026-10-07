@@ -20,6 +20,7 @@ import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
@@ -36,6 +37,7 @@ class HexAutomataFabric : IAPI(), ModInitializer {
     }
 
     override fun onInitialize() {
+        Network.keepAlive()
         bindReg(HexActions.REGISTRY, HAActions::register)
         bindReg(BuiltInRegistries.ITEM, HAItems::register)
         bindReg(BuiltInRegistries.CREATIVE_MODE_TAB, HAItems.Tabs::register)
@@ -68,6 +70,13 @@ class HexAutomataFabric : IAPI(), ModInitializer {
     object Network : HAPackets.Server {
         init {
             HAPackets.SERVER = this
+
+            PayloadTypeRegistry.playS2C().let {
+                it.register(S2CShowMultiblock.TYPE, S2CShowMultiblock.STREAM_CODEC)
+                it.register(
+                    S2CPlayerExposureEffect.TYPE, S2CPlayerExposureEffect.STREAM_CODEC
+                )
+            }
         }
 
         private fun <T : CustomPacketPayload?> make(
@@ -89,6 +98,7 @@ class HexAutomataFabric : IAPI(), ModInitializer {
 
 class HexAutomataFabricClient : ClientModInitializer {
     override fun onInitializeClient() {
+        Network.keepAlive()
         HexAutomataClient.load()
     }
 

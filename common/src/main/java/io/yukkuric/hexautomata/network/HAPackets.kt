@@ -9,11 +9,15 @@ object HAPackets {
     var CLIENT: Client? = null
     var SERVER: Server? = null
 
-    interface Client {
+    interface IKeepAlive {
+        fun keepAlive() {}
+    }
+
+    interface Client : IKeepAlive {
         fun sendPacketToServer(packet: CustomPacketPayload)
     }
 
-    interface Server {
+    interface Server : IKeepAlive {
         fun sendPacketToPlayer(player: ServerPlayer, packet: CustomPacketPayload)
         fun sendPacketTracking(entity: Entity, packet: CustomPacketPayload)
         fun sendPacketToPlayerAndTracking(player: ServerPlayer, packet: CustomPacketPayload) {
