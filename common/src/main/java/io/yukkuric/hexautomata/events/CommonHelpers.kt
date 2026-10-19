@@ -2,7 +2,6 @@ package io.yukkuric.hexautomata.events
 
 import at.petrak.hexcasting.api.casting.eval.env.PlayerBasedMishapEnv
 import io.yukkuric.hexautomata.HAConfig
-import io.yukkuric.hexautomata.HexAutomata
 import io.yukkuric.hexautomata.casting.MishapOutEvent
 import io.yukkuric.hexautomata.helpers.ADV_STACK_OVERFLOW
 import io.yukkuric.hexautomata.helpers.grantAdvancement
@@ -27,7 +26,6 @@ object CommonHelpers {
 
     @JvmStatic
     fun shouldIgnoreHurt(src: DamageSource): Boolean {
-        HexAutomata.LOGGER.error("damage check ${src.type()}, ${src.`is`(HATags.Damage.IGNORE_HURT)}")
         return src.`is`(HATags.Damage.IGNORE_HURT) || (src.entity?.type?.`is`(HATags.Entity.IGNORE_HURT) == true)
     }
 
